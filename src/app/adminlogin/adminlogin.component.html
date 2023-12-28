@@ -1,0 +1,33 @@
+<section class="vh-100 " >
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+            <img src="assets/img/Logo-RUTS.png" alt="" width="" height=""  class="img-fluid" >
+          <form (ngSubmit)="adminlogin()" [formGroup]="frmAdminLogin">
+            <br>
+            <br>
+            <div class="text-left form-outline mb-4">
+              <label class="form-label" for="user_email"><fa-icon [icon]="faUsers"></fa-icon><strong> เจ้าหน้าที่คณะ/กองพัฒฯ</strong></label>
+            </div>
+            <div class="form-outline mb-4">
+              <input type="email" formControlName="user_email"  id="user_email" name="user_email" 
+              class="form-control form-control-lg"  placeholder="e-Passport" required/>
+              <!-- <label class="form-label" for="user_email">e-pass</label> -->
+            </div>
+
+            <div class="form-outline mb-4">
+              <input type="password" formControlName="user_password"  id="user_password" 
+              name="user_password" class="form-control form-control-lg" 
+              placeholder="Password" required/>
+              <!-- <label class="form-label" for="user_password">Password</label> -->
+            </div>
+            <button  class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,84 @@
+<app-navbar-fac></app-navbar-fac>
+<main>
+    <div class="container">
+        <div class="main-body">
+            <Br />
+            <Br />
+            <div class="row gutters-sm">
+                <!-- <div class="col-8">
+                  <div class="btn-group dropend">
+                    <ul class="nav nav-pills nav-fill">
+                      <li class="nav-item">
+                        <button class="nav-link" aria-current="page" (click)="getDataCap(mapFacId, 'notSelect',0)" 
+                        [ngClass]="{'active': approv_status == '0'}">รออนุมัติ 
+                        <span class="badge badge-warning text-dark">{{num_status_w}}</span></button>
+                      </li>
+                      <li class="nav-item">
+                        <button class="nav-link" (click)="getDataCap(mapFacId, 'notSelect',1)" 
+                        [ngClass]="{'active': approv_status == '1'}">อนุมัติแล้ว
+                        <span class="badge badge-success text-dark">{{num_status_y}}</span></button>
+                      </li>
+                      <li class="nav-item">
+                        <button class="nav-link" (click)="getDataCap(mapFacId, 'notSelect',2)" 
+                        [ngClass]="{'active': approv_status == '2'}">ไม่อนุมัติ
+                        <span class="badge badge-danger text-whit">{{num_status_n}}</span></button>
+                      </li>
+                    </ul>
+                  </div>
+                </div> -->
+    
+                <div class="card mt-3">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="list-home" role="tabpanel"
+                            aria-labelledby="list-home-list">
+                            <table class="table table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">รหัสนักศึกษา</th>
+                                        <th scope="col">ชื่อ - สกุล</th>
+                                        <!-- <th scope="col">ชั้นปี</th> -->
+                                        <th scope="col">สาขา</th>
+                                        <th scope="col">การใช้ชีวิตแห่งโลกสมัยใหม่</th>
+                                        <th scope="col">การเป็นผู้ประกอบการ</th>
+                                        <th scope="col">เทคโนโลยีดิจิทัล</th>
+                                        <th scope="col">ภาษาต่างประเทศ</th>
+                                        <th scope="col">การวางแผนทางการเงิน</th>
+                                        <th scope="col">สถานะ</th>
+                                        <!-- <th scope="col">จัดการ</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of filteredItems | paginate: { itemsPerPage: 10, currentPage: p }">
+                                        <th scope="row">{{ item.std_id }}</th>
+                                        <td>{{ item.std_name }} {{ item.std_lastname }}</td>
+                                        <!-- <td>{{ item.fac_name }}</td> -->
+                                        <td>{{ item.pro_name }}</td>
+                                        <td>{{ item.cap_type_1 }}</td>
+                                        <td>{{ item.cap_type_2 }}</td>
+                                        <td>{{ item.cap_type_3 }}</td>
+                                        <td>{{ item.cap_type_4 }}</td>
+                                        <td>{{ item.cap_type_5 }}</td>
+                                        <td
+                                            [ngClass]="{'bg-danger': item.status_pass == '0', 'bg-success': item.status_pass == '1'}">
+                                            <!-- <span *ngIf="item.status_pass == '0'">ไม่ผ่านเกณ </span>
+                                <span *ngIf="item.status_pass == '1'">ผ่านแล้ว</span> -->
+                                        </td>
+    
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="list">
+                                <!-- <ul>
+                          <li *ngFor="let item of collection | paginate: { itemsPerPage: 10, currentPage: p }">
+                            {{ item }}
+                          </li>
+                        </ul> -->
+                                <pagination-controls (pageChange)="p=$event"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

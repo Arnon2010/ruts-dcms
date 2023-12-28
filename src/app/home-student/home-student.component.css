@@ -1,0 +1,119 @@
+/* Style the modal content */
+.modal-content {
+  background-color: #e6e2d3;
+  /* Replace with your desired background color */
+  border: 1px solid #f1eee3;
+  border-radius: 5px;
+  position: relative;
+  top: 25%;
+}
+
+.bg-light-gray {
+  background-color: rgb(228, 43, 43);
+  /* Replace with your desired background color */
+  border: 1px solid #C8C8C8;
+  border-radius: 5px;
+  position: relative;
+  top: 25%;
+}
+
+.bg-header {
+  /*background-color: rgba(238, 104, 63, 0.5); /* Add a semi-transparent background overlay */
+  background-color: #005689;
+  color: #C8C8C8;
+  height: 100px;
+  padding-top: 2.1em;
+  border: 5px;
+  border-radius: 0px;
+}
+
+.bg-canvas {
+  background-color: rgba(163, 171, 225, 0.5);
+  /* Add a semi-transparent background overlay */
+  height: 100px;
+  padding-top: 2.1em;
+  border: 5px;
+  border-radius: 0px;
+  border: 1px solid #C8C8C8;
+  position: relative;
+}
+
+li {
+  background-color: rgba(163, 171, 225, 0.5);
+  border-radius: 5px;
+}
+ 
+  /* .card-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  } */
+
+
+.card-button {
+  display: flex;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  max-width: 260px;
+  border-radius: 10px;
+  position: relative;
+  margin: 15px;
+  transition: 0.3s all ease-in-out;
+  border: 1px solid #eeeeee;
+
+  >div {
+    padding: 30px 30px;
+    transition: 0.3s all ease-in-out;
+    display: flex;
+    align-items: center;
+  }
+
+  .icon {
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 35px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    box-shadow: 5px 0px 12px -4px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+
+  .text {
+    background-color: #003B67;
+    color: #ffffff;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .badge {
+    position: absolute;
+    color: #003B67;
+    background-color: #ffffff;
+    box-shadow: inset 0px 0px 6px 6px #E0E0E0;
+    font-weight: bold;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid #000000;
+    top: -10px;
+    left: -10px;
+    z-index: 2;
+  }
+
+  &:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+
+    .text {
+      background-color: #29C1F4;
+      background-image: radial-gradient(#96e1fa, #2ac1f4);
+      color: #000000;
+    }
+  }
+}

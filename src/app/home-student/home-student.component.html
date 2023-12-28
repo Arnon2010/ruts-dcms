@@ -1,0 +1,616 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="main-body">
+    <!-- HERO -->
+    <section class="hero d-flex flex-column justify-content-center align-items-center mb-4" id="intro">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex flex-column align-items-center text-center">
+                  <img *ngIf="studentData.prefixname =='นาย'" src="./assets/img/avatar-male.png" class="rounded-circle"
+                    width="200" alt="Profile">
+                  <img *ngIf="studentData.prefixname !='นาย'" src="./assets/img/avatar-fmale.png" class="rounded-circle"
+                    width="200" alt="Profile">
+                  <div class="mt-3">
+                    <h4>
+                      <div class="email-link">👋{{studentData.prefixname}}{{studentData.firstname}}
+                        {{studentData.lastname}}</div>
+                    </h4>
+                    <h4 class="hero-text">
+                      <div>{{studentData.studentid}}</div>
+                    </h4>
+                    <hr />
+                    <div><strong>สาขา: {{studentData.majorname}}</strong></div>
+                    <div><strong>{{studentData.facultyname}}</strong></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-lg-6 col-md-6 col-12">
+            <div class="hero-text mb-4">
+              <h1 class="hero-title">
+                <fa-icon [icon]="faEnvelope"></fa-icon> {{studentData.email}}
+              </h1>
+              <h1>
+                <span class="email-link">ชั้นปี {{studentData.stdYear}}</span>
+              </h1>
+              <!-- <h1 class="hero-title1">
+                <a href="#" data-toggle="modal" data-target="#uploadModal"> <img src="assets/img/upload.png"
+                    width="150"></a>
+              </h1> -->
+            </div>
+            <div class="mt-3">
+              <div class="row">
+                <div class="col">
+                  <div class="card">
+                    <div class="card-image">
+                      <img src="assets/img/upload.png" class="materialboxed" width="150">
+                      <span class="card-title"></span>
+                      <!-- <a href="#" data-toggle="modal" data-target="#uploadModal">
+                        <img src="assets/img/testimonials/icons8-add-64.png" class="materialboxed">
+
+                      </a> -->
+                      <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                        <img src="assets/img/testimonials/icons8-add-64.png" class="materialboxed">
+                      </button>
+                    </div>
+                    <div class="card-content d-flex flex-column m-2">
+                      <p>
+                        <span class="h6">ส่งใบรับรองสมรรถนะ(Certificate)</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="hero-text1">
+              <h1 class="hero-title1">
+                <a href="#" data-toggle="modal" data-target="#uploadModal"> <img src="assets/img/Logo 11.png"
+                    width="150"></a>
+              </h1>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- TESTIMONIAL -->
+    <section class="testimonials section-padding mb-5" id="testimonials">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="d-flex justify-content-between justify-content-center">
+              <div>
+                <!-- <img src="./assets/img/testimonials/icons8-ability-64-2.png" class="img-fluid m-2" width="64"
+                  alt="testimonials image"> -->
+                <span class="head h2">การเข้าร่วมสมรรถนะของนักศึกษา</span>
+                <hr>
+              </div>
+
+              <!-- <div class="hero-text1">
+                <h1 class="hero-title1">
+                  <a href="#" data-toggle="modal" data-target="#uploadModal"> <img src="assets/img/Logo 11.png"
+                      width="150"></a>
+                </h1>
+              </div> -->
+            </div>
+            <div class="owl-carousel owl-theme" id="testimonials-carousel">
+              <!-- <div class="item" *ngFor="let item of capList">
+                <div class="testimonials-thumb d-flex">
+                  <div class="testimonials-image">
+                    <img src="./assets/img/testimonials/icons8-skills-64.png" class="img-fluid"
+                      alt="testimonials image">
+                  </div>
+                  <div class="testimonials-info">
+                    <p>{{item.cap_type_name}}</p>
+                    <h6 class="mb-0">{{item.cap_type_name}}</h6>
+                  
+                     <span class="text-secondary">
+                        <button type="button" class="btn position-relative m-2"
+                          (click)="courseDetail(item.cap_courses, item.cap_type_name)" data-bs-toggle="offcanvas"
+                          href="#offcanvasCourse"
+                          [ngClass]="{'btn-warning': item.status_cap == 'N','btn-primary': item.status_cap == 'Y'}">
+                          <fa-icon [icon]="faCircleCheck" *ngIf="item.status_cap == 'Y'"></fa-icon>
+                          <fa-icon [icon]="faCircleXmark" *ngIf="item.status_cap == 'N'"></fa-icon>
+                          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{item.num_cap}}
+                            <span class="visually-hidden"></span>
+                          </span>
+                        </button>
+                      </span>
+                  </div>
+                </div>
+                <hr/>
+              </div> -->
+              <ul class="list-group list-group-flush">
+                <li *ngFor="let item of capList"
+                  class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                  <div class="testimonials-image">
+                    <div class="content-type badge-heading">
+                      <img *ngIf="item.status_cap == 'Y'" src="./assets/img/testimonials/icons8-done-64-2.png"
+                        width="64" class="img-fluid icon-image m-2" alt="testimonials image">
+                      <img *ngIf="item.status_cap == 'N'" src="./assets/img/testimonials/icons8-error-noti-64.png"
+                        width="64" class="img-fluid icon-image m-2" alt="testimonials image">
+                      {{item.cap_type_name}}
+                      <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        {{item.num_cap}}
+                      </span> -->
+                    </div>
+                  </div>
+                  <!-- <h1 class="badge-heading">Example heading <span class="badge bg-primary">New</span></h1> -->
+
+
+                  <span class="text-secondary">
+
+                    <!-- <button type="button" class="btn position-relative"
+                      (click)="courseDetail(item.cap_courses, item.cap_type_name)" data-bs-toggle="offcanvas"
+                      href="#offcanvasCourse"
+                      [ngClass]="{'btn-warning': item.status_cap == 'N','btn-success': item.status_cap == 'Y'}">
+                      {{item.num_cap}}
+
+                    </button>
+
+                    <a href="#offcanvasCourse" data-bs-toggle="offcanvas"
+                      (click)="courseDetail(item.cap_courses, item.cap_type_name)">
+                      <img src="./assets/img/testimonials/icons8-next-96.png" width="45" class="img-fluid"
+                        alt="testimonials image">
+                    </a> -->
+
+                    <div class="card-button">
+                      <!-- <span class="badge">{{item.num_cap}}</span> -->
+                      <div class="icon"
+                        [ngClass]="{'bg-warning': item.status_cap == 'N','bg-success': item.status_cap == 'Y'}">
+                        <span class="btn rounded-circle h1"
+                          [ngClass]="{'btn-danger': item.status_cap == 'N','btn-light': item.status_cap == 'Y'}">
+                          <strong>{{item.num_cap}}</strong></span>
+                      </div>
+                      <div class="text">
+                        <a href="#offcanvasCourse" data-bs-toggle="offcanvas"
+                          (click)="courseDetail(item.cap_courses, item.cap_type_name)">
+                          <img src="./assets/img/testimonials/icons8-open-64.png" class="img-fluid"
+                            alt="testimonials icon-image">
+                        </a>
+
+                        <!-- <fa-icon [icon]="faCircleChevronRight" style="width: 50px;"></fa-icon> -->
+                      </div>
+                    </div>
+
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- <div class="d-flex flex-column justify-content-center align-items-center col-lg-2 col-md-6 col-12">
+            <div class="hero-text">
+              <h1 class="hero-title">
+                <a routerLink="/uploadfile"> <img src="assets/img/Logo 11.png" width="150"></a>
+              </h1>
+            </div>
+          </div> -->
+
+        </div>
+      </div>
+    </section>
+
+    <!-- <div class="row gutters-sm">
+      <div class="col-md-12 col-lg-12 col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle"
+                width="150">
+              <div class="mt-3">
+                <h4>
+                  <div class="email-link">{{studentData.prefixname}}{{studentData.firstname}} {{studentData.lastname}}
+                  </div>
+                </h4>
+                <h4>
+                  <div>{{studentData.studentid}}</div>
+                </h4>
+
+                <div>{{studentData.majorname}}</div>
+                <div>{{studentData.facultyname}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card mt-3">
+          <ul class="list-group list-group-flush">
+            <li *ngFor="let item of capList"
+              class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+              <h5>{{item.cap_type_name}}</h5>
+              <span class="text-secondary">
+                <button type="button" class="btn position-relative m-2"
+                  (click)="courseDetail(item.cap_courses, item.cap_type_name)" data-bs-toggle="offcanvas"
+                  href="#offcanvasCourse"
+                  [ngClass]="{'btn-warning': item.status_cap == 'N','btn-primary': item.status_cap == 'Y'}">
+                  <fa-icon [icon]="faCircleCheck" *ngIf="item.status_cap == 'Y'"></fa-icon>
+                  <fa-icon [icon]="faCircleXmark" *ngIf="item.status_cap == 'N'"></fa-icon>
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{item.num_cap}}
+                    <span class="visually-hidden"></span>
+                  </span>
+                </button>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="row gutters-md">
+          <div class="col">
+            <a routerLink="/uploadfile"> <img src="assets/img/Logo 11.png" width="200" height="200"></a>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- Modal Courses -->
+    <!-- <div class="modal fade" id="ModalCourseDetail" tabindex="-1" role="dialog" aria-labelledby="ModalCourseDetailTitle"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="ModalCourseDetailTitle"><fa-icon [icon]="faBookOpen"></fa-icon>
+              สมรรถนะด้าน{{course_name}}</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+              <ul class="list-group list-group-flush">
+                <li *ngFor="let course of cap_courses"
+                  class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                  <h6>{{course.course_name}}</h6>
+                  <span class="text-secondary">
+                   
+                    <button type="button" class="btn btn-sm position-relative m-2" 
+                      [ngClass]="{'btn-warning': course.approv_status =='0','btn-success': course.approv_status =='1', 'btn-secondary': course.approv_status =='2'}">
+                      <fa-icon [icon]="faClock" *ngIf="course.approv_status =='0'"></fa-icon>
+                      <fa-icon [icon]="faCircleCheck" *ngIf="course.approv_status =='1'"></fa-icon>
+                      <fa-icon [icon]="faCircleXmark" *ngIf="course.approv_status =='2'"></fa-icon>
+                    </button>
+                    <button type="button" (click)="openAnyFile(course.path_certificate)"
+                      class="btn btn-info btn-sm position-relative m-2" data-toggle="modal" data-target="#ModalViewFile">
+                      <fa-icon [icon]="faFilePen"></fa-icon>
+                    </button>
+                  </span>
+                </li>
+  
+              </ul>
+            
+          </div>
+          
+          <div class="modal-footer">
+            <span class="text-left"><small>
+              <fa-icon [icon]="faClock" class="m-2"></fa-icon> รอตรวจสอบ
+              <fa-icon [icon]="faCircleCheck"></fa-icon> ผ่าน
+              <fa-icon [icon]="faCircleXmark"></fa-icon> ไม่ผ่าน
+            </small>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCourse" aria-labelledby="offcanvasCourseLabel">
+      <div class="offcanvas-header bg-header">
+        <h5 class="offcanvas-title" id="offcanvasCourseLabel"><strong>สมรรถนะด้าน</strong>
+          <br />
+          <small>{{course_type}}</small>
+        </h5>
+
+        <button type="button" class="btn btn-danger" data-bs-dismiss="offcanvas" aria-label="Close">
+          <fa-icon [icon]="faRectangleXmark"></fa-icon> ปิด</button>
+      </div>
+      <div class="offcanvas-body bg-canvas1">
+        <div>
+          <ul class="list-group list-group-flush">
+            <li *ngFor="let course of cap_courses; let i = index"
+              class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+
+              <h6>
+                <button type="button" class="btn btn-sm position-relative m-2"
+                  [ngClass]="{'btn-light': course.approv_status =='0','btn-success': course.approv_status =='1', 'btn-secondary': course.approv_status =='2'}">
+                  <fa-icon [icon]="faClock" *ngIf="course.approv_status =='0'"></fa-icon>
+                  <fa-icon [icon]="faCircleCheck" *ngIf="course.approv_status =='1'"></fa-icon>
+                  <fa-icon [icon]="faCircleXmark" *ngIf="course.approv_status =='2'"></fa-icon>
+                </button>
+                <strong>{{i+1}}. {{course.course_name}}</strong>
+              </h6>
+              <span class="text-secondary">
+                <button type="button" (click)="openAnyFile(course.path_certificate, course.course_name)"
+                  class="btn btn-info btn-sm position-relative m-2" data-toggle="modal" data-target="#ModalViewFile">
+                  <fa-icon [icon]="faFilePen"></fa-icon>
+                </button>
+                <!-- <button type="button" (click)="openAnyFile(course.path_certificate, course.course_name)"
+                  class="btn btn-danger btn-sm position-relative m-2" data-toggle="modal" data-target="#ModalViewFile">
+                  <fa-icon [icon]="faCircleXmark"></fa-icon>
+                </button> -->
+                <!-- <a href="{{pdfSrc}}" target="_blank">วิว</a> -->
+                <!-- <button type="button" (click)="openAnyFile(course.path_certificate)"
+                  class="btn btn-info btn-sm position-relative m-2" data-bs-toggle="offcanvas" data-bs-target="#fullScreenOffcanvas">
+                  <fa-icon [icon]="faFilePen"></fa-icon>
+                </button> -->
+              </span>
+            </li>
+
+          </ul>
+        </div>
+        <div class="dropdown mt-3">
+          <hr />
+          <span class="text-left">หมายเหตุ: <small>
+              <fa-icon [icon]="faClock" class="m-2"></fa-icon>รอตรวจสอบ
+              <fa-icon [icon]="faCircleCheck" class="m-2"></fa-icon> ผ่าน
+              <fa-icon [icon]="faCircleXmark" class="m-2"></fa-icon> ไม่ผ่าน
+            </small>
+          </span>
+        </div>
+        <!-- <div class="dropdown mt-3">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+            Dropdown button
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </div> -->
+      </div>
+    </div>
+
+    <!-- Modal View File -->
+    <div class="modal fade" id="ModalViewFile" tabindex="-1" role="dialog" aria-labelledby="ModalViewFileTitle"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-header">
+            <h6 class="modal-title" id="ModalViewFileTitle"><strong>หลักสูตร{{course_name}}</strong></h6>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">
+              <fa-icon [icon]="faRectangleXmark"></fa-icon> ปิด</button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="row">
+                <div class="col d-flex justify-content-center">
+                  <iframe align="middle" frameborder="1" height="650" scrolling="yes" [src]="fileUrlCap"
+                    width="90%"></iframe>
+
+                  <!-- <ngx-extended-pdf-viewer
+                      [src]="pathFilePdf"
+                      [height]="'auto'"
+                      [useBrowserLocale]="true"
+                      [textLayer]="true"
+                      [showHandToolButton]="true"
+                      [mobileFriendlyZoom]="zoom">
+                  </ngx-extended-pdf-viewer> -->
+                </div>
+              </div>
+            </div>
+            <!-- <iframe src="{{path_file_cert}}" width="100%" height="500px"></iframe> {{path_file_cert}} -->
+            <!-- <ngx-extended-pdf-viewer
+                [src]="pathFilePdf"
+                [height]="'auto'"
+                [useBrowserLocale]="true"
+                [textLayer]="true"
+                [showHandToolButton]="true"
+                [mobileFriendlyZoom]="zoom">
+            </ngx-extended-pdf-viewer> -->
+
+            <!-- <ngx-extended-pdf-viewer
+              [base64Src]="base64File"
+              backgroundColor="#ffffff"
+              [height]="'90vh'"
+              [useBrowserLocale]="true"
+              [handTool]="false"
+              [showHandToolButton]="true"
+            >
+          </ngx-extended-pdf-viewer> -->
+
+            <!-- <ngx-extended-pdf-viewer 
+              [src]="'/assets/pdfs/test.pdf'" 
+              [height]="'auto'" 
+              [useBrowserLocale]="true"
+              [mobileFriendlyZoom]="zoom">
+            </ngx-extended-pdf-viewer> -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button> -->
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="offcanvas offcanvas-top" tabindex="-1" id="fullScreenOffcanvas" aria-labelledby="offcanvasTopLabel">
+    <div class="offcanvas-header bg-header">
+      <div class="col-4 justify-content-center align-items-center">
+        <h5 class="offcanvas-title" id="offcanvasLabel">
+          <fa-icon [icon]="faSquareCheck"></fa-icon>
+          ยืนยัน
+        </h5>
+        <!-- <span><strong>{{std.std_prefix}}{{std.std_name}} {{std.std_lastname}}</strong></span> -->
+      </div>
+      <div class="col-3">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="offcanvas" aria-label="Close">
+          <fa-icon [icon]="faRectangleXmark"></fa-icon> ปิด</button>
+      </div>
+    </div>
+    <div class="offcanvas-body">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <!-- <iframe align="middle" frameborder="1" height="650" scrolling="yes" [src]="fileUrlCap"
+                        width="100%"></iframe> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal upload file -->
+  <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <div class="alert alert-warning" role="alert">
+              <p class="h3"><img src="./assets/img/testimonials/icons8-certificate-64.png" width="64" class="img-fluid"
+                  alt="testimonials image"> ส่งหลักฐานการเข้าทดสอบสมรรถนะ</p>
+            </div> -->
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button type="button" class="btn btn-danger btn-sm rounded-circle" (click)="stdDataCapType(studentData.studentid); onReset();"
+              data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </button> -->
+
+
+        </div>
+        <div class="modal-body">
+
+          <section class="section-padding pt-0" id="contact">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-8 col-md-8 col-12">
+                  <div>
+                    <span><img src="./assets/img/testimonials/icons8-certificate-64.png" width="64" class="icon-image"
+                        alt="testimonials image"> ส่งใบรับรองสมรรถนะ(Certificate)</span>
+                    <hr />
+                  </div>
+                  <form class="contact-form webform" role="form" [formGroup]="form" (ngSubmit)="uploadFilesConfirm()">
+                    <div class="form-group d-flex flex-column-reverse">
+                      <select class="form-control form-select mb-3" aria-label=".form-select-lg actList" id="capTypeId"
+                        name="capTypeId" formControlName="capTypeId"
+                        [ngClass]="{ 'is-invalid': submitted && f['capTypeId'].errors }" required>
+                        <option selected value="">&nbsp;เลือกสมรรถนะ</option>
+                        <option *ngFor="let cap of capTypeList" value="{{cap.cap_type_id}}">
+                          &nbsp;{{cap.cap_type_name}}
+                        </option>
+                      </select>
+
+                      <label for="capTypeId" class="webform-label">สมรรถนะด้าน</label>
+                      <div class="invalid-feedback">กรุณาเลือกด้านสมรรถนะ</div>
+                    </div>
+                    <div class="form-group d-flex flex-column-reverse">
+                      <input type="text" class="form-control" formControlName="courseName" name="courseName"
+                        minlength="15" id="courseName" [ngClass]="{ 'is-invalid': submitted && f['courseName'].errors }"
+                        placeholder="ชื่อหลักสูตร" required>
+                      <label for="courseName" class="webform-label">หลักสูตร</label>
+                      <div class="invalid-feedback">กรุณากรอกข้อมูลชื่อหลักสูตร และอย่างน้อย 15 ตัวอักษร</div>
+                    </div>
+                    <div class="form-group d-flex flex-column-reverse">
+                      <textarea class="form-control" rows="3" formControlName="noteText" id="noteText" name="noteText"
+                        placeholder="ข้อความ"></textarea>
+                      <label for="noteText" class="webform-label">หมายเหตุ</label>
+                    </div>
+                    <div class="form-group d-flex flex-column-reverse">
+                      <input type="file" #fileInput class="form-control" formControlName="fileUpload" id="fileUpload"
+                        aria-label="file example" required (change)="onFileChange($event)"
+                        [ngClass]="{ 'is-invalid': submitted && f['fileUpload'].errors }" accept="application/pdf">
+                      <label for="fileUpload" class="webform-label">Certificate (pdf)</label>
+                      <div class="invalid-feedback">โปรดเลือกไฟล์</div>
+                    </div>
+
+                    <div class="form-group d-flex flex-column-reverse" *ngIf="selectedFiles.length > 0">
+                      <a [href]="image" target="_blank"><fa-icon [icon]="faFilePdf"></fa-icon> view</a>
+                    </div>
+                    <button type="button" class="form-control btn btn-primary" id="submit-button" name="check_confirm"
+                      *ngIf="!confirmSend" (click)="sendToConfirm()">
+                      <strong>Send Certificate</strong></button>
+                    <div class="form-group d-flex justify-content-start" *ngIf="confirmSend">
+                      <div class="m-2">
+                        <button type="submit" class="form-control" id="submit-button" name="confirm">
+                          <strong>ยืนยันการส่ง</strong></button>
+                      </div>
+                      <div class="m-2">
+                        <button type="button" class="form-control" id="submit-button-cancel" name="confirm"
+                          (click)="cancelToConfirm()">
+                          <strong>ยกเลิก</strong></button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+            (click)="stdDataCapType(studentData.studentid); onReset();">ปิด</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <form class="was-validated" [formGroup]="form" (ngSubmit)="uploadFilesConfirm()">
+          <div class="modal-header">
+            <div class="alert alert-warning" role="alert">
+              <p class="h3"><img src="./assets/img/testimonials/icons8-certificate-64.png" width="64" class="img-fluid"
+                  alt="testimonials image"> ส่งหลักฐานการเข้าทดสอบสมรรถนะ</p>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="validationTextarea" class="form-label">ประเภทสมรรถนะ</label>
+              <select class="form-select mb-3" aria-label=".form-select-lg actList" name="capTypeId"
+                formControlName="capTypeId" [ngClass]="{ 'is-invalid': submitted && f['capTypeId'].errors }" required>
+                <option selected value=""></option>
+                <option *ngFor="let cap of capTypeList" value="{{cap.cap_type_id}}">
+                  {{cap.cap_type_name}}
+                </option>
+              </select>
+              <div class="invalid-feedback">กรุณาเลือกประเภทสมรรถนะ</div>
+            </div>
+            <div class="mb-3">
+              <label for="validationTextarea" class="form-label">ชื่อหลักสูตรอบรม</label>
+              <input type="text" class="form-control" formControlName="courseName" name="courseName"
+                [ngClass]="{ 'is-invalid': submitted && f['courseName'].errors }" required>
+              <div class="invalid-feedback">กรุณากรอกข้อมูลชื่อหลักสูตร</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="validationTextarea" class="form-label">หมายเหตุ</label>
+              <textarea class="form-control" rows="3" formControlName="noteText" name="noteText"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="validationTextarea" class="form-label">แนบไฟล์ Certificate (PDF)</label>
+              <input type="file" #fileInput class="form-control" formControlName="fileUpload" aria-label="file example"
+                required (change)="onFileChange($event)"
+                [ngClass]="{ 'is-invalid': submitted && f['fileUpload'].errors }" accept="application/pdf">
+              <div class="invalid-feedback">โปรดเลือกไฟล์</div>
+            </div>
+            <div *ngIf="selectedFiles.length > 0">
+              <h6>ไฟล์ที่ต้องการอัพโหลด</h6>
+              <ul>
+                <li *ngFor="let file of selectedFiles">{{ file.name }}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="stdDataCapType(studentData.studentid); onReset();"
+              data-dismiss="modal">ปิด</button>
+            <button type="submit" class="btn btn-primary">บันทึก</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div> -->

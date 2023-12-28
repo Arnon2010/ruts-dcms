@@ -1,0 +1,50 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="main-body">
+    <br>
+    <div class="alert alert-warning" role="alert">
+      <p class="h3">ส่งหลักฐานการเข้าทดสอบสมรรถนะ</p>
+    </div>
+    <form class="was-validated">
+      <div class="mb-3">
+        <label for="validationTextarea" class="form-label">ประเภทสมรรถนะ</label>
+        <select class="form-select mb-3" aria-label=".form-select-lg actList" name="capTypeId" [(ngModel)]="cap_type_id">
+          <option selected value=""></option>
+          <option *ngFor="let cap of capTypeList" value="{{cap.cap_type_id}}">
+            {{cap.cap_type_name}}
+          </option>
+        </select>
+        <div class="invalid-feedback">กรุณาเลือกประเภทสมรรถนะ</div>
+      </div>
+      <div class="mb-3">
+        <label for="validationTextarea" class="form-label">ชื่อหลักสูตรอบรม</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" name="courseName" [(ngModel)]="course_name">
+        <div class="invalid-feedback">กรุณากรอกข้อมูลชื่อหลักสูตร</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="validationTextarea" class="form-label">หมายเหตุ</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="noteText" [(ngModel)]="Note"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="validationTextarea" class="form-label">แนบไฟล์ Certificate (PDF)</label>
+        <input type="file" class="form-control" aria-label="file example" required (change)="onFileChange($event)">
+        <div class="invalid-feedback">โปรดเลือกไฟล์</div>
+      </div>
+      <div *ngIf="selectedFiles.length > 0">
+        <h6>ไฟล์ที่ต้องการอัพโหลด</h6>
+        <ul>
+          <li *ngFor="let file of selectedFiles">{{ file.name }}</li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <button class="btn btn-primary" type="submit" (click)="uploadFilesConfirm()">ยืนยัน</button>
+        &nbsp;
+        <button class="btn btn-danger" type="button" (click)="clearFiles()">ลบไฟล์</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,524 @@
+<app-navbar></app-navbar>
+
+<!-- <div class="container mt-5">
+  <div class="row justify-content-end">
+    <div class="col col-lg-2">
+      <div class="input-group">
+        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+          aria-describedby="search-addon" />
+        <div class="input-group-append">
+          <button type="button" class="btn btn-outline-primary">Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="container mt-5">
+  <Br />
+  <div class="row gutters-sm">
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-column align-items-center text-center">
+            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle"
+              width="150" />
+            <div class="mt-3">
+              <!-- <h4>กองพัฒนานักศึกษา</h4> -->
+              <div class="hero-text">
+
+                <div class="h6">👋 {{userFname}} {{userLname}}</div>
+                <h5>
+                  {{userFacName}}
+                </h5>
+
+                <!-- <p>(คณะ/วิทยาลัย)</p> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="accordion accordion-flush" id="accordionFlushExample">
+        <!-- ภาพรวมระบบ -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+              <fa-icon [icon]="faList"></fa-icon>&nbsp;&nbsp;<strong>ภาพรวมระบบ</strong>
+            </button>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+            data-bs-parent="#accordionFlushExample">
+            <br />
+            <div class="row">
+              <div class="col-6">
+                <div class="col mb-5">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">จำนวนการส่งหลักฐานสมรรถนะ</h5>
+                      <p class="card-text"></p>
+                    </div>
+                    
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap m-2">
+                        <a class="list-group-item list-group-item-action" 
+                        id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab"
+                        aria-controls="list-profile">ทั้งหมด<span
+                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                          {{total_cap_all}}
+                          <span class="visually-hidden">unread messages</span>
+                        </span></a>
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap m-2">
+                        <a class="list-group-item list-group-item-action" 
+                        id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab"
+                        aria-controls="list-profile">อนุมัติแล้ว<span
+                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                          {{total_cap_y}}
+                          <span class="visually-hidden">unread messages</span>
+                        </span></a>
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap m-2">
+                        <a class="list-group-item list-group-item-action" 
+                        id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab"
+                        aria-controls="list-profile">รอดำเนินการ<span
+                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                          {{total_cap_w}}
+                          <span class="visually-hidden">unread messages</span>
+                        </span></a>
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap m-2">
+                        <a class="list-group-item list-group-item-action" 
+                        id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab"
+                        aria-controls="list-profile">ไม่ผ่านอนุมัติ<span
+                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                          {{total_cap_n}}
+                          <span class="visually-hidden">unread messages</span>
+                        </span></a>
+                      </li>
+                    </ul>
+                    <div class="card-body">
+                      <!-- <a href="#" class="card-link">Card link</a>
+                      <a href="#" class="card-link">Another link</a> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="col-6">
+                <div class="card border-success ms-3" style="max-width: 18rem">
+                  <div class="card-header">นักศึกษาปีสุดท้ายประจำปีการศึกษา 2566</div>
+                  <div class="card-body text-success">
+                    <p class="card-text">ผ่านสมรรถนะแล้ว 373 ราย</p>
+                    <p class="card-text">ยังไม่ผ่านสมรรถนะ 41 ราย</p>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+
+        <!-- ภาพรวมของสมรรถนะ -->
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#flush-collapseFaculty" aria-expanded="false" aria-controls="flush-collapseFaculty">
+              <fa-icon [icon]="faList"></fa-icon>&nbsp;&nbsp;<strong>สรุปจำนวนการยื่นหลักฐานสมรรถนะ</strong>
+            </button>
+          </h2>
+          <div id="flush-collapseFaculty" class="accordion-collapse collapse" aria-labelledby="flush-headingFaculty"
+            data-bs-parent="#accordionFlushExample">
+            <br />
+            <div class="row">
+              <!-- <div class="col-6">
+                <div class="col mb-3">
+                  <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">นักศึกษาปีสุดท้ายประจำปีการศึกษา 2566</h5>
+                      <p class="card-text"></p>
+                    </div>
+                    
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap m-2">
+                        ผ่านสมรรถนะแล้ว 373 ราย
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap m-2">
+                        ยังไม่ผ่านสมรรถนะ 41 ราย
+                      </li>
+                    </ul>
+                    <div class="card-body">
+                      <a href="#" class="card-link">Card link</a>
+                      <a href="#" class="card-link">Another link</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            -->
+             
+              <div class="col-6">
+                <div class="col mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">สมรรถนะแต่ละด้าน</h5>
+                      <p class="card-text">นักศึกษาที่ส่งหลักฐานในแต่ละด้าน</p>
+                      <!-- <p class="card-text">ทั้งหมด/ผ่าน</p> -->
+                    </div>
+                    
+                    <ul class="list-group list-group-flush">
+                      <li *ngFor="let cap of capListTypeReport"
+                        class="list-group-item d-flex justify-content-between align-items-center flex-wrap m-2">
+                        <a class="list-group-item list-group-item-action" 
+                          id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab"
+                          aria-controls="list-profile">{{cap.cap_type_name}}<span
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{cap.num_cap_type}}
+                            <span class="visually-hidden">unread messages</span>
+                          </span></a>
+        
+                      </li>
+                    </ul>
+                    <div class="card-body">
+                      <!-- <a href="#" class="card-link">Card link</a>
+                      <a href="#" class="card-link">Another link</a> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="col mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">คณะ/วิทยาลัย</h5>
+                      <p class="card-text">นักศึกษาที่ส่งหลักฐานในแต่ละคณะ</p>
+                    </div>
+                    
+                    <ul class="list-group list-group-flush">
+                      <li *ngFor="let cap of capListFacReport"
+                        class="list-group-item d-flex justify-content-between align-items-center flex-wrap m-2">
+                        <a class="list-group-item list-group-item-action" 
+                          id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab"
+                          aria-controls="list-profile">{{cap.fac_name}}<span
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{cap.num_cap_fac}}
+                            <span class="visually-hidden">unread messages</span>
+                          </span></a>
+        
+                      </li>
+                    </ul>
+                    <div class="card-body">
+                      <!-- <a href="#" class="card-link">Card link</a>
+                      <a href="#" class="card-link">Another link</a> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+              <fa-icon [icon]="faUserPlus"></fa-icon>&nbsp;&nbsp;<strong>เพิ่มผู้ใช้งานระบบ</strong>
+            </button>
+          </h2>
+          <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+            data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+              <div class="row mb-3">
+                <div class="col-sm-3">
+                  <label for="exampleFormControlInput1" class="form-label">ชื่อผู้ใช้งาน e-Passport</label>
+                </div>
+                <div class="col-sm-4 mb-3">
+                  <input [(ngModel)]="user_email" type="email" class="form-control" id="exampleFormControlInput1"
+                    placeholder="e-Passport" />
+
+                  <!-- <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                  <input [(ngModel)]="user_password" type="password" id="inputPassword5" class="form-control"
+                    aria-describedby="passwordHelpBlock" />
+                  <div id="passwordHelpBlock" class="form-text"></div> -->
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">ชื่อ</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input [(ngModel)]="user_name" class="form-control" type="text" placeholder="ชื่อ"
+                    aria-label="default input example" />
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">สกุล</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <input [(ngModel)]="user_lastname" class="form-control" type="text" placeholder="นามสกุล"
+                    aria-label="default input example" />
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">บทบาท (Role)</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <select selected class="form-select" required aria-label="select example" [(ngModel)]="user_role"
+                    name="user_role">
+                    <!-- <option value="" selected>ระดับ</option> -->
+                    <option value="A">เจ้าหน้าที่คณะ/วิทยาลัย</option>
+                    <option value="M">ผู้ดูแลระบบ/กองพัฒนานักศึกษา</option>
+                  </select>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">คณะ/วิทยาลัย</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <select class="form-select mb-3" aria-label=".form-select-lg faclist" [(ngModel)]="fac_id"
+                    name="fac_id">
+                    <!-- <option value="0" selected>คณะ</option> -->
+                    <option *ngFor="let fac of FAClist" value="{{ fac.fac_id }}">
+                      {{ fac.fac_name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <hr />
+              <input class="btn btn-warning" type="submit" value="ยืนยันเพิ่มผู้ใช้" type="button"
+                (click)="adduser()" />
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+              ควบคุมจัดการ
+            </button>
+          </h2>
+          <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
+            data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <label for="exampleFormControlInput2" class="form-label">เพิ่มหมวดหมู่รายวิชา</label>
+                </div>
+                <div class="mb-3">
+                  <input [(ngModel)]="cap_type_name" type="text" class="form-control" id="exampleFormControlInput2"
+                    placeholder="เพิ่มหมวดหมู่รายวิชา" />
+                  <hr />
+                  <input class="btn btn-warning" type="submit" value="ยืนยัน" type="button"
+                    (click)="addcapacityType()" />
+                </div>
+
+              </div>
+            </div>
+
+            <div class="accordion-body">
+              <div class="row">
+                <div class="col-sm-3">
+                  <label for="exampleFormControlInput4" class="form-label">เพิ่มเลเวลผู้พัฒนา</label>
+                </div>
+                <div class="mb-3">
+                  <input type="text" class="form-control" id="exampleFormControlInput4"
+                    placeholder="เพิ่มเลเวลผู้ใช้งาน" />
+                  <hr />
+                  <input class="btn btn-success" type="submit" value="ยืนยัน" type="button" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+        <br>
+        <h5>ผู้ใช้ในระบบ</h5>
+        <br>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">e-Passport</th>
+              <th scope="col">ชื่อ - สกุล</th>
+
+              <th scope="col">บทบาท (Role)</th>
+              <th scope="col">คณะ/วิทยาลัย</th>
+              <th scope="col">แก้ไข</th>
+              <th scope="col">ลบ</th>
+              <!-- <th scope="col"><fa-icon [icon]="faWrench"></fa-icon></th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of userlist; let i = index">
+              <th scope="row">{{i+1}}</th>
+              <td>{{item.user_email}}</td>
+              <td>{{item.user_name}} {{item.user_lastname}}</td>
+              <td>
+                <span *ngIf="item.user_role == 'A'">คณะ</span>
+                <span *ngIf="item.user_role == 'M'">ผู้ดูแลระบบ</span>
+              </td>
+              <td>{{item.fac_name}}</td>
+              <td><button type="button" (click)="editShowData(item)" class="btn btn-warning btn-sm"
+                  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <fa-icon [icon]="faUserEdit"></fa-icon>
+                </button></td>
+              <td><button class="btn btn-danger btn-sm" type="submit" (click)="confirmDelUser(item);">
+                  <fa-icon [icon]="faUserXmark"></fa-icon></button></td>
+              <!-- <td><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#SetModal"
+                  data-bs-whatever="@fat">
+                  <fa-icon [icon]="faGear"></fa-icon></button>
+              </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ผู้ใช้งานระบบ -->
+<section class="hero d-flex flex-column justify-content-center align-items-center mt-5" id="intro">
+
+  <div class="container">
+    <div class="row">
+      <div class="mx-auto col-lg-5 col-md-5 col-10">
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="SetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">กำหนดสิทธิ์</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">ระดับผู้ใช้งาน</label>
+            <select class="form-select form-select" aria-label=".form-select-sm example">
+              <option selected>ระดับผู้ใช้งาน</option>
+              <option value="1">User</option>
+              <option value="2">Admin</option>
+              <option value="3">Super Admin</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">สิทธิ์การเข้าถึง</label>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked1"
+                      checked />
+                    <label class="form-check-label" for="flexSwitchCheckChecked1">ตรวจสอบเอกสาร</label>
+                  </div>
+
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked2"
+                      checked />
+                    <label class="form-check-label" for="flexSwitchCheckChecked2">เพิ่มผู้ดูแลระบบ</label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked3"
+                      checked />
+                    <label class="form-check-label" for="flexSwitchCheckChecked3">เพิ่มหมวดหมู่รายวิชา</label>
+                  </div>
+
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked4"
+                      checked />
+                    <label class="form-check-label" for="flexSwitchCheckChecked4">เพิ่มเลเวลผู้พัฒนา</label>
+                  </div>
+                </div>
+                <br>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+        <button type="button" class="btn btn-primary">ยืนยัน</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">a
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><fa-icon [icon]="faPenToSquare"></fa-icon>&nbsp;&nbsp;แก้ไขข้อมูล
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="regisForm">
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">ชื่อผู้ใช้ e-Passport:</label>
+            <input type="text" class="form-control" name="email" [(ngModel)]="regis.user_email"
+              formControlName="user_email">
+          </div>
+          <!-- <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Password</label>
+            <input type="password" class="form-control" name="user_password" [(ngModel)]="regis.user_password"
+              formControlName="user_password">
+          </div> -->
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">ชื่อ:</label>
+            <input type="text" class="form-control" name="fname" [(ngModel)]="regis.user_name"
+              formControlName="user_name">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">สกุล:</label>
+            <input type="text" class="form-control" [(ngModel)]="regis.user_lastname" formControlName="user_lastname">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">บทบาท (Role):</label>
+
+
+            <select selected class="form-select" required aria-label="select example" [(ngModel)]="regis.user_role"
+              formControlName="user_role" name="user_role">
+              <option>ระดับ:</option>
+              <option value="A">เจ้าหน้าที่คณะ/วิทยาลัย</option>
+              <option value="M">ผู้ดูแลระบบ/กองพัฒนานักศึกษา</option>
+            </select>
+
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">คณะ/วิทยาลัย:</label>
+            <select class="form-select mb-3" aria-label=".form-select-lg faclist" [(ngModel)]="regis.fac_id"
+              name="fac_id" formControlName="fac_id">
+              <option selected></option>
+              <option *ngFor="let fac of FAClist" value="{{ fac.fac_id }}">
+                {{ fac.fac_name }}
+              </option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+        <button type="button" class="btn btn-primary" (click)="editUser(regis)" data-bs-dismiss="modal">บันทึก</button>
+      </div>
+    </div>
+  </div>
+</div>

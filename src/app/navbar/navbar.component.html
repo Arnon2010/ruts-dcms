@@ -1,0 +1,72 @@
+<!-- <nav class="navbar navbar-light bd-blue-900">
+
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/src/app/home-student/home-student.component.html">
+      <img src="assets/img/Logo-RUTS.png" alt="" height="45" class="d-inline-block align-text-top">
+    </a>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <a routerLink="/logout" class="btn bd-yellow-500" role="button"
+        data-bs-toggle="button"><strong>Logout</strong></a>
+    </div>
+
+  </div>
+</nav>
+
+<nav class="navbar navbar-expand-xl bd-blue-100">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-ex-2">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbar-ex-2">
+      <div class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-item nav-link " [routerLink]="['/homestudent']" routerLinkActive="router-link-active"
+            class="text-whit btn btn-warning"> <fa-icon [icon]="faHouse"></fa-icon> Home</a>
+        </li>
+      </div>
+    </div>
+  </div>
+</nav> -->
+
+
+<!-- MENU BAR -->
+<nav class="navbar fixed-top navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="/src/app/home-student/home-student.component.html">
+      <img src="assets/img/Logo-RUTS.png" alt="" height="45" class="d-inline-block align-text-top">
+    </a>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+              <li class="nav-item mb-2">
+                <a class="nav-item nav-link " [routerLink]="['/homestudent']" routerLinkActive="router-link-active"
+                  class="text-whit btn btn-warning"> <fa-icon [icon]="faHouse"></fa-icon> Home</a>
+              </li>
+
+              <!-- <li class="nav-item">
+                  <a href="#report" class="nav-link smoothScroll">รายงานผล</a>
+              </li>
+
+              <li class="nav-item">
+                  <a href="#testimonials" class="nav-link smoothScroll">Reviews</a>
+              </li>
+
+              <li class="nav-item">
+                  <a href="#contact" class="nav-link smoothScroll">Contact</a>
+              </li> -->
+          </ul>
+
+          <div class="mt-lg-0 mt-3 mb-4 mb-lg-0">
+            <a routerLink="/logout" class="btn btn-warning" role="button"
+            data-bs-toggle="button"><strong>Logout</strong></a>
+          </div>
+      </div>
+
+  </div>
+</nav>

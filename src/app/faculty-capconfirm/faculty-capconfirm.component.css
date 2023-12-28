@@ -1,0 +1,26 @@
+/* Custom CSS for full-screen offcanvas */
+#fullScreenOffcanvas {
+    width: 85%;
+    height: 90%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050; /* Ensure it's above other content */
+    background-color: rgba(242, 238, 238, 0.908); /* Add a semi-transparent background overlay */
+    transform: translateY(-100%); /* Start offcanvas off-screen by default */
+    transition: transform 0.2s ease-in-out; /* Add a smooth transition animation */
+  }
+  
+  /* Override the default Bootstrap styles for offcanvas */
+  #fullScreenOffcanvas.show {
+    transform: translateX(0); /* Show the offcanvas when it's active */
+  }
+
+  .bg-title {
+    background-color: rgba(198, 89, 56, 0.194); /* Add a semi-transparent background overlay */
+    height: 85px;
+    width: 20%;
+    border: 5px;
+    border-radius: 10px;
+  }
+  

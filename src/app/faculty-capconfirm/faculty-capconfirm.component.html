@@ -1,0 +1,151 @@
+<app-navbar-fac></app-navbar-fac>
+<div class="container">
+    <div class="main-body">
+        <Br />
+        <Br />
+        <div class="row gutters-sm bg-header mb-3">
+            <div class="col-6">&nbsp;</div>
+            <div class="col-6">
+                <form class="form-inline">
+                    <button type="button" class="btn btn-warning position-relative m-2" (click)="selectPrevious()">
+                        <fa-icon [icon]="faCaretLeft"></fa-icon>
+                    </button>
+                    <div class="form-group mb-2">
+                        <select class="form-select" name="studentId" [(ngModel)]="studentId" (change)="onItemSelected(studentId)"
+                            aria-label="Default select example">
+                            <option value="0">เลือกนักศึกษาคนอื่น</option>
+                            <option *ngFor="let student of students" [value]="student">
+                                {{student}}
+                            </option>
+                        </select>
+                         
+                    </div>
+                    <button type="button" class="btn btn-warning position-relative m-2" 
+                        (click)="selectNextValue()">
+                        <fa-icon [icon]="faCaretRight"></fa-icon>
+                    </button>
+                </form>
+            </div>
+            
+        </div>
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img *ngIf="studentData.std_prefix =='นาย'" src="./assets/img/avatar-male.png" class="rounded-circle"
+                                width="200" alt="Profile">
+                            <img *ngIf="studentData.std_prefix !='นาย'" src="./assets/img/avatar-fmale.png" class="rounded-circle"
+                                width="200" alt="Profile">
+                            <div class="mt-3">
+                                <h5>
+                                    <div> {{studentData.std_id}}</div>
+                                    <div> {{studentData.std_prefix}}{{studentData.std_name}}
+                                        {{studentData.std_lastname}}</div>
+                                </h5>
+                                <div> {{studentData.pro_name}}</div>
+                                <div> {{studentData.fac_name}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card mb-5">
+                    <div class="card-body">
+                        <div class="list-group" id="list-tab" role="tablist">
+                            <div class="alert alert-warning" role="alert">
+                                <h5>หลักสูตรของนักศึกษาที่ยื่นหลักฐาน</h5>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li *ngFor="let item of capStudent"
+                                    class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                    <h6>
+                                        <a href="#" (click)="onClickViewConfirm(item)" data-bs-toggle="offcanvas"
+                                            data-bs-target="#fullScreenOffcanvas">
+                                            <strong>{{item.cap_type_name}}</strong>
+                                        </a>
+                                        <br />
+                                        <small class="text-dark">หลักสูตร: {{item.course_name}}</small>
+                                        <br />
+                                        <small class="text-danger" *ngIf="item.approv_feedback">หมายเหตุ:
+                                            {{item.approv_feedback}}</small>
+                                        
+                                    </h6>
+                                    <span class="text-secondary">
+                                        <!-- <button type="button" class="btn position-relative m-2"
+                                            (click)="onClickViewConfirm(item)" data-bs-toggle="offcanvas"
+                                            data-bs-target="#fullScreenOffcanvas" [ngClass]="{'btn-warning': item.approv_status == '0','btn-primary': item.approv_status == '1',
+                                                'btn-danger': item.approv_status == '2'}">
+                                                
+                                            <fa-icon [icon]="faW" *ngIf="item.approv_status == '0'"></fa-icon>
+                                            <fa-icon [icon]="faCircleCheck" *ngIf="item.approv_status == '1'"></fa-icon>
+                                            <fa-icon [icon]="faCircleXmark" *ngIf="item.approv_status == '2'"></fa-icon>
+                                        </button> -->
+                                        <a href="#" (click)="onClickViewConfirm(item)" data-bs-toggle="offcanvas"
+                                            data-bs-target="#fullScreenOffcanvas">
+                                            <img src="./assets/img/testimonials/icons8-processing-time-64.png" *ngIf="item.approv_status == '0'" class="img-fluid m-2"
+                                                alt="testimonials image">
+                                            <img src="./assets/img/testimonials/icons8-done-64.png" *ngIf="item.approv_status == '1'" class="img-fluid m-2"
+                                                alt="testimonials image">
+                                            <img src="./assets/img/testimonials/icons8-error-64-2.png" *ngIf="item.approv_status == '2'" class="img-fluid m-2"
+                                                alt="testimonials image">
+                                        </a>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-top" tabindex="-1" id="fullScreenOffcanvas" aria-labelledby="offcanvasTopLabel">
+    <div class="offcanvas-header bg-header">
+
+        <div class="col-4 justify-content-center align-items-center">
+            <h5 class="offcanvas-title" id="offcanvasLabel">
+                <fa-icon [icon]="faSquareCheck"></fa-icon>
+                ยืนยัน
+            </h5>
+            <span><strong>{{std.std_prefix}}{{std.std_name}} {{std.std_lastname}}</strong></span>
+        </div>
+        <div class="col-2">
+            <select class="form-select" aria-label="Default select example" [(ngModel)]="approv_status">
+                <option value="0">รอดำเนินการ</option>
+                <option value="1">ยืนยันอนุมัติ</option>
+                <option value="2">ไม่อนุมัติ</option>
+            </select>
+        </div>
+        <div class="col-3" *ngIf="approv_status == '2'">
+            <input type="text" class="form-control" name="approv_feedback" [(ngModel)]="approv_feedback"
+                placeholder="ข้อเสนอแนะ" />
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn btn-primary m-2" data-bs-dismiss="offcanvas" aria-label="Close"
+                (click)="onSubmitConfirm(std.std_id, std.id, approv_status, approv_feedback)">
+                <fa-icon [icon]="faFloppyDisk"></fa-icon> บันทึก</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="offcanvas" aria-label="Close">
+                <fa-icon [icon]="faRectangleXmark"></fa-icon> ปิด</button>
+            <!-- <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button> -->
+        </div>
+
+    </div>
+    <div class="offcanvas-body">
+        <!-- Offcanvas content here -->
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <!-- <iframe align="middle" frameborder="1" height="650" scrolling="yes"
+                        src="https://webportal.bangkok.go.th/public/user_files_editor/343/pdf/test_iframe.pdf"
+                        width="100%"></iframe> -->
+                    <iframe align="middle" frameborder="1" height="650" scrolling="yes" [src]="fileUrlCap"
+                        width="100%"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
