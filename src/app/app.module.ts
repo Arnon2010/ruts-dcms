@@ -27,6 +27,7 @@ import { AuthGuard } from './services/auth.guard';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { LoginrutsappComponent } from './loginrutsapp/loginrutsapp.component';
 import { ReportComponent } from './report/report.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { ReportComponent } from './report/report.component';
     FooterComponent,
     LoginrutsappComponent,
     ReportComponent,
+    HomeComponent,
 
   ],
   imports: [

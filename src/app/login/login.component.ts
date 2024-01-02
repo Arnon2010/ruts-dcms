@@ -11,10 +11,13 @@ import { ApiService } from '../services/api.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {    //กำหนดฟอร์ม frmLogin โดยใช้ FormBuilder ซึ่งประกอบด้วยสองฟิลด์คือ std_id และ std_password 
-  frmLogin = this.formBuilder.group({             // โดยต้องมีการระบุ Validators ที่บังคับให้กรอกข้อมูลเสมอ
-    std_id: ['', Validators.required],
-    std_password: ['', Validators.required]
+export class LoginComponent implements OnInit {    
+  // กำหนดฟอร์ม frmLogin โดยใช้ FormBuilder ซึ่งประกอบด้วยสองฟิลด์คือ std_id และ std_password 
+  // โดยต้องมีการระบุ Validators ที่บังคับให้กรอกข้อมูลเสมอ
+  title = 'RUTS Digital Conference Management System';
+  frmLogin = this.formBuilder.group({             
+    user_epassport: ['', Validators.required],
+    user_password: ['', Validators.required]
   });
   user_epass: any;
   user_password: string | null | undefined;
@@ -28,19 +31,20 @@ export class LoginComponent implements OnInit {    //กำหนดฟอร์
 
   ngOnInit(): void { }
 
-  login(): void {
+  login111(): void {
     console.log(this.frmLogin.value);
-    this.user_epass = this.frmLogin.value.std_id;
-    this.user_password = this.frmLogin.value.std_password;
+    this.user_epass = this.frmLogin.value.user_epassport;
+    this.user_password = this.frmLogin.value.user_password;
     this.dataService.eloginUser(this.user_epass, this.user_password , 'https://api.rmutsv.ac.th/elogin')
       .subscribe((res: any) => {
         if (res.status == "ok") {
           console.log('user login', res); // เเสดงค่าใน console
-          const splitArray:string[] = this.user_epass.split("s");
-          let stdId = splitArray[1];
+          
           //console.log(stdId);
           // student data from สวท.
-          this.getStudentDataSis(stdId);
+          //this.getStudentDataSis(stdId);
+
+          this.router.navigate(['homestudent']);
            
         } else {
           Swal.fire('เข้าสู่ระบบไม่สำเร็จ ! ', '', 'error').then(() => {
@@ -48,6 +52,47 @@ export class LoginComponent implements OnInit {    //กำหนดฟอร์
           });
         }
       });
+  }
+
+  logintest() {
+    console.log('login test...');
+  }
+
+  login() {
+    this.http.post(environment.baseUrl + '/login_user.php', this.frmLogin.value).subscribe({ //ส่งค่าจาก Form ไป ตรวจสอบกับ API Login ติดต่อไปยัง Api login.php
+      next: (data: any) => {
+        console.log('user: ', data); // เเสดงค่าใน console
+
+        if (data != 'Login failed') {  //หากเข้าสู่ระบบสำเร็จ
+          //this.getStudentData(res['std_id']); //รับค่า จำก std_id
+          // elogin
+          this.user_epass = this.frmLogin.value.user_epassport;
+          this.user_password = this.frmLogin.value.user_password;
+          this.dataService.eloginUser(this.user_epass, this.user_password, 'https://api.rmutsv.ac.th/elogin')
+            .subscribe((res: any) => {
+              //console.log(res.token);
+              //console.log(res);
+              if (res.status == "ok") {
+                localStorage.setItem('Token', JSON.stringify(data)); //เเละเก็บค่าที่ respond ไว้ใน localStorage Key ชื่อ Token 
+                if (data.USER_ROLE == 'A') {
+                  this.router.navigate(['home'], {}); // คณะ/วิทยาลัย
+                } else {
+                  this.router.navigate(['masteradmin'], {}); // กองพัฒ ฯ
+                }
+              } else {
+                Swal.fire('เข้าสู่ระบบไม่สำเร็จ', '', 'error').then(() => {
+                  //this.frmAdminLogin.reset();
+                });
+              }
+
+            });
+        } else {
+          Swal.fire('ไม่มีสิทธิการเข้าใช้ระบบ กรุณาติดต่อกองพัฒนานักศึกษา !', '', 'error').then(() => {
+            //this.frmAdminLogin.reset();
+          });
+        }
+      }
+    });
   }
 
   getStudentDataSis(std_id:any): void {

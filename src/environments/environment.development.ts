@@ -1,8 +1,8 @@
-const url = 'http://localhost/';
+const url = 'http://localhost:8010/';
 export const environment = {
     production: false,
-    baseUrl: url + 'studyCap/Api',
-    baseUrlUpload: url + 'studyCap/document',
+    baseUrl: url + 'dcms-api',
+    baseUrlUpload: url + 'dcms-api/document',
     //baseUrlUpload: 'assets/documents',
-    baseUrlReport: url + 'studyCap/report'
+    baseUrlReport: url + 'dcms-api/report'
   };

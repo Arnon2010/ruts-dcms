@@ -13,8 +13,10 @@ import { LogoutComponent } from './logout/logout.component';
 import { FacultyCapconfirmComponent } from './faculty-capconfirm/faculty-capconfirm.component';
 import { AuthGuard } from './services/auth.guard';
 import { LoginrutsappComponent } from './loginrutsapp/loginrutsapp.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
+  { path: 'home', component: HomeComponent}, // route Home
   { path: 'report', component: ReportComponent}, // route report
   { path: 'loginrutsapp/:token', component: LoginrutsappComponent}, // route ไปหน้าหลักของนักศึกษา
   { path: 'homestudent', component: HomeStudentComponent, canActivate: [AuthGuard] }, // route ไปหน้าหลักของนักศึกษา
@@ -27,7 +29,7 @@ const routes: Routes = [
   { path: 'masteradmin', component: MasteradminComponent, canActivate: [AuthGuard] }, // route ไปหน้าหลักกองพัฒ
   { path: 'adduser', component: AdduserComponent, canActivate: [AuthGuard] }, // route ไปหน้าเพิ่ม user ของกองพัฒ
   { path: 'fcapconfirm/:id', component: FacultyCapconfirmComponent, canActivate: [AuthGuard] }, // route ไปหน้าเพิ่ม user ของคณะเพื่อยืนยันสมรรถนะ
-  { path: '**', redirectTo: '/selectlogin' }, // หากใส่ url ไม่ถูกต้องจะทำการ Redirect ไป หน้าเลือกการ Login 
+  { path: '**', redirectTo: '/login' }, // หากใส่ url ไม่ถูกต้องจะทำการ Redirect ไป หน้าเลือกการ Login 
 
 ];
 
