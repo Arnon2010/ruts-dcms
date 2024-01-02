@@ -36,11 +36,29 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/assets/css/style.css"
+              "src/assets/vendors/feather/feather.css",
+              "src/assets/vendors/ti-icons/css/themify-icons.css",
+              "src/assets/vendors/css/vendor.bundle.base.css",
+              "src/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css",
+              "src/assets/vendors/ti-icons/css/themify-icons.css",
+              "src/assets/js/select.dataTables.min.css",
+              "src/assets/css/vertical-layout-light/style.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "src/assets/vendors/js/vendor.bundle.base.js",
+              "src/assets/vendors/chart.js/Chart.min.js",
+              "src/assets/vendors/datatables.net/jquery.dataTables.js",
+              "src/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js",
+              "src/assets/js/dataTables.select.min.js",
+              "src/assets/js/off-canvas.js",
+              "src/assets/js/hoverable-collapse.js",
+              "src/assets/js/template.js",
+              "src/assets/js/settings.js",
+              "src/assets/js/todolist.js",
+              "src/assets/js/dashboard.js",
+              "src/assets/js/Chart.roundedBarCharts.js"
             ]
           },
           "configurations": {
