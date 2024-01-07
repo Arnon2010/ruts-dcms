@@ -1,4 +1,4 @@
-const url = 'http://localhost/';
+const url = 'http://localhost:8010/';
 export const environment = {
     production: false,
     baseUrl: url + 'dcms-api',

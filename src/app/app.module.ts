@@ -32,6 +32,7 @@ import { UsersComponent } from './users/users.component';
 import { PositionsComponent } from './positions/positions.component';
 import { MeetingTypeComponent } from './meeting-type/meeting-type.component';
 import { MeetingAgendaComponent } from './meeting-agenda/meeting-agenda.component';
+import { MeetingSettingComponent } from './meeting-setting/meeting-setting.component';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { MeetingAgendaComponent } from './meeting-agenda/meeting-agenda.componen
     PositionsComponent,
     MeetingTypeComponent,
     MeetingAgendaComponent,
+    MeetingSettingComponent,
 
   ],
   imports: [

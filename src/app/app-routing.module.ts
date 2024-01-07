@@ -18,6 +18,7 @@ import { UsersComponent } from './users/users.component';
 import { PositionsComponent } from './positions/positions.component';
 import { MeetingTypeComponent } from './meeting-type/meeting-type.component';
 import { MeetingAgendaComponent } from './meeting-agenda/meeting-agenda.component';
+import { MeetingSettingComponent } from './meeting-setting/meeting-setting.component';
 
 const routes: Routes = [
  
@@ -37,9 +38,10 @@ const routes: Routes = [
   
   //new 
   { path: 'user', component: UsersComponent, canActivate: [AuthGuard]}, //เพิ่มผู้ใช้ระบบ Admin,user
-  { path: 'position', component: PositionsComponent, canActivate: [AuthGuard]}, //เพิ่มผู้ใช้ระบบ Admin,user
-  { path: 'meeting-type', component: MeetingTypeComponent, canActivate: [AuthGuard]}, //เพิ่มผู้ใช้ระบบ Admin,user
-  { path: 'meeting-agenda', component: MeetingAgendaComponent, canActivate: [AuthGuard]}, //เพิ่มผู้ใช้ระบบ Admin,user
+  { path: 'position', component: PositionsComponent, canActivate: [AuthGuard]}, //
+  { path: 'meeting-type', component: MeetingTypeComponent, canActivate: [AuthGuard]}, 
+  { path: 'meeting-agenda', component: MeetingAgendaComponent, canActivate: [AuthGuard]}, 
+  { path: 'meeting-setting', component: MeetingSettingComponent, canActivate: [AuthGuard]}, //กำหนดชื่อการประชุม 
 
   { path: '**', redirectTo: '/login' }, // หากใส่ url ไม่ถูกต้องจะทำการ Redirect ไป หน้าเลือกการ Login 
 
