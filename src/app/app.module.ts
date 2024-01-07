@@ -28,6 +28,10 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { LoginrutsappComponent } from './loginrutsapp/loginrutsapp.component';
 import { ReportComponent } from './report/report.component';
 import { HomeComponent } from './home/home.component';
+import { UsersComponent } from './users/users.component';
+import { PositionsComponent } from './positions/positions.component';
+import { MeetingTypeComponent } from './meeting-type/meeting-type.component';
+import { MeetingAgendaComponent } from './meeting-agenda/meeting-agenda.component';
 
 
 @NgModule({
@@ -52,6 +56,10 @@ import { HomeComponent } from './home/home.component';
     LoginrutsappComponent,
     ReportComponent,
     HomeComponent,
+    UsersComponent,
+    PositionsComponent,
+    MeetingTypeComponent,
+    MeetingAgendaComponent,
 
   ],
   imports: [

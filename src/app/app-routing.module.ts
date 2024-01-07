@@ -14,8 +14,13 @@ import { FacultyCapconfirmComponent } from './faculty-capconfirm/faculty-capconf
 import { AuthGuard } from './services/auth.guard';
 import { LoginrutsappComponent } from './loginrutsapp/loginrutsapp.component';
 import { HomeComponent } from './home/home.component';
+import { UsersComponent } from './users/users.component';
+import { PositionsComponent } from './positions/positions.component';
+import { MeetingTypeComponent } from './meeting-type/meeting-type.component';
+import { MeetingAgendaComponent } from './meeting-agenda/meeting-agenda.component';
 
 const routes: Routes = [
+ 
   { path: 'home', component: HomeComponent}, // route Home
   { path: 'report', component: ReportComponent}, // route report
   { path: 'loginrutsapp/:token', component: LoginrutsappComponent}, // route ไปหน้าหลักของนักศึกษา
@@ -29,7 +34,15 @@ const routes: Routes = [
   { path: 'masteradmin', component: MasteradminComponent, canActivate: [AuthGuard] }, // route ไปหน้าหลักกองพัฒ
   { path: 'adduser', component: AdduserComponent, canActivate: [AuthGuard] }, // route ไปหน้าเพิ่ม user ของกองพัฒ
   { path: 'fcapconfirm/:id', component: FacultyCapconfirmComponent, canActivate: [AuthGuard] }, // route ไปหน้าเพิ่ม user ของคณะเพื่อยืนยันสมรรถนะ
+  
+  //new 
+  { path: 'user', component: UsersComponent, canActivate: [AuthGuard]}, //เพิ่มผู้ใช้ระบบ Admin,user
+  { path: 'position', component: PositionsComponent, canActivate: [AuthGuard]}, //เพิ่มผู้ใช้ระบบ Admin,user
+  { path: 'meeting-type', component: MeetingTypeComponent, canActivate: [AuthGuard]}, //เพิ่มผู้ใช้ระบบ Admin,user
+  { path: 'meeting-agenda', component: MeetingAgendaComponent, canActivate: [AuthGuard]}, //เพิ่มผู้ใช้ระบบ Admin,user
+
   { path: '**', redirectTo: '/login' }, // หากใส่ url ไม่ถูกต้องจะทำการ Redirect ไป หน้าเลือกการ Login 
+
 
 ];
 

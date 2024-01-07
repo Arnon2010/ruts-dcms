@@ -1,0 +1,266 @@
+<app-navbar></app-navbar>
+<!-- partial -->
+<div class="container-fluid page-body-wrapper">
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h3 class="font-weight-bold">กำหนดสิทธิ์ผู้ใช้ (Users setting)</h3>
+                        <h6 class="font-weight-normal mb-0">All users <span class="text-primary"> <strong>{{total_row}}</strong></span>
+                        </h6>
+                    </div>
+                    <div class="col-12 col-xl-4">
+                        <div class="justify-content-end d-flex">
+                            <div class="add-items d-flex mb-0 mt-2">
+                                <!-- <li class="nav-item nav-search d-none d-lg-block">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                                        <span class="input-group-text" id="search">
+                                          <i class="icon-search"></i>
+                                        </span>
+                                      </div>
+                                      <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+                                    </div>
+                                  </li> -->
+                                <input type="text" [(ngModel)]="searchText" 
+                                (input)="onSearch()" class="form-control todo-list-input" placeholder="ค้นหา">
+                                <input type="text" class="form-control todo-list-input" placeholder="Add new user">
+                                <button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"
+                                    data-toggle="modal" data-target="#addUserForm" data-whatever="@getbootstrap"><i
+                                        class="icon-circle-plus"></i></button>
+                            </div>
+                            <!-- <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                                    <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button"
+                                        id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="true">
+                                        <i class="mdi mdi-calendar"></i> Today (10 Jan 2021)
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
+                                        <a class="dropdown-item" href="#">January - March</a>
+                                        <a class="dropdown-item" href="#">March - June</a>
+                                        <a class="dropdown-item" href="#">June - August</a>
+                                        <a class="dropdown-item" href="#">August - November</a>
+                                    </div>
+                                </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title mb-0">User</p>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>e-Passport</th>
+                                        <th>ชื่อ - สกุล</th>
+                                        <th>คณะ/หน่วยงาน</th>
+                                        <th>สิทธิ์ใช้งาน</th>
+                                        <th>สถานะใช้งาน</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let user of filteredItems | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+                                        <td>{{ i + (p - 1) * 10 + 1 }}</td>
+                                        <td>{{user.user_epassport}}</td>
+                                        <td class="font-weight-bold">{{user.user_fname}} {{user.user_lname}}</td>
+                                        <td>{{user.faculty_name}}</td>
+                                        <td class="font-weight-medium">
+                                            <div class="badge badge-warning">{{user.role_status}}</div>
+                                        </td>
+                                        <td class="font-weight-medium">
+                                              <div class="badge badge-success" *ngIf="user.user_astatus == '1'">On</div>
+                                              <div class="badge badge-warning" *ngIf="user.user_astatus == '0'">Off</div>
+                                        </td>
+                                        <td><button type="button" (click)="onClickEditUser(user)" 
+                                            data-toggle="modal" data-target="#addUserForm" data-whatever="@getbootstrap" 
+                                            class="btn btn-outline-secondary btn-icon-text btn-sm">
+                                            Edit
+                                            <i class="ti-file btn-icon-append"></i>                          
+                                          </button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="list">
+                                <pagination-controls (pageChange)="p=$event"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 grid-margin stretch-card">
+                <!-- <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">To Do Lists</h4>
+                            <div class="list-wrapper pt-2">
+                                <ul class="d-flex flex-column-reverse todo-list todo-list-custom">
+                                    <li>
+                                        <div class="form-check form-check-flat">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox">
+                                                Meeting with Urban Team
+                                            </label>
+                                        </div>
+                                        <i class="remove ti-close"></i>
+                                    </li>
+                                    <li class="completed">
+                                        <div class="form-check form-check-flat">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox" checked>
+                                                Duplicate a project for new customer
+                                            </label>
+                                        </div>
+                                        <i class="remove ti-close"></i>
+                                    </li>
+                                    <li>
+                                        <div class="form-check form-check-flat">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox">
+                                                Project meeting with CEO
+                                            </label>
+                                        </div>
+                                        <i class="remove ti-close"></i>
+                                    </li>
+                                    <li class="completed">
+                                        <div class="form-check form-check-flat">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox" checked>
+                                                Follow up of team zilla
+                                            </label>
+                                        </div>
+                                        <i class="remove ti-close"></i>
+                                    </li>
+                                    <li>
+                                        <div class="form-check form-check-flat">
+                                            <label class="form-check-label">
+                                                <input class="checkbox" type="checkbox">
+                                                Level up for Antony
+                                            </label>
+                                        </div>
+                                        <i class="remove ti-close"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="add-items d-flex mb-0 mt-2">
+                                <input type="text" class="form-control todo-list-input" placeholder="Add new task">
+                                <button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"><i
+                                        class="icon-circle-plus"></i></button>
+                            </div>
+                        </div>
+                    </div> -->
+            </div>
+        </div>
+
+        <!-- <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title">Advanced Table</p>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive">
+                                        <table id="example" class="display expandable-table" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Quote#</th>
+                                                    <th>Product</th>
+                                                    <th>Business type</th>
+                                                    <th>Policy holder</th>
+                                                    <th>Premium</th>
+                                                    <th>Status</th>
+                                                    <th>Updated at</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div> -->
+    </div>
+    <!-- content-wrapper ends -->
+
+    <div class="modal fade" id="addUserForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New user</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">เพิ่มผู้ใช้งาน</h4>
+
+                                <form class="forms-sample" [formGroup]="regisForm">
+                                    <div class="form-group">
+                                        <label for="exampleInputUsername1">e-Passport: *</label>
+                                        <input type="text" class="form-control" id="user_epassport"
+                                            [(ngModel)]="user.user_epassport" formControlName="user_epassport"
+                                            placeholder="Username">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">ชื่อ: *</label>
+                                        <input type="text" class="form-control" id="user_fname" 
+                                            [(ngModel)]="user.user_fname"
+                                            formControlName="user_fname" placeholder="Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">นามสกุล: *</label>
+                                        <input type="text" class="form-control" id="user_lname"
+                                            [(ngModel)]="user.user_lname" formControlName="user_lname"
+                                            placeholder="Lastname">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>คณะ/หน่วยงาน: *</label>
+                                        <select class="form-control" [(ngModel)]="user.faculty_code" name="faculty_code"
+                                            formControlName="faculty_code">
+                                            <option *ngFor="let item of FAClist" value="{{ item.FACULTY_CODE }}">
+                                                {{ item.FACULTY_TNAME }}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>สิทธิ์การใช้งาน: *</label>
+                                        <select class="form-control" [(ngModel)]="user.user_role" name="user_role"
+                                            formControlName="user_role">
+                                            <option value=""></option>
+                                            <option value="A">ผู้ดูแลระบบ</option>
+                                            <option value="F">คณะ/หน่วยงาน</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" [disabled]="!regisForm.valid" class="btn btn-primary" data-dismiss="modal" (click)="saveUser(user)"
+                    >ยืนยันเพิ่มผู้ใช้</button>
+                </div>
+               
+            </div>
+        </div>
+    </div>

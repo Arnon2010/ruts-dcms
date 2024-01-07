@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
           this.user_password = this.frmLogin.value.user_password;
           this.dataService.eloginUser(this.user_epass, this.user_password, 'https://api.rmutsv.ac.th/elogin')
             .subscribe((res: any) => {
-              //console.log(res.token);
+              console.log(res.token);
               //console.log(res);
               if (res.status == "ok") {
                 localStorage.setItem('Token', JSON.stringify(data)); //เเละเก็บค่าที่ respond ไว้ใน localStorage Key ชื่อ Token 

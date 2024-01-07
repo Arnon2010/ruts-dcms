@@ -26,7 +26,6 @@ export class ReportComponent {
   userLname: any;
   userFacName: any;
 
-
   p: number = 1;
   collection: any = [];
 
