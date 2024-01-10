@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
               console.log(res.token);
               //console.log(res);
               if (res.status == "ok") {
-                localStorage.setItem('Token', JSON.stringify(data)); //เเละเก็บค่าที่ respond ไว้ใน localStorage Key ชื่อ Token 
+                localStorage.setItem('Token', JSON.stringify(data.row)); //เเละเก็บค่าที่ respond ไว้ใน localStorage Key ชื่อ Token 
                 if (data.row.USER_ROLE == 'A') {
                   this.router.navigate(['home'], {}); // คณะ/วิทยาลัย
                 } else {

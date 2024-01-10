@@ -12,13 +12,23 @@ import Swal from 'sweetalert2';
 // import { IgxStepperComponent } from 'igniteui-angular';
 
 @Component({
-  selector: 'app-meeting-setting',
-  templateUrl: './meeting-setting.component.html',
-  styleUrls: ['./meeting-setting.component.css']
+  selector: 'app-meeting-create',
+  templateUrl: './meeting-create.component.html',
+  styleUrls: ['./meeting-create.component.css']
 })
-export class MeetingSettingComponent {
+export class MeetingCreateComponent {
   title = 'stepper';
+
   meetingForm!: FormGroup;
+
+  fruits: Array<string> = ["apple", "pear", "kiwi", "banana", "grape", "strawberry", "grapefruit", "melon", "mango", "plum"];
+
+  formGroup!: FormGroup;
+
+
+  /** Returns a FormArray with the name 'formArray'. */
+  get formArray(): AbstractControl | null { return this.formGroup.get('formArray'); }
+
   meeting: meetingSet = {
     meeting_code: 0, //รหัสการประชุม
     faculty_code: '', //รหัสการประชุม
@@ -200,4 +210,3 @@ export interface meetingSet {
   meeting_fdate: String;
   action_submit: String; // Add or Update
 }
-

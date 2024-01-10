@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule , ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeStudentComponent } from './home-student/home-student.component';
@@ -21,7 +21,7 @@ import { ExamplePdfViewerComponent } from './example-pdf-viewer/example-pdf-view
 import { FacultyCapconfirmComponent } from './faculty-capconfirm/faculty-capconfirm.component';
 import { NavbarFacComponent } from './navbar-fac/navbar-fac.component';
 import { NavbarAdminComponent } from './navbar-admin/navbar-admin.component';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { FooterComponent } from './footer/footer.component'; // <-- import the module
 import { AuthGuard } from './services/auth.guard';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
@@ -30,10 +30,17 @@ import { ReportComponent } from './report/report.component';
 import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './users/users.component';
 import { PositionsComponent } from './positions/positions.component';
-import { MeetingTypeComponent } from './meeting-type/meeting-type.component';
-import { MeetingAgendaComponent } from './meeting-agenda/meeting-agenda.component';
 import { MeetingSettingComponent } from './meeting-setting/meeting-setting.component';
 
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StepperComponent } from './stepper/stepper.component';
+import { SecurityComponent } from './security/security.component';
+import { InformationComponent } from './information/information.component';
+import { FinishComponent } from './finish/finish.component';
+import { ContactComponent } from './contact/contact.component';
+import { MeetingCreateComponent } from './meeting-create/meeting-create.component';
+import { MeetingAddAgendaComponent } from './meeting-add-agenda/meeting-add-agenda.component';
 
 @NgModule({
   declarations: [
@@ -59,23 +66,31 @@ import { MeetingSettingComponent } from './meeting-setting/meeting-setting.compo
     HomeComponent,
     UsersComponent,
     PositionsComponent,
-    MeetingTypeComponent,
-    MeetingAgendaComponent,
     MeetingSettingComponent,
+    StepperComponent,
+    SecurityComponent,
+    InformationComponent,
+    FinishComponent,
+    ContactComponent,
+    MeetingCreateComponent,
+    MeetingAddAgendaComponent,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule ,
+    FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
     NgxExtendedPdfViewerModule,
-    NgxPaginationModule
-
+    NgxPaginationModule,
+    CdkStepperModule,
+    BrowserAnimationsModule
   ],
-  providers: [AuthGuard, {provide:LocationStrategy, useClass:HashLocationStrategy}],
+  exports:[CdkStepperModule],
+  providers: [AuthGuard, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

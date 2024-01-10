@@ -1,0 +1,81 @@
+<p>meeting-add-agenda works!</p>
+<div class="mt-4">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-floating mb-3">
+                <form [formGroup]="form">
+                    <select formArrayName="selectedValues" multiple class="form-control">
+                      <option *ngFor="let option of options; let i = index" [value]="option.value">{{ option.label }}</option>
+                    </select>
+                  </form>
+                
+            </div>
+           
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-outline-primary m-2" (click)="addToSelectedValues('newOption')">
+                เพิ่ม <i class="fa fa-angle-right"></i>
+            </button>
+            <button class="btn btn-outline-primary m-2">
+                ลบ <i class="fa fa-angle-right"></i>
+            </button>
+        </div>
+        <div class="col-md-5">
+            <div class="form-floating mb-3">
+                <select multiple class="form-control" id="exampleFormControlSelect2">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                <label for="Recovery Email">Recover Email</label>
+            </div>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-floating mb-3">
+                <select multiple class="form-control" id="exampleFormControlSelect2">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                <label for="Password">Password</label>
+            </div>
+           
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-outline-primary m-2">
+                เพิ่ม <i class="fa fa-angle-right"></i>
+            </button>
+            <button class="btn btn-outline-primary m-2">
+                ลบ <i class="fa fa-angle-right"></i>
+            </button>
+        </div>
+        <div class="col-md-5">
+            <div class="form-floating mb-3">
+                <select multiple class="form-control" id="exampleFormControlSelect2">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                <label for="Recovery Email">Recover Email</label>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-between flex-row mb-5 mt-4">
+    <button class="btn btn-outline-primary" cdkStepperPrevious>
+        <i class="fa fa-angle-left"></i> back To Contact
+    </button>
+    <button class="btn btn-outline-primary" cdkStepperNext>
+        Submit Form <i class="fa fa-angle-right"></i>
+    </button>
+</div>

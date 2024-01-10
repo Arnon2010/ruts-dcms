@@ -35,6 +35,8 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "node_modules/minireset.css/minireset.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/vendors/feather/feather.css",
               "src/assets/vendors/ti-icons/css/themify-icons.css",
@@ -42,7 +44,8 @@
               "src/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css",
               "src/assets/vendors/ti-icons/css/themify-icons.css",
               "src/assets/js/select.dataTables.min.css",
-              "src/assets/css/vertical-layout-light/style.css"
+              "src/assets/css/vertical-layout-light/style.css",
+              "node_modules/igniteui-angular/styles/igniteui-angular.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -58,8 +61,14 @@
               "src/assets/js/settings.js",
               "src/assets/js/todolist.js",
               "src/assets/js/dashboard.js",
-              "src/assets/js/Chart.roundedBarCharts.js"
-            ]
+              "src/assets/js/Chart.roundedBarCharts.js",
+              "./node_modules/hammerjs/hammer.min.js"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -125,9 +134,18 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "src/styles.css",
+              "node_modules/igniteui-angular/styles/igniteui-angular.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/hammerjs/hammer.min.js"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules"
+              ]
+            }
           }
         }
       }
