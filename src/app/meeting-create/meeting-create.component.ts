@@ -89,17 +89,14 @@ export class MeetingCreateComponent {
       meeting_id: ['', Validators.required],
       meeting_passcode: ['', Validators.required]
     });
-
-
   }
-
-
 
   ngOnInit(): void {
     this.getFac();
     this.fetchTypeMeeting();
     this.getUser();
     this.fetchDataMeeting();
+    
   }
 
   onSearch() {
@@ -168,6 +165,9 @@ export class MeetingCreateComponent {
           Swal.fire('บันทึกข้อมูลสำเร็จ', '', 'success').then(() => {
             // get users
             this.fetchDataMeeting();
+
+            // set local storage
+            localStorage.setItem('token-meeting', JSON.stringify(response)); //เเละเก็บค่าที่ respond ไว้ใน localStorage Key ชื่อ Token
           })
         }
       },

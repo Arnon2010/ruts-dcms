@@ -22,6 +22,7 @@ export class UsersComponent {
     user_lname: '',
     user_role: '',
     faculty_code: '',
+    faculty_name: '',
     action_submit: 'Insert',
   }
 
@@ -68,6 +69,11 @@ export class UsersComponent {
     });
   }
 
+  getFacultyName(facultyCode: any): string {
+    const selectedFaculty = this.FAClist.find((item: { FACULTY_CODE: string; }) => item.FACULTY_CODE === facultyCode);
+    return selectedFaculty ? selectedFaculty.FACULTY_TNAME : '';
+  }
+
   getUserData(): void {
     const Token: any = localStorage.getItem('Token');
     this.userData = JSON.parse(Token) //ให้ตัวเเปล studentData เท่ากับ ค่าจาก local storage ใน Key Token ที่อยู่ใน รูปเเบบ Json
@@ -101,8 +107,9 @@ export class UsersComponent {
   }
 
   // Add and Update User.
-  saveUser(item:any) {
+  saveUser(item:any, fac:any) {
     this.user = item;
+    this.user.faculty_name = fac.fac_name;
     console.log('test adduser', this.user);
     this.http.post(environment.baseUrl + '/_user_save.php', this.user).subscribe(
       (response:any) => {
@@ -139,6 +146,7 @@ export interface regisUser {
   user_lname: String;
   user_role: String;
   faculty_code: String;
+  faculty_name: String;
   action_submit: String; // Add or Update
 
 }

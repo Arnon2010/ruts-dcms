@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { Observable, BehaviorSubject, Subject, of, Subscription, throwError } from "rxjs";
 import { delay } from 'rxjs/operators';
 import { Router } from "@angular/router";
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -107,6 +108,31 @@ export class ApiService {
       }),
       //catchError(this.handleError)
     );
+  }
+
+  // Api delete data
+
+  public apiDelete(item: string, url: string) {
+    const httpOptions = {
+      headers: new HttpHeaders()
+    }
+    httpOptions.headers.append('Access-Control-Allow-Origin', '*');
+    httpOptions.headers.append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    httpOptions.headers.append('Content-Type', 'application/json');
+
+    Swal.fire({
+      title: 'ยืนยันการลบข้อมูล',
+      text: 'คุณต้องการที่จะลบข้อมูลนี้หรือไม่?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ใช่, ลบ!',
+      cancelButtonText: 'ยกเลิก'
+    }).then((result:any) => {
+      
+    });
+
   }
 
   // Error

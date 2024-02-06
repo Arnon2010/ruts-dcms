@@ -7,9 +7,9 @@
             <div class="col-md-12 grid-margin">
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                        <h3 class="font-weight-bold">ยินดีตอนรับ RUTS Digital Conference :DCMS</h3>
-                        <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span
-                                class="text-primary">3 unread alerts!</span></h6>
+                        <h4 class="font-weight-bold">ยินดีตอนรับ RUTS Digital Conference :DCMS</h4>
+                        <h6 class="font-weight-normal mb-0">{{user_fname}} {{user_lname}}<span
+                                class="text-primary"> {{fac_name}}</span></h6>
                     </div>
                     <div class="col-12 col-xl-4">
                        
@@ -34,27 +34,58 @@
         </div>
         <div class="row">
             <div class="col-md-6 grid-margin stretch-card">
-                <div class="card tale-bg">
-                    <div class="card-people mt-auto">
-                        <img src="assets/images/dashboard/people.svg" alt="people">
-                        <div class="weather-info">
-                            <div class="d-flex">
-                                <div>
-                                    <h2 class="mb-0 font-weight-normal"><i class="icon-sun mr-2"></i>31<sup>C</sup>
-                                    </h2>
+                <div class="card tale-bg p-2">
+                    <div class="row">
+                        <div class="col-xl-12 mb-4" *ngFor="let item of agency_list">
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                  <img
+                                    src="assets/img/icons8-meeting-64.png"
+                                    alt=""
+                                    style="width: 45px; height: 45px"
+                                    class="rounded-circle"
+                                  />
+                                  <div class="ms-3">
+                                    <p class="fw-bold mb-1">{{item.open_title}} คร้ังที่ {{item.meeting_thetime}}
+                                        <!-- <br>
+                                        <small><strong>วันสุดท้ายที่เสนอวาระ: </strong>{{item.meeting_sdate}}</small> -->
+                                    </p>
+                                    <p class="text-muted mb-0">{{item.faculty_name}}</p>
+                                  </div>
                                 </div>
-                                <div class="ml-2">
-                                    <h4 class="location font-weight-normal">Bangalore</h4>
-                                    <h6 class="font-weight-normal">India</h6>
-                                </div>
+                                <span class="badge rounded-pill badge-success">Active</span>
+                              </div>
                             </div>
+                            <div
+                              class="card-footer border-0 bg-body-tertiary p-2 d-flex justify-content-around"
+                            >
+                              <a
+                                class="btn btn-link m-0 text-reset"
+                                [routerLink]="['/agenda-topic',item.meeting_code]" routerLinkActive="router-link-active" 
+                                role="button"
+                                data-ripple-color="primary"
+                                data-mdb-ripple-init
+                                >เสนอวาระ<i class="fas fa-envelope ms-2"></i
+                              ></a>
+                              <a
+                                class="btn btn-link m-0 text-reset"
+                                href="#"
+                                role="button"
+                                data-ripple-color="primary"
+                                data-mdb-ripple-init
+                                ><small><strong>วันสุดท้ายที่เสนอวาระ: </strong>{{item.meeting_sdate}}</small><i class="fas fa-phone ms-2"></i
+                              ></a>
+                            </div>
+                          </div>
                         </div>
-                    </div>
+                      </div>
                 </div>
             </div>
             <div class="col-md-6 grid-margin transparent">
                 <div class="row">
-                    <div class="col-md-6 mb-4 stretch-card transparent">
+                    <div class="col-md-4 mb-4 stretch-card transparent">
                         <div class="card card-tale">
                             <div class="card-body">
                                 <p class="mb-4">Today’s Meeting</p>
@@ -63,7 +94,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-4 stretch-card transparent">
+                    <div class="col-md-4 mb-4 stretch-card transparent">
                         <div class="card card-dark-blue">
                             <div class="card-body">
                                 <p class="mb-4">Total Bookings</p>
@@ -74,7 +105,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                    <div class="col-md-4 mb-4 mb-lg-0 stretch-card transparent">
                         <div class="card card-light-blue">
                             <div class="card-body">
                                 <p class="mb-4">Number of Meetings</p>
@@ -83,7 +114,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 stretch-card transparent">
+                    <div class="col-md-4 stretch-card transparent">
                         <div class="card card-light-danger">
                             <div class="card-body">
                                 <p class="mb-4">Number of Clients</p>
@@ -94,6 +125,305 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card tale-bg">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                          <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">List group item heading</h5>
+                            <small>3 days ago</small>
+                          </div>
+                          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                          <small>Donec id elit non mi porta.</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                          <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">List group item heading</h5>
+                            <small class="text-muted">3 days ago</small>
+                          </div>
+                          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                          <small class="text-muted">Donec id elit non mi porta.</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                          <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">List group item heading</h5>
+                            <small class="text-muted">3 days ago</small>
+                          </div>
+                          <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                          <small class="text-muted">Donec id elit non mi porta.</small>
+                        </a>
+                      </div>
+                </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card tale-bg">
+                    <ol class="list-group list-group-light list-group-numbered">
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Subheading</div>
+                            Content for list item
+                          </div>
+                          <span class="badge badge-primary rounded-pill">14</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Subheading</div>
+                            Content for list item
+                          </div>
+                          <span class="badge badge-primary rounded-pill">14</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Subheading</div>
+                            Content for list item
+                          </div>
+                          <span class="badge badge-primary rounded-pill">14</span>
+                        </li>
+                      </ol>
+                </div>
+            </div>
+            
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card tale-bg">
+                    <ul class="list-group list-group-light">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          <div class="d-flex align-items-center">
+                            <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px"
+                              class="rounded-circle" />
+                            <div class="ms-3">
+                              <p class="fw-bold mb-1">John Doe</p>
+                              <p class="text-muted mb-0">john.doe@gmail.com</p>
+                            </div>
+                          </div>
+                          <a class="btn btn-link btn-rounded btn-sm" href="#" role="button">View</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          <div class="d-flex align-items-center">
+                            <img src="https://mdbootstrap.com/img/new/avatars/6.jpg" class="rounded-circle" alt=""
+                              style="width: 45px; height: 45px" />
+                            <div class="ms-3">
+                              <p class="fw-bold mb-1">Alex Ray</p>
+                              <p class="text-muted mb-0">alex.ray@gmail.com</p>
+                            </div>
+                          </div>
+                          <a class="btn btn-link btn-rounded btn-sm" href="#" role="button">View</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          <div class="d-flex align-items-center">
+                            <img src="https://mdbootstrap.com/img/new/avatars/7.jpg" class="rounded-circle" alt=""
+                              style="width: 45px; height: 45px" />
+                            <div class="ms-3">
+                              <p class="fw-bold mb-1">Kate Hunington</p>
+                              <p class="text-muted mb-0">kate.hunington@gmail.com</p>
+                            </div>
+                          </div>
+                      
+                          <a class="btn btn-link btn-rounded btn-sm" href="#" role="button">View</a>
+                        </li>
+                      </ul>
+                </div>
+            </div>
+            <!-- <div class="col-md-6 grid-margin stretch-card">
+                <div class="card tale-bg">
+                    <div class="list-group list-group-light">
+                        <a href="#" class="list-group-item list-group-item-action px-3 border-0 rounded-3 mb-2">
+                          A simple default list group item</a>
+                        <a href="#" class="list-group-item list-group-item-action px-3 border-0 rounded-3 mb-2 list-group-item-primary">
+                          A simple primary list group item</a>
+                        <a href="#" class="list-group-item list-group-item-action px-3 border-0 rounded-3 mb-2 list-group-item-secondary">
+                          A simple secondary list group item</a>
+                        <a href="#" class="list-group-item list-group-item-action px-3 border-0 rounded-3 mb-2 list-group-item-success">
+                          A simple success list group item</a>
+                        <a href="#" class="list-group-item list-group-item-action px-3 border-0 rounded-3 mb-2 list-group-item-danger">
+                          A simple danger list group item</a>
+                        <a href="#" class="list-group-item list-group-item-action px-3 border-0 rounded-3 mb-2 list-group-item-warning">
+                          A simple warning list group item</a>
+                        <a href="#" class="list-group-item list-group-item-action px-3 border-0 rounded-3 mb-2 list-group-item-info">
+                          A simple info list group item</a>
+                        <a href="#" class="list-group-item list-group-item-action px-3 border-0 rounded-3 mb-2 list-group-item-light">
+                          A simple light list group item</a>
+                        <a href="#" class="list-group-item list-group-item-action px-3 border-0 rounded-3 list-group-item-dark">
+                           simple dark list group item</a>
+                      </div>
+                </div>
+            </div> -->
+
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card tale-bg">
+                    <div class="row">
+                        <div class="col-xl-6 mb-4">
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                  <img
+                                    src="https://mdbootstrap.com/img/new/avatars/8.jpg"
+                                    alt=""
+                                    style="width: 45px; height: 45px"
+                                    class="rounded-circle"
+                                  />
+                                  <div class="ms-3">
+                                    <p class="fw-bold mb-1">John Doe</p>
+                                    <p class="text-muted mb-0">john.doe@gmail.com</p>
+                                  </div>
+                                </div>
+                                <span class="badge rounded-pill badge-success">Active</span>
+                              </div>
+                            </div>
+                            <div
+                              class="card-footer border-0 bg-body-tertiary p-2 d-flex justify-content-around"
+                            >
+                              <a
+                                class="btn btn-link m-0 text-reset"
+                                href="#"
+                                role="button"
+                                data-ripple-color="primary"
+                                data-mdb-ripple-init
+                                >Message<i class="fas fa-envelope ms-2"></i
+                              ></a>
+                              <a
+                                class="btn btn-link m-0 text-reset"
+                                href="#"
+                                role="button"
+                                data-ripple-color="primary"
+                                data-mdb-ripple-init
+                                >Call<i class="fas fa-phone ms-2"></i
+                              ></a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-6 mb-4">
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                  <img
+                                    src="https://mdbootstrap.com/img/new/avatars/6.jpg"
+                                    alt=""
+                                    style="width: 45px; height: 45px"
+                                    class="rounded-circle"
+                                  />
+                                  <div class="ms-3">
+                                    <p class="fw-bold mb-1">Alex Ray</p>
+                                    <p class="text-muted mb-0">alex.ray@gmail.com</p>
+                                  </div>
+                                </div>
+                                <span class="badge rounded-pill badge-primary"
+                                  >Onboarding</span
+                                >
+                              </div>
+                            </div>
+                            <div
+                              class="card-footer border-0 bg-body-tertiary p-2 d-flex justify-content-around"
+                            >
+                              <a
+                                class="btn btn-link m-0 text-reset"
+                                href="#"
+                                role="button"
+                                data-ripple-color="primary"
+                                data-mdb-ripple-init
+                                >Message<i class="fas fa-envelope ms-2"></i
+                              ></a>
+                              <a
+                                class="btn btn-link m-0 text-reset"
+                                href="#"
+                                role="button"
+                                data-ripple-color="primary"
+                                data-mdb-ripple-init
+                                >Call<i class="fas fa-phone ms-2"></i
+                              ></a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-6 mb-4">
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                  <img
+                                    src="https://mdbootstrap.com/img/new/avatars/7.jpg"
+                                    alt=""
+                                    style="width: 45px; height: 45px"
+                                    class="rounded-circle"
+                                  />
+                                  <div class="ms-3">
+                                    <p class="fw-bold mb-1">Kate Hunington</p>
+                                    <p class="text-muted mb-0">kate.hunington@gmail.com</p>
+                                  </div>
+                                </div>
+                                <span class="badge rounded-pill badge-warning">Awaiting</span>
+                              </div>
+                            </div>
+                            <div
+                              class="card-footer border-0 bg-body-tertiary p-2 d-flex justify-content-around"
+                            >
+                              <a
+                                class="btn btn-link m-0 text-reset"
+                                href="#"
+                                role="button"
+                                data-ripple-color="primary"
+                                data-mdb-ripple-init
+                                >Message<i class="fas fa-envelope ms-2"></i
+                              ></a>
+                              <a
+                                class="btn btn-link m-0 text-reset"
+                                href="#"
+                                role="button"
+                                data-ripple-color="primary"
+                                data-mdb-ripple-init
+                                >Call<i class="fas fa-phone ms-2"></i
+                              ></a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-6 mb-4">
+                          <div class="card">
+                            <div class="card-body">
+                              <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                  <img
+                                    src="https://mdbootstrap.com/img/new/avatars/3.jpg"
+                                    alt=""
+                                    style="width: 45px; height: 45px"
+                                    class="rounded-circle"
+                                  />
+                                  <div class="ms-3">
+                                    <p class="fw-bold mb-1">Michael Bale</p>
+                                    <p class="text-muted mb-0">michael.bale@gmail.com</p>
+                                  </div>
+                                </div>
+                                <span class="badge rounded-pill badge-danger">Removed</span>
+                              </div>
+                            </div>
+                            <div
+                              class="card-footer border-0 bg-body-tertiary p-2 d-flex justify-content-around"
+                            >
+                              <a
+                                class="btn btn-link m-0 text-reset"
+                                href="#"
+                                role="button"
+                                data-ripple-color="primary"
+                                data-mdb-ripple-init
+                                >Message<i class="fas fa-envelope ms-2"></i
+                              ></a>
+                              <a
+                                class="btn btn-link m-0 text-reset"
+                                href="#"
+                                role="button"
+                                data-ripple-color="primary"
+                                data-mdb-ripple-init
+                                >Call<i class="fas fa-phone ms-2"></i
+                              ></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+           
+            
         </div>
 
         <div class="row">
@@ -511,3 +841,4 @@
             </div>
         </div>
     </div>
+</div>

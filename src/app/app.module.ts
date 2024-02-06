@@ -42,6 +42,32 @@ import { ContactComponent } from './contact/contact.component';
 import { MeetingCreateComponent } from './meeting-create/meeting-create.component';
 import { MeetingAddAgendaComponent } from './meeting-add-agenda/meeting-add-agenda.component';
 
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MeetingAddTopicComponent } from './meeting-add-topic/meeting-add-topic.component';
+import { MeetingComponent } from './meeting/meeting.component';
+
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatButtonModule} from '@angular/material/button';
+
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import {MatSelectModule} from '@angular/material/select';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { OutsiderComponent } from './outsider/outsider.component';
+import { SideMenuComponent } from './side-menu/side-menu.component';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
+import { MeetingManageComponent } from './meeting-manage/meeting-manage.component';
+import { MeetingManageTopicComponent } from './meeting-manage-topic/meeting-manage-topic.component';
+import { MeetingTimeComponent } from './meeting-time/meeting-time.component';
+import { AgendaManageComponent } from './agenda-manage/agenda-manage.component';
+import { AgencyTopicComponent } from './agency-topic/agency-topic.component';
+import { AgendaTopicComponent } from './agenda-topic/agenda-topic.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,6 +100,18 @@ import { MeetingAddAgendaComponent } from './meeting-add-agenda/meeting-add-agen
     ContactComponent,
     MeetingCreateComponent,
     MeetingAddAgendaComponent,
+    MeetingAddTopicComponent,
+    MeetingComponent,
+    OutsiderComponent,
+    SideMenuComponent,
+    AuthLayoutComponent,
+    DashboardLayoutComponent,
+    MeetingManageComponent,
+    MeetingManageTopicComponent,
+    MeetingTimeComponent,
+    AgendaManageComponent,
+    AgencyTopicComponent,
+    AgendaTopicComponent,
 
   ],
   imports: [
@@ -86,7 +124,22 @@ import { MeetingAddAgendaComponent } from './meeting-add-agenda/meeting-add-agen
     NgxExtendedPdfViewerModule,
     NgxPaginationModule,
     CdkStepperModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    MatInputModule,
+    MatButtonModule,
+    DragDropModule,
+    MatStepperModule,
+    MatButtonModule,
+    MatStepperModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    NgxMatSelectSearchModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    AutocompleteLibModule
   ],
   exports:[CdkStepperModule],
   providers: [AuthGuard, { provide: LocationStrategy, useClass: HashLocationStrategy }],

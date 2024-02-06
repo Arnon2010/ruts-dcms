@@ -7,17 +7,17 @@
             <div class="col-md-12 grid-margin">
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                        <h3 class="font-weight-bold">กำหนดชื่อการประชุม (Set a meeting)</h3>
+                        <h4 class="font-weight-bold">กำหนดชื่อการประชุม (Set a meeting)</h4>
                         <h6 class="font-weight-normal mb-0">&nbsp;</h6>
                     </div>
                     <div class="col-12 col-xl-4">
                         <div class="justify-content-end d-flex">
                             <div class="add-items d-flex mb-0 mt-2">
-                                <input type="text" [(ngModel)]="searchText" 
-                                (input)="onSearch()" class="form-control todo-list-input" placeholder="ค้นหา">
-                                <input type="text" class="form-control todo-list-input" placeholder="เปิดประชุม">
+                                <input type="text" [(ngModel)]="searchText" (input)="onSearch()"
+                                    class="form-control todo-list-input" placeholder="ค้นหา">
+                                <input type="text" class="form-control todo-list-input" placeholder="เพิ่มชื่อการประชุม">
                                 <button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"
-                                    data-toggle="modal" data-target="#addUserForm" data-whatever="@getbootstrap"><i
+                                    data-toggle="modal" data-target="#meeting-setting" data-whatever="@getbootstrap"><i
                                         class="icon-circle-plus"></i></button>
                             </div>
                         </div>
@@ -40,35 +40,58 @@
                                         <th>ชื่อการประชุม</th>
                                         <th>ประจำปี</th>
                                         <th>เลขที่คำสั่ง</th>
+                                        <th>เอกสารคำสั่ง</th>
                                         <th>ผู้ร่วมประชุม</th>
                                         <th>คัดลอก</th>
-                                        <th>แก้ไข</th>
-                                        <th>ลบ</th>
+                                        <th>แก้ไข/ลบ</th>
+                                        <!-- <th>ลบ</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let item of filteredItems | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+                                    <tr
+                                        *ngFor="let item of filteredItems | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
                                         <td>{{ i + (p - 1) * 10 + 1 }}</td>
-                                        <td class="font-weight-bold">{{item.meeting_name}}</td>
-                                        <td class="font-weight-bold">{{item.meeting_year}}</td>
-                                        <td class="font-weight-bold">{{item.meeting_book}}</td>
-                                       
-                                        <td class="font-weight-medium">
-                                            <a href="#" data-toggle="modal" data-target="#add-user-meeting">
-                                                <span class="badge badge-secondary">ผู้เข้าร่วม</span>
+                                        <td class="font-weight-bold">{{item.open_title}}</td>
+                                        <td class="font-weight-bold">{{item.open_year}}</td>
+                                        <td class="font-weight-bold">{{item.open_order}}</td>
+                                        <td class="font-weight-bold">
+                                            <a href="#">
+                                                <span class="badge badge-info"><i class="mdi mdi-book-open"></i>
+                                                    เอกสาร</span>
                                             </a>
                                         </td>
+
                                         <td class="font-weight-medium">
-                                            <a href="#" data-toggle="modal" data-target="#myModal">
-                                                <span class="badge badge-info">คัดลอก</span>
+                                            <a [routerLink]="['/meeting-setting']" routerLinkActive="router-link-active"
+                                                data-toggle="modal" data-target="#add-user-meeting"
+                                                (click)="personAdd(item.open_code)">
+                                                <span class="badge badge-secondary"><i
+                                                        class="mdi mdi-account-multiple-plus"></i> ผู้เข้าร่วม</span>
                                             </a>
                                         </td>
+
                                         <td class="font-weight-medium">
-                                            <span class="badge badge-warning">แก้ไข</span>
+                                            <a [routerLink]="['/meeting-setting']" routerLinkActive="router-link-active"
+                                                data-toggle="modal" data-target="#myModal">
+                                                <span class="badge badge-info"><i class="mdi mdi-content-copy"></i>
+                                                    คัดลอก</span>
+                                            </a>
                                         </td>
+
                                         <td class="font-weight-medium">
-                                            <span class="badge badge-danger">ลบ</span>
+                                            <span class="badge badge-warning"><i class="mdi mdi-grease-pencil"></i>
+                                                แก้ไข</span>
+                                            <a [routerLink]="['/meeting-setting']" routerLinkActive="router-link-active"
+                                                (click)="delOpenMeeting(item.open_code)">
+                                                <span class="badge badge-danger ml-2"><i class="mdi mdi-delete"></i>
+                                                    ลบ</span>
+                                            </a>
                                         </td>
+                                        <!-- <td class="font-weight-medium">
+                                            <a (click)="delMeeting(item.meeting_code)">
+                                                <span class="badge badge-danger"><i class="mdi mdi-delete"></i> ลบ</span>
+                                            </a>
+                                        </td> -->
                                     </tr>
 
                                 </tbody>
@@ -146,7 +169,152 @@
     </div>
     <!-- content-wrapper ends -->
 
-    <div class="modal fade" id="addUserForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- เพิ่มผู้เข้าร่วมประชุม Add user meeting -->
+    <div class="modal fade" id="add-user-meeting" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog md-modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มผู้เข้าร่วมประชุม</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-4">
+                        <div class="row">
+                            <div class="col-md-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <!-- <div class="card-title">
+                                        <h4 class="card-title">:: คณะกรรมการพิจารณาวาระ</h4>
+                                    </div> -->
+                                    <div class="card-body">
+                                        <form class="forms-person" [formGroup]="personForm" name="forms-person">
+                                            <div class="form-group row">
+                                                <label for="exampleInputUsername2"
+                                                    class="col-sm-3 col-form-label">บุคคลกร</label>
+                                                <div class="col-sm-3">
+                                                    <div class="form-check1 ml-3">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input"
+                                                                [(ngModel)]="persons.person_rstatus" name="person_rstatus"
+                                                                formControlName="person_rstatus" value="01" checked>
+                                                            ภายใน
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-check1 ml-2">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input"
+                                                                [(ngModel)]="persons.person_rstatus" name="person_rstatus"
+                                                                formControlName="person_rstatus" value="02">
+                                                            ภายนอก
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <style>
+                                                .ng-autocomplete {
+                                                    width: 100%;
+                                                }
+                                            </style>
+
+                                            <div class="form-group row">
+                                                <label for="exampleInputUsername2"
+                                                    class="col-sm-3 col-form-label">ค้นหา:</label>
+                                                <div class="col-sm-5">
+                                                    <div class="ng-autocomplete">
+                                                        <ng-autocomplete [data]="data_person" [searchKeyword]="keyword"
+                                                            placeholder="ค้นหาคณะกรรมการ"
+                                                            (selected)='selectEvent($event)'
+                                                            (inputChanged)='onChangeSearch($event)'
+                                                            (inputFocused)='onFocused($event)'
+                                                            [itemTemplate]="itemTemplate"
+                                                            [notFoundTemplate]="notFoundTemplate"
+                                                            formControlName="person_id">
+                                                        </ng-autocomplete>
+
+                                                        <ng-template #itemTemplate let-item>
+                                                            <a [innerHTML]="item.name"></a>
+                                                        </ng-template>
+
+                                                        <ng-template #notFoundTemplate let-notFound>
+                                                            <div [innerHTML]="notFound">
+                                                            </div>
+                                                        </ng-template>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="exampleInputUsername2"
+                                                    class="col-sm-3 col-form-label">ตำแหน่ง</label>
+                                                <div class="col-sm-5">
+                                                    <select class="form-control" [(ngModel)]="persons.mtposition_code"
+                                                        formControlName="mtposition_code" name="mtposition_code">
+                                                        <option *ngFor="let item of mtposition_list"
+                                                            value="{{ item.mtposition_code }}">
+                                                            {{ item.mtposition_name }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="exampleInputUsername2"
+                                                    class="col-sm-3 col-form-label"></label>
+
+                                                <div class="col-sm-2">
+                                                    <button type="button" [disabled]="!personForm.valid"
+                                                        (click)="addPerson(persons, person.id, person.name)"
+                                                        class="btn btn-outline-primary">เพิ่มผู้เข้าร่วม</button>
+                                                </div>
+
+                                                <div class="col-sm-2">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <h2 class="card-title">ผู้เข้าร่วมประชุม
+                                                </h2>
+                                                <ul class="list-group">
+                                                    <li *ngFor="let item of person_list; let i = index"
+                                                        class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <span class="badge badge-secondary badge-pill">{{i
+                                                                + 1}}</span>
+                                                            {{item.person_name}}
+                                                        </div>
+                                                        <div>
+                                                            <span
+                                                                class="badge badge-primary badge-pill">{{item.mtposition_name}}</span>
+                                                            <button type="button" (click)="delPerson(item)"
+                                                                class="btn btn-outline-danger btn-sm m-2">ลบ</button>
+                                                        </div>
+
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ตั้งค่าการประชุม -->
+    <div class="modal fade" id="meeting-setting" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -160,215 +328,412 @@
                     <div class="col-md-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <div class="col-md-8 grid-margin stretch-card">
+                                <div class="col-md-12 grid-margin stretch-card">
                                     <div class="card">
                                         <div class="card-body">
-                                            
-                                            <!-- <p class="card-description">
-                                                Horizontal form layout
-                                                </p> -->
-                                                <div class="row">
-                                                    <!-- <h2 class="text-center mt-4">Angular Stepper Tutorials</h2> -->
-                                                    <div class="col-md-9 mx-auto">
-                                                      <app-stepper [linearModeSelected]="false" #appStepper>
-                                                        <cdk-step [label]="'สร้างประชุม'"> 
-                                                          <app-meeting-create></app-meeting-create>
-                                                        </cdk-step>
-                                                        <cdk-step [label]="'กำหนดวาระ'">
-                                                          <app-meeting-add-agenda></app-meeting-add-agenda>
-                                                        </cdk-step>
-                                                        <cdk-step [label]="'เสนอวาระ'">
-                                                            <app-security></app-security>
-                                                          </cdk-step>
-                                                        <cdk-step [label]="'ผู้เกี่ยวข้อง'">
-                                                            <app-security></app-security>
-                                                          </cdk-step>
-                                                        <cdk-step [label]="'Finish'">
-                                                          <app-finish></app-finish>
-                                                        </cdk-step>
-                                                      </app-stepper>
-                                                    </div>
-                                                  </div>
-                                            <!-- <form class="forms-sample" [formGroup]="meetingForm">
-                                                <div class="form-group row">
-                                                    <label for="exampleInputUsername2"
-                                                        class="col-sm-4 col-form-label">ประเภทการประชุม : *</label>
-                                                    <div class="col-sm-6">
-                                                        <select class="form-control" [(ngModel)]="meeting.type_code"
-                                                            name="faculty_code" formControlName="type_code">
-                                                            <option *ngFor="let item of type_list"
-                                                                value="{{ item.type_code }}">
-                                                                {{ item.type_name }}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="exampleInputUsername2"
-                                                        class="col-sm-4 col-form-label">เสนอวาระการประชุม : *</label>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="radio" class="form-check-input"
-                                                                    [(ngModel)]="meeting.propose_code"
-                                                                    name="propose_code" formControlName="propose_code"
-                                                                    value="01" checked>
-                                                                เสนอวาระ
-                                                            </label>
+
+                                            <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+                                                {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+                                            </button>
+                                            <mat-stepper [linear]="isLinear" #stepper>
+                                                <!--ระบุข้อมูลการประชุม-->
+                                                <mat-step [stepControl]="firstFormGroup">
+                                                    <h4 class="card-title">ระบุข้อมูลการประชุม</h4>
+                                                    <p>&nbsp;</p>
+                                                    <form class="forms-sample" [formGroup]="meetingForm">
+                                                        <ng-template matStepLabel>สร้างประชุม</ng-template>
+                                                        <div class="form-group row">
+                                                            <label for="exampleInputUsername2"
+                                                                class="col-sm-4 col-form-label">ประเภทการประชุม :
+                                                                *</label>
+                                                            <div class="col-sm-6">
+                                                                <select class="form-control"
+                                                                    [(ngModel)]="meeting.type_code" name="faculty_code"
+                                                                    formControlName="type_code">
+                                                                    <option *ngFor="let item of type_list"
+                                                                        value="{{ item.type_code }}">
+                                                                        {{ item.type_name }}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="form-group row">
+                                                            <label for="exampleInputUsername2"
+                                                                class="col-sm-4 col-form-label">ชื่อเรื่องการประชุม:
+                                                                *</label>
+                                                            <div class="col-md-8">
+                                                                <input type="text" class="form-control"
+                                                                    [(ngModel)]="meeting.open_title" name="open_title"
+                                                                    formControlName="open_title"
+                                                                    placeholder="ชื่อเรื่อง หรือหัวข้อการประชุม">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="exampleInputEmail2"
+                                                                class="col-sm-4 col-form-label">ประจำปี:
+                                                                *</label>
+                                                            <div class="col-sm-3">
+                                                                <input type="email" class="form-control"
+                                                                    [(ngModel)]="meeting.open_year" name="open_year"
+                                                                    formControlName="open_year" placeholder="ปี พ.ศ.">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label for="exampleInputMobile"
+                                                                class="col-sm-4 col-form-label">เลขที่คำสั่ง:</label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" class="form-control"
+                                                                    [(ngModel)]="meeting.open_order" name="open_order"
+                                                                    formControlName="open_order"
+                                                                    placeholder="เลขหนังสือ เลขคำส่ัง">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                            <label for="exampleInputMobile"
+                                                                class="col-sm-4 col-form-label">เอกสารคำสั่ง:</label>
+                                                            <div class="col-sm-6">
+                                                                <input type="file" class="form-control"
+                                                                    (change)="onFileChange($event)"
+                                                                    [(ngModel)]="meeting.open_path" name="open_path"
+                                                                    formControlName="open_path"
+                                                                    placeholder="เอกสารคำสั่ง">
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div>
+                                                            <button class="btn btn-light"
+                                                                data-dismiss="modal">ยกเลิก</button>
+                                                            <button type="submit" class="btn btn-outline-primary m-2"
+                                                                (click)="saveOpenMeeting(meeting)"
+                                                                matStepperNext>บันทึกและขั้นตอนถัดไป</button>
+                                                        </div>
+                                                    </form>
+                                                </mat-step>
+
+                                                <!--ตำแหน่งในการประชุม-->
+                                                <mat-step [stepControl]="secondFormGroup" label="ตำแหน่งในการประชุม">
+                                                    <div class="mt-4">
+                                                        <div class="row">
+                                                            <div class="col-md-12 grid-margin stretch-card">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <form class="forms-position"
+                                                                            [formGroup]="mtpositionForm"
+                                                                            name="forms-position">
+                                                                            <div class="form-group row">
+                                                                                <label for="exampleInputUsername2"
+                                                                                    class="col-sm-3 col-form-label">ตำแหน่งวาระการประชุม</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        [(ngModel)]="mtposition_name"
+                                                                                        name="mtposition_name"
+                                                                                        formControlName="mtposition_name"
+                                                                                        placeholder="เพิ่มตำแหน่งในการประชุม">
+                                                                                </div>
+                                                                                <div class="col-sm-2">
+                                                                                    <button type="button"
+                                                                                        [disabled]="!mtpositionForm.valid"
+                                                                                        (click)="addMtPosition(mtposition_name)"
+                                                                                        class="btn btn-outline-primary">เพิ่ม</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+
+                                                                        <div class="row">
+                                                                            <h2 class="card-title">
+                                                                                ตำแหน่งในการประชุม</h2>
+                                                                            <ul class="list-group">
+                                                                                <li *ngFor="let item of mtposition_list"
+                                                                                    class="list-group-item d-flex justify-content-between align-items-center">
+                                                                                    {{item.mtposition_name}}
+                                                                                    <button
+                                                                                        (click)="removeMtPosition(item.mtposition_code)"
+                                                                                        class="btn btn-outline-danger btn-sm">ลบ</button>
+                                                                                </li>
+
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="d-flex justify-content-between flex-row mb-5 mt-4">
+                                                                <button class="btn btn-outline-primary"
+                                                                    matStepperPrevious>
+                                                                    <i class="fa fa-angle-left"></i> กลับ
+                                                                </button>
+                                                                <button class="btn btn-outline-primary" matStepperNext>
+                                                                    ขั้นตอนถัดไป <i class="fa fa-angle-right"></i>
+                                                                </button>
+                                                            </div>
+
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-4">
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="radio" class="form-check-input"
-                                                                    [(ngModel)]="meeting.propose_code"
-                                                                    name="propose_code" formControlName="propose_code"
-                                                                    value="02">
-                                                                ไม่เสนอวาระ
-                                                            </label>
+                                                </mat-step>
+
+                                                <!--ระเบียบวาระ-->
+                                                <mat-step [stepControl]="thirdFormGroup" label="หัวข้อวาระการประชุม">
+                                                    <h4 class="card-title">:: กำหนดระเบียบวาระการประชุม</h4>
+                                                    <div class="mt-4">
+                                                        <div class="row">
+                                                            <div class="col-md-5">
+                                                                <div class="form-floating mb-3">
+                                                                    <div class="example-container">
+                                                                        <h6 class="card-title">เลือกวาระการประชุม</h6>
+                                                                        <div cdkDropList #todoList="cdkDropList"
+                                                                            [cdkDropListData]="topic_list"
+                                                                            [cdkDropListConnectedTo]="[doneList]"
+                                                                            class="example-list"
+                                                                            (cdkDropListDropped)="drop($event)">
+                                                                            <div class="example-box"
+                                                                                *ngFor="let item of topic_list" cdkDrag>
+                                                                                {{item.topic_name}}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-5">
+                                                                <div class="form-floating mb-3">
+                                                                    <div class="example-container">
+                                                                        <h6 class="card-title">วาระการประชุมที่เลือก
+                                                                        </h6>
+                                                                        <div cdkDropList #doneList="cdkDropList"
+                                                                            [cdkDropListData]="topic_done"
+                                                                            [cdkDropListConnectedTo]="[todoList]"
+                                                                            class="example-list"
+                                                                            (cdkDropListDropped)="drop($event)">
+                                                                            <div class="example-box"
+                                                                                *ngFor="let item of topic_done" cdkDrag>
+                                                                                {{item.topic_name}}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- <div>
+                                                                <button mat-button matStepperPrevious>Back</button>
+                                                                <button mat-button matStepperNext>Next</button>
+                                                              </div> -->
+                                                            <div
+                                                                class="d-flex justify-content-between flex-row mb-5 mt-4">
+                                                                <button class="btn btn-outline-primary"
+                                                                    matStepperPrevious>
+                                                                    <i class="fa fa-angle-left"></i> กลับ
+                                                                </button>
+                                                                <button class="btn btn-outline-primary"
+                                                                    (click)="addMeetingTopic(topic_done)"
+                                                                    matStepperNext>
+                                                                    บันทึกและขั้นตอนถัดไป <i
+                                                                        class="fa fa-angle-right"></i>
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="exampleInputUsername2"
-                                                        class="col-sm-4 col-form-label">หัวข้อการประชุม: *</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" class="form-control"
-                                                            [(ngModel)]="meeting.meeting_name" name="meeting_name"
-                                                            formControlName="meeting_name" placeholder="ชื่อการประชุม">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="exampleInputEmail2"
-                                                        class="col-sm-4 col-form-label">ครั้งที่ /ประจำปี พ.ศ.:
-                                                        *</label>
-                                                    <div class="col-sm-2">
-                                                        <input type="email" class="form-control"
-                                                            [(ngModel)]="meeting.meeting_thetime" name="meeting_thetime"
-                                                            formControlName="meeting_thetime" placeholder="คร้ังที่">
-                                                    </div>/
-                                                    <div class="col-sm-2">
-                                                        <input type="email" class="form-control"
-                                                            [(ngModel)]="meeting.meeting_year" name="meeting_year"
-                                                            formControlName="meeting_year" placeholder="ปี">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="exampleInputMobile"
-                                                        class="col-sm-4 col-form-label">เลขที่หนังสือ: *</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="text" class="form-control"
-                                                            [(ngModel)]="meeting.meeting_book" name="meeting_book"
-                                                            formControlName="meeting_book"
-                                                            placeholder="เลขหนังสือ เลขคำส่ัง">
-                                                    </div>
-                                                </div>
+                                                </mat-step>
+                                                <!--กำหนดระเบียบวาระการประชุม-->
+                                                <!-- <mat-step [stepControl]="thirdFormGroup" label="หน่วยงานเข้าร่วม">
+                                                    <div class="mt-4">
+                                                        <div class="row">
+                                                            <div class="col-md-12 grid-margin stretch-card">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <form class="forms-agency" name="forms-agency">
+                                                                            <div class="form-group row">
+                                                                                <label for="exampleInputUsername2"
+                                                                                    class="col-sm-3 col-form-label">เลือกหน่วยงาน</label>
+                                                                                <div class="col-sm-7">
+                                                                                    <select class="form-control"
+                                                                                        [(ngModel)]="agencys.faculty_code"
+                                                                                        name="faculty_code">
+                                                                                        <option
+                                                                                            *ngFor="let item of FAClist"
+                                                                                            value="{{ item.FACULTY_CODE }}">
+                                                                                            {{ item.FACULTY_TNAME }}
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-sm-2">
+                                                                                    <button type="submit"
+                                                                                        (click)="addAgency({ code: agencys.faculty_code, name: getFacultyName(agencys.faculty_code) })"
+                                                                                        class="btn btn-outline-primary">เพิ่ม</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
 
-                                                <div class="form-group row">
-                                                    <label for="exampleInputConfirmPassword2"
-                                                        class="col-sm-4 col-form-label">สถานที่ประชุม: *</label>
+                                                                        <div class="row">
+                                                                            <h2 class="card-title">
+                                                                                หน่วยงานเข้าร่วมเสนอระเบียบวาระ</h2>
+                                                                            <ul class="list-group">
+                                                                                <li *ngFor="let item of agency_list"
+                                                                                    class="list-group-item d-flex justify-content-between align-items-center">
+                                                                                    {{item.agency_name}}
+                                                                                    <button
+                                                                                        (click)="removeAgency(item.agency_code)"
+                                                                                        class="btn btn-outline-danger btn-sm">ลบ</button>
+                                                                                </li>
 
-                                                    <div class="col-sm-3">
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="radio" class="form-check-input"
-                                                                    [(ngModel)]="meeting.channel_code"
-                                                                    name="channel_code" formControlName="channel_code"
-                                                                    value="01" checked>
-                                                                Onsite
-                                                            </label>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="d-flex justify-content-between flex-row mb-5 mt-4">
+                                                                <button class="btn btn-outline-primary"
+                                                                    matStepperPrevious>
+                                                                    <i class="fa fa-angle-left"></i> กลับ
+                                                                </button>
+                                                                <button class="btn btn-outline-primary" matStepperNext>
+                                                                    ขั้นตอนถัดไป <i class="fa fa-angle-right"></i>
+                                                                </button>
+                                                            </div>
+                                                            
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-4">
-                                                        <div class="form-check">
-                                                            <label class="form-check-label">
-                                                                <input type="radio" class="form-check-input"
-                                                                    [(ngModel)]="meeting.channel_code"
-                                                                    name="channel_code" formControlName="channel_code"
-                                                                    value="02">
-                                                                Online
-                                                            </label>
+                                                </mat-step> -->
+
+                                                <!--คณะกรรมการพิจารณาวาระ-->
+                                                <!-- <mat-step [stepControl]="forFormGroup" label="คณะกรรมการพิจารณาวาระ">
+                                                    <div class="mt-4">
+                                                        <div class="row">
+                                                            <div class="col-md-12 grid-margin stretch-card">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <form class="forms-consider"
+                                                                            [formGroup]="considerForm"
+                                                                            name="forms-consider">
+                                                                            <div class="form-group row">
+                                                                                <label for="exampleInputUsername2"
+                                                                                    class="col-sm-3 col-form-label">ค้นหา:</label>
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="ng-autocomplete">
+                                                                                        <ng-autocomplete
+                                                                                            [data]="data_person"
+                                                                                            [searchKeyword]="keyword"
+                                                                                            placeholder="ค้นหาคณะกรรมการ"
+                                                                                            (selected)='selectEvent($event)'
+                                                                                            (inputChanged)='onChangeSearch($event)'
+                                                                                            (inputFocused)='onFocused($event)'
+                                                                                            [itemTemplate]="itemTemplate"
+                                                                                            [notFoundTemplate]="notFoundTemplate"
+                                                                                            formControlName="person_id">
+                                                                                        </ng-autocomplete>
+
+                                                                                        <ng-template #itemTemplate
+                                                                                            let-item>
+                                                                                            <a
+                                                                                                [innerHTML]="item.name"></a>
+                                                                                        </ng-template>
+
+                                                                                        <ng-template #notFoundTemplate
+                                                                                            let-notFound>
+                                                                                            <div [innerHTML]="notFound">
+                                                                                            </div>
+                                                                                        </ng-template>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group row">
+                                                                                <label for="exampleInputUsername2"
+                                                                                    class="col-sm-3 col-form-label">ตำแหน่ง</label>
+                                                                                <div class="col-sm-5">
+                                                                                    <select class="form-control"
+                                                                                        [(ngModel)]="position_code"
+                                                                                        formControlName="position_code"
+                                                                                        name="position_code">
+                                                                                        <option
+                                                                                            *ngFor="let item of position_list"
+                                                                                            value="{{ item.position_code }}">
+                                                                                            {{ item.position_name }}
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group row">
+                                                                                <label for="exampleInputUsername2"
+                                                                                    class="col-sm-3 col-form-label"></label>
+
+                                                                                <div class="col-sm-2">
+                                                                                    <button type="submit"
+                                                                                        [disabled]="!considerForm.valid"
+                                                                                        (click)="addConsider(position_code, person.id, person.name)"
+                                                                                        class="btn btn-outline-primary">เพิ่ม</button>
+                                                                                </div>
+                                                                               
+                                                                            </div>
+                                                                        </form>
+
+                                                                        <div class="row">
+                                                                            <h2 class="card-title">คณะกรรมการพิจารณาวาระ
+                                                                            </h2>
+                                                                            <ul class="list-group">
+                                                                                <li *ngFor="let item of consider_list; let i = index"
+                                                                                    class="list-group-item d-flex justify-content-between align-items-center">
+                                                                                    <div>
+                                                                                        <span
+                                                                                            class="badge badge-secondary badge-pill">{{i
+                                                                                            + 1}}</span>
+                                                                                        {{item.person_name}}
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        <span
+                                                                                            class="badge badge-primary badge-pill">{{item.position_name}}</span>
+                                                                                        <button type="submit"
+                                                                                            (click)="delConsider(item.consider_code)"
+                                                                                            class="btn btn-outline-danger btn-sm m-2">ลบ</button>
+                                                                                    </div>
+
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="d-flex justify-content-between flex-row mb-5 mt-4">
+                                                                <button class="btn btn-outline-primary"
+                                                                    matStepperPrevious>
+                                                                    <i class="fa fa-angle-left"></i> กลับ
+                                                                </button>
+                                                                <button class="btn btn-outline-primary" matStepperNext>
+                                                                    ขั้นตอนถัดไป <i class="fa fa-angle-right"></i>
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <label for="exampleInputConfirmPassword2"
-                                                        class="col-sm-4 col-form-label">&nbsp;</label>
-                                                    <div class="col-sm-8" *ngIf="meeting.channel_code == '01'">
-                                                        <input type="text" class="form-control"
-                                                            [(ngModel)]="meeting.meeting_location"
-                                                            name="meeting_location" formControlName="meeting_location"
-                                                            placeholder="อาคาร/ห้องประชุม">
-                                                    </div>
-                                                   
-                                                    <div class="col-sm-8" *ngIf="meeting.channel_code == '02'">
-                                                        <input type="text" class="form-control"
-                                                            [(ngModel)]="meeting.meeting_link" name="meeting_link"
-                                                            formControlName="meeting_link" placeholder="Meeting Link">
-                                                    </div>
-                                                    <label for="exampleInputConfirmPassword2"
-                                                        class="col-sm-4 col-form-label">&nbsp;</label>
-                                                    <div class="col-sm-4" *ngIf="meeting.channel_code == '02'">
-                                                        <input type="text" class="form-control"
-                                                            [(ngModel)]="meeting.meeting_id" name="meeting_id"
-                                                            formControlName="meeting_id" placeholder="Meeting ID">
-                                                    </div>
-                                                    <div class="col-sm-4" *ngIf="meeting.channel_code == '02'">
-                                                        <input type="text" class="form-control"
-                                                            [(ngModel)]="meeting.meeting_passcode"
-                                                            name="meeting_passcode" formControlName="meeting_passcode"
-                                                            placeholder="Meeting Passcode">
-                                                    </div>
-                                                </div>
+                                                </mat-step> -->
+                                                <mat-step>
+                                                    <ng-template matStepLabel>เสร็จสิ้น</ng-template>
+                                                    <!-- <p>ยืนยันการประชุมเพื่อแจ้งไปยังหน่วยงานดำเนินการเสนอวาระการประชุม
+                                                    </p> -->
+                                                    <div class="d-flex justify-content-between flex-row mb-5 mt-4">
+                                                        <button class="btn btn-outline-primary" matStepperPrevious>
+                                                            <i class="fa fa-angle-left"></i> กลับ
+                                                        </button>
 
-                                                <div class="form-group row">
-                                                    <label for="exampleInputPassword2"
-                                                        class="col-sm-4 col-form-label">วันที่เริ่ม: *</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="date" class="form-control"
-                                                            [(ngModel)]="meeting.meeting_sdate" name="meeting_sdate"
-                                                            formControlName="meeting_sdate"
-                                                            placeholder="วันที่เริ่มประชุม">
-                                                    </div>
-                                                </div>
+                                                        <!-- <button class="btn btn-primary"
+                                                            (click)="confirmMeetingSet(meeting.meeting_code)">
+                                                        เสร็จสิ้นกระบวนการ<i class="fa fa-angle-right"></i>
+                                                        </button> -->
 
-                                                <div class="form-group row">
-                                                    <label for="exampleInputPassword2"
-                                                        class="col-sm-4 col-form-label">วันที่สิ้นสุด: *</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="date" class="form-control"
-                                                            [(ngModel)]="meeting.meeting_edate" name="meeting_edate"
-                                                            formControlName="meeting_edate"
-                                                            placeholder="วันสิ้นสุดประชุม">
+                                                        <button class="btn btn-primary" data-dismiss="modal"
+                                                            (click)="confirmDone()">
+                                                            เสร็จสิ้นกระบวนการ<i class="fa fa-angle-right"></i>
+                                                        </button>
                                                     </div>
-                                                </div>
+                                                    <!-- <div>
+                                                        <button mat-button matStepperPrevious>Back</button>
+                                                        <button mat-button (click)="stepper.reset()">Reset</button>
+                                                    </div> -->
+                                                </mat-step>
+                                            </mat-stepper>
 
-                                                <div class="form-group row">
-                                                    <label for="exampleInputPassword2"
-                                                        class="col-sm-4 col-form-label">เวลา: *</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="time" class="form-control"
-                                                            [(ngModel)]="meeting.meeting_time" name="meeting_time"
-                                                            formControlName="meeting_time"
-                                                            placeholder="เวลาเริ่มประชุม">
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group row" *ngIf="meeting.propose_code == '01'">
-                                                    <label for="exampleInputPassword2"
-                                                        class="col-sm-4 col-form-label">วันที่สิ้นสุดการเสนอวาระ:
-                                                        *</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="date" class="form-control"
-                                                            [(ngModel)]="meeting.meeting_fdate" name="meeting_fdate"
-                                                            formControlName="meeting_fdate"
-                                                            placeholder="วันสุดท้ายการเสนอวาระ">
-                                                    </div>
-                                                </div>
-                                               
-
-                                                <button class="btn btn-light" data-dismiss="modal">ยกเลิก</button>
-                                                <button type="submit" class="btn btn-primary m-2"
-                                                    (click)="saveMeeting(meeting)" data-dismiss="modal">บันทึก</button>
-                                            </form> -->
                                         </div>
                                     </div>
                                 </div>
@@ -377,90 +742,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
                     <!-- <button type="submit" [disabled]="!regisForm.valid" class="btn btn-primary" data-dismiss="modal"
                         (click)="saveUser(user)">ยืนยันเพิ่มผู้ใช้</button> -->
                 </div>
 
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="add-user-meeting" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มผู้เข้าร่วมประชุม</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="col-md-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="col-md-8 grid-margin stretch-card">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title">ระบุผู้เกี่ยวข้อง</h4>
-                                            <!-- <form class="forms-sample" [formGroup]="meetingForm">
-                                                <div class="form-group row">
-                                                    <label for="exampleInputUsername2"
-                                                        class="col-sm-4 col-form-label">ผู้เข้าร่วม: *</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" class="form-control"
-                                                            [(ngModel)]="meeting.meeting_name" name="meeting_name"
-                                                            formControlName="meeting_name" placeholder="ชื่อการประชุม">
-                                                    </div>
-                                                </div>
-                                                <button class="btn btn-light" data-dismiss="modal">ยกเลิก</button>
-                                                <button type="submit" class="btn btn-primary m-2"
-                                                    (click)="saveMeeting(meeting)" data-dismiss="modal">บันทึก</button>
-                                            </form> -->
-                                            <div class="container">
-                                                <div class="row">
-                                                  <h2 class="text-center mt-4">Angular Stepper Tutorials</h2>
-                                                  <div class="col-md-9 mx-auto">
-                                                    <app-stepper [linearModeSelected]="false" #appStepper>
-                                                      <cdk-step [label]="'Information'"> 
-                                                        <app-information></app-information>
-                                                      </cdk-step>
-                                                      <cdk-step [label]="'Contact'">
-                                                        <app-contact></app-contact>
-                                                      </cdk-step>
-                                                      <cdk-step [label]="'Security'">
-                                                        <app-security></app-security>
-                                                      </cdk-step>
-                                                      <cdk-step [label]="'Finish'">
-                                                        <app-finish></app-finish>
-                                                      </cdk-step>
-                                                    </app-stepper>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <!-- <button type="submit" [disabled]="!regisForm.valid" class="btn btn-primary" data-dismiss="modal"
-                        (click)="saveUser(user)">ยืนยันเพิ่มผู้ใช้</button> -->
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                ...
             </div>
         </div>
     </div>

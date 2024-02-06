@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;500;600&display=swap');
+
+* {
+    font-family: 'Noto Sans Thai', sans-serif;
+  }
+
+.custom-modal-dialog {
+    max-width: 70%;
+    /* กำหนดความกว้างสูงสุด */
+    max-height: 600px;
+    /* กำหนดความสูงสูงสุด */
+}
+
+.md-modal-dialog {
+    max-width: 65%;
+    /* กำหนดความกว้างสูงสุด */
+    max-height: 600px;
+    /* กำหนดความสูงสูงสุด */
+}
+
+.lg-modal-dialog {
+    max-width: 85%;
+    /* กำหนดความกว้างสูงสุด */
+    max-height: 600px;
+    /* กำหนดความสูงสูงสุด */
+}
+/** icon mdi */
+i.mdi {
+    font-size: 24px; /* ปรับขนาดตามที่ต้องการ */
+   
+  }
+
+

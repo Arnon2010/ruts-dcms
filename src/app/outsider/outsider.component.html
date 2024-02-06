@@ -1,0 +1,227 @@
+<app-navbar></app-navbar>
+<!-- partial -->
+<div class="container-fluid page-body-wrapper">
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h3 class="font-weight-bold">ผู้ใช้งานภายนอก (Outsider users)</h3>
+                        <h6 class="font-weight-normal mb-0">All users <span class="text-primary">
+                                <strong>{{total_row}}</strong></span>
+                        </h6>
+                    </div>
+                    <div class="col-12 col-xl-4">
+                        <div class="justify-content-end d-flex">
+                            <div class="add-items d-flex mb-0 mt-2">
+                                <input type="text" [(ngModel)]="searchText" (input)="onSearch()"
+                                    class="form-control todo-list-input" placeholder="ค้นหา">
+                                <input type="text" class="form-control todo-list-input" placeholder="เพิ่มบุคคลภายนอก">
+                                <button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"
+                                    data-toggle="modal" data-target="#addUserForm" data-whatever="@getbootstrap"><i
+                                        class="icon-circle-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title mb-0">บุคคลภายนอก</p>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>ชื่อ - สกุล</th>
+                                        <!-- <th>ตำแหน่ง</th> -->
+                                        <th>หน่วยงาน</th>
+                                        <th>อีเมล</th>
+                                        <th>เบอร์โทร</th>
+                                        <th>ชื่อผู้ใช้งาน</th>
+                                        <!-- <th>รหัสผ่าน</th> -->
+                                        <!-- <th>สถานะใช้งาน</th> -->
+                                        <th>แก้ไข</th>
+                                        <th>ลบ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let user of filteredItems | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+                                        <td>{{ i + (p - 1) * 10 + 1 }}</td>
+                                        <td>{{user.prefix_name}}{{user.outsider_fname}} {{user.outsider_lname}}
+                                           <br/>
+                                            <br/>
+                                            <small><strong>ตำแหน่ง:</strong> {{user.outsider_position}}</small>
+                                        </td>
+                                        <!-- <td>{{user.outsider_position}}</td> -->
+                                        <td>{{user.outsider_agency}}</td>
+                                        <td>{{user.outsider_email}}
+
+                                        </td>
+                                        <td>{{user.outsider_phone}}</td>
+                                        <td>{{user.outsider_username}}</td>
+                                        <!-- <td>{{user.outsider_password}}</td> -->
+                                        <!-- <td class="font-weight-medium">
+                                            <div class="badge badge-success" *ngIf="user.outsider_astatus == '1'">On</div>
+                                            <div class="badge badge-warning" *ngIf="user.outsider_astatus == '0'">Off</div>
+                                        </td> -->
+                                        <td>
+                                            <a href="#" (click)="onClickEditUser(user)" data-toggle="modal"
+                                            data-target="#addUserForm" data-whatever="@getbootstrap">
+                                                <span class="badge badge-warning"><i class="ti-file btn-icon-append"></i> แก้ไข</span>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="#" data-toggle="modal" data-target="#add-user-meeting"
+                                            (click)="delOutsider(user)">
+                                                <span class="badge badge-danger"><i class="mdi mdi-delete"></i> ลบ</span>
+                                            </a>
+                                            <!-- <button type="button" (click)="delOutsider(user)"
+                                                class="btn btn-outline-danger btn-icon-text btn-sm">
+                                                ยกเลิก
+                                                <i class="mdi mdi-delete"></i>
+                                            </button> -->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="list">
+                                <pagination-controls (pageChange)="p=$event"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- content-wrapper ends -->
+
+    <style>
+        .custom-modal-dialog {
+            max-width: 70%;
+            /* กำหนดความกว้างสูงสุด */
+            max-height: 600px;
+            /* กำหนดความสูงสูงสุด */
+        }
+    </style>
+
+    <div class="modal fade" id="addUserForm" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog custom-modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">เพิ่มผู้ใช้งานภายนอก</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">ระบุข้อมูลผู้ใช้งานภายนอก</h4>
+
+                                <form class="forms-sample" [formGroup]="outsiderForm">
+                                    <div class="form-group row">
+                                        <label for="prefix_name" class="col-sm-3 col-form-label">รหัสคำนำหน้า: *</label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" [(ngModel)]="user.prefix_name" name="prefix_name"
+                                                formControlName="prefix_name">
+                                                <option *ngFor="let item of prefix_list" value="{{ item.PREFIX_NAME }}">
+                                                    {{ item.PREFIX_NAME }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group row">
+                                        <label for="outsider_fname" class="col-sm-3 col-form-label">ชื่อ: *</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" id="outsider_fname"
+                                                [(ngModel)]="user.outsider_fname" formControlName="outsider_fname"
+                                                placeholder="ชื่อ">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="outsider_lname" class="col-sm-3 col-form-label">นามสกุล: *</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" id="outsider_lname"
+                                                [(ngModel)]="user.outsider_lname" formControlName="outsider_lname"
+                                                placeholder="นามสกุล">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="outsider_position" class="col-sm-3 col-form-label">ตำแหน่ง: *</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" id="outsider_position"
+                                                [(ngModel)]="user.outsider_position" formControlName="outsider_position"
+                                                placeholder="ตำแหน่งงาน">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="outsider_agency" class="col-sm-3 col-form-label">หน่วยงาน: *</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" id="outsider_agency"
+                                                [(ngModel)]="user.outsider_agency" formControlName="outsider_agency"
+                                                placeholder="หน่วยงานต้นสังกัด">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="outsider_email" class="col-sm-3 col-form-label">อีเมล: *</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="outsider_email"
+                                                [(ngModel)]="user.outsider_email" formControlName="outsider_email"
+                                                placeholder="e-mail">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="outsider_phone" class="col-sm-3 col-form-label">เบอร์โทร: *</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="outsider_phone"
+                                                [(ngModel)]="user.outsider_phone" formControlName="outsider_phone"
+                                                placeholder="หมายเลขโทรศัพท์">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="outsider_username" class="col-sm-3 col-form-label">ชื่อผู้ใช้งาน: *</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="outsider_username"
+                                                [(ngModel)]="user.outsider_username" formControlName="outsider_username"
+                                                placeholder="Username">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="outsider_password" class="col-sm-3 col-form-label">รหัสผ่าน: *</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="outsider_password"
+                                                [(ngModel)]="user.outsider_password" formControlName="outsider_password"
+                                                placeholder="รหัสผ่านเข้าใช้งาน">
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">ยกเลิก</button>
+                                        <button type="submit" [disabled]="!outsiderForm.valid" class="btn btn-primary m-2"
+                                            data-dismiss="modal" (click)="saveOutsider(user)">ยืนยันเพิ่มบุคคลภายนอก</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                </div>
+            </div>
+        </div>
+    </div>

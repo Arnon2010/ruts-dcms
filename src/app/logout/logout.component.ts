@@ -9,24 +9,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./logout.component.css']
 })
 export class LogoutComponent {
+  isLogin: boolean | undefined;
 
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private router: Router
   ) {
-    this.router.navigate(['selectlogin'], {});
+    this.router.navigate(['login'], {});
     this.clearToken()
   }
-
     clearToken(){
-      localStorage.removeItem('Token')
-
-
-
-
+      localStorage.removeItem('Token');
+      this.isLogin = false;
     }
   
-
 }
 

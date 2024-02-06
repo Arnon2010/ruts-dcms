@@ -1,0 +1,312 @@
+<app-navbar></app-navbar>
+<!-- partial -->
+<div class="container-fluid page-body-wrapper">
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h6 class="font-weight-bold"><a [routerLink]="['/meeting-manage']"
+                                routerLinkActive="router-link-active">จัดการการประชุม >> </a> {{open_title}}</h6>
+                        <h6 class="font-weight-normal mb-0">&nbsp;</h6>
+                    </div>
+                    <div class="col-12 col-xl-4">
+                        <div class="justify-content-end d-flex">
+                            <div class="add-items d-flex mb-0 mt-2">
+
+                                <input type="text" class="form-control todo-list-input" placeholder="สร้างวาระ [pdf]">
+                                <button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"
+                                    data-toggle="modal" data-target="#addMeetingForm"
+                                    data-whatever="@getbootstrap"><span class="badge badge-warning"><i
+                                            class="mdi mdi-content-save-settings"></i></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title mb-0">รายการการจัดประชุม</p>
+                        <br />
+                        <!-- <div class="table-responsive">
+                            <table class="table table-striped table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">วาระ</th>
+                                        <th>เรื่อง</th>
+                                        <th class="text-center">วาระที่เสนอ</th>
+                                        <th class="text-center">ตรวจสอบ/อนุมัติวาระ</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of mttopic_list; let i = index">
+                                        <td class="text-center">{{ i + 1 }}</td>
+                                        <td>
+                                            {{data.topic_name}}
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#">
+                                                <span class="badge badge-primary">
+                                                    <i class="mdi mdi-file-document"></i></span>
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#" data-toggle="modal" data-target="#add-agenda-sub">
+                                                <span class="badge badge-warning" (click)="onClickAddTopic(data.topic_code)"><i
+                                                        class="mdi mdi-file-document-box"></i></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> -->
+
+                        <div class="row h5 font-weight-bold">
+                            <div class="row col-12 topic">
+                                <div class="col-sm-1">
+                                    วาระ
+                                </div>
+                                <div class="col-sm-5">
+                                    เรื่อง
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    วาระที่เสนอ
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    ตรวจสอบ/พิจารณา
+                                </div>
+                                <div class="col-sm-2 text-right p-3">
+                                    สถานะ
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" *ngFor="let data of mttopic_list; let i = index">
+                            <div class="row col-12 topic font-weight-bold">
+                                <div class="col-sm-1">
+                                    <!-- วาระ -->
+                                    {{ i + 1 }}
+                                </div>
+                                <div class="col-sm-5">
+                                    <!-- เรื่อง -->
+                                    {{data.topic_name}}
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <!-- วาระที่เสนอ -->
+                                    <a href="#">
+                                        <span class="badge badge-primary font-weight-bold p-3">
+                                            {{data.num_topic}}
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="col-sm-2 text-center">
+                                    <!-- ตรวจสอบ/พิจารณา -->
+                                    <a>
+                                        <span class="badge badge-primary p-2">
+                                            <i class="mdi mdi-file-document-box"></i></span>
+                                    </a>
+                                </div>
+                                <div class="col-sm-2 text-center">
+
+                                </div>
+                            </div>
+
+                            <div class="row" *ngFor="let datasub of data.sub_data; let i = index">
+                                <div class="row col-12 ml-5">
+                                    <div class="col-sm-1">
+                                        <!-- วาระ -->
+                                        {{ i + 1 }}
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <!-- เรื่อง -->
+                                        {{datasub.agendatopic_name}}
+                                    </div>
+                                    <div class="col-sm-2 text-center">
+                                        <!-- วาระที่เสนอ -->
+                                        <!-- <a href="#">
+                                            <span class="badge badge-primary font-weight-bold p-3">
+                                                {{datasub.num_topic}}
+                                            </span>
+                                        </a> -->
+                                    </div>
+                                    <div class="col-sm-2 text-center">
+                                        <!-- ตรวจสอบ/พิจารณา -->
+                                        <a href="#" data-toggle="modal" data-target="#checkconfirm-agenda">
+                                            <span class="badge badge-warning p-2 m-2"
+                                                (click)="onClickCheckTopic(datasub)">
+                                                <i class="mdi mdi-file-document-box"></i></span>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-2 text-right pr-4 pt-2">
+                                        <span class="badge badge-outline-success text-dark font-weight-bold" *ngIf="datasub.agendatopic_rstatus == 'Y'">
+                                            ผ่าน
+                                        </span>
+                                        <span class="badge badge-outline-danger text-dark font-weight-bold" *ngIf="datasub.agendatopic_rstatus == 'N'">
+                                            ไม่ผ่าน
+                                        </span>
+                                        <span class="badge badge-outline-warning text-dark font-weight-bold" *ngIf="datasub.agendatopic_rstatus == '1'">
+                                            รอตรวจสอบ
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- content-wrapper ends -->
+
+    <style>
+        .custom-modal-dialog {
+            max-width: 70%;
+            /* กำหนดความกว้างสูงสุด */
+            max-height: 600px;
+            /* กำหนดความสูงสูงสุด */
+        }
+    </style>
+
+    <div class="modal fade" id="checkconfirm-agenda" tabindex="-1" role="dialog"
+        aria-labelledby="checkConfirmAgendaSubModalLabel" aria-hidden="true">
+        <div class="modal-dialog custom-modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="checkConfirmAgendaSubModalLabel">ตรวจสอบ/พิจารณาวาระ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">{{open_title}}</h4>
+
+                                <form class="forms-sample" [formGroup]="topicForm">
+
+                                    <div class="form-group row">
+                                        <label for="outsider_fname" class="col-sm-3 col-form-label">กำหนดวาระย่อยที่: *
+                                        </label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="meeting_thetime"
+                                                [(ngModel)]="topic.agendatopic_no" formControlName="agendatopic_no"
+                                                placeholder="เช่น 1.1, ๑.๑">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="outsider_lname" class="col-sm-3 col-form-label">เรื่อง: *
+                                        </label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" id="agendatopic_name"
+                                                [(ngModel)]="topic.agendatopic_name" formControlName="agendatopic_name"
+                                                placeholder="เช่น ประธานแจ้งให้ที่ประชุมทราบ">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="outsider_lname" class="col-sm-3 col-form-label">ความเป็นมา:
+                                        </label>
+                                        <div class="col-sm-5">
+                                            <textarea class="form-control" id="agendatopic_origin"
+                                                [(ngModel)]="topic.agendatopic_origin"
+                                                formControlName="agendatopic_origin"
+                                                placeholder="ที่มาของประเด็นที่นำเสนอ"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="outsider_position"
+                                            class="col-sm-3 col-form-label">ข้อเสนอเพื่อพิจารณา:
+                                        </label>
+                                        <div class="col-sm-5">
+                                            <textarea class="form-control" id="agendatopic_offer"
+                                                [(ngModel)]="topic.agendatopic_offer"
+                                                formControlName="agendatopic_offer"
+                                                placeholder="ประเด็นที่ต้องการขออนุมัติ หรือ เห็นชอบ"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="outsider_phone"
+                                            class="col-sm-3 col-form-label">เอกสารการประชุมฉบับเต็ม:</label>
+                                        <div class="col-sm-3">
+                                            <a href="#" target="_blank" *ngIf="topic.agendatopic_doc != ''"
+                                                (click)="openAnyFile(topic.agendatopic_doc)">
+                                                <span class="badge badge-primary">
+                                                    <i class="mdi mdi-file-check"></i></span>
+                                            </a>
+                                            <a *ngIf="topic.agendatopic_doc == ''">
+                                                <span class="badge badge-secondary">
+                                                    <i class="mdi mdi-file-hidden"></i></span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="outsider_phone"
+                                            class="col-sm-3 col-form-label">ผู้ชี้แจงข้อสักถาม:</label>
+                                        <div class="col-sm-8">
+                                            <ul class="list-group">
+                                                <li *ngFor="let item of topic.data_foreman; let i = index"
+                                                    class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <span class="badge badge-info badge-pill">{{i
+                                                            + 1}}</span>
+                                                        {{item.foreman_name}}
+                                                    </div>
+                                                    <div>
+                                                        <span
+                                                            class="badge badge-primary badge-pill">{{item.position_work}}</span>
+
+                                                    </div>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="form-group d-flex "> -->
+                                    <!-- <label for="outsider_phone" class="col-sm-3 col-form-label">66</label> -->
+                                    <!-- <div class="col-auto"> -->
+                                    <div class="row text-center font-weight-bold">
+
+                                        <div class="col d-flex justify-content-center align-items-center">
+
+                                            <button type="button"
+                                                (click)="confirmCheckAgendaTopic(topic.agendatopic_code,'Y')"
+                                                class="btn btn-primary m-2 d-flex align-items-center justify-content-center"
+                                                data-dismiss="modal"><i class="mdi mdi-check-circle"></i>
+                                                ผ่านการตรวจสอบ</button>
+                                            <button type="button"
+                                                (click)="confirmCheckAgendaTopic(topic.agendatopic_code,'N')"
+                                                class="btn btn-warning d-flex align-items-center justify-content-center"
+                                                data-dismiss="modal">
+                                                <i class="mdi mdi-close-circle"></i> ไม่ผ่านการตรวจสอบ</button>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- </div> -->
+                                    <!-- </div> -->
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger d-flex align-items-center justify-content-center"
+                        data-dismiss="modal"><i class="mdi mdi-close-box"></i> ปิด</button>
+                </div>
+            </div>
+        </div>
+    </div>

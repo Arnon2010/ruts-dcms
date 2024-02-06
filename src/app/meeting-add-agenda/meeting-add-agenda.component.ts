@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { faUsers, faFilePen, faFilePdf, faCheckToSlot } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../services/api.service';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -25,6 +26,32 @@ export class MeetingAddAgendaComponent implements OnInit {
     { value: 'option2', label: 'Option 2' },
     // other options
   ];
+
+  todo = [
+    'Get to work',
+    'Pick up groceries',
+    'Go home',
+    'Fall asleep'
+  ];
+
+  done = [
+    'Get up',
+    'Brush teeth',
+    'Take a shower',
+    'Check e-mail',
+    'Walk dog'
+  ];
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+    }
+  }
   
 
   constructor(
@@ -40,6 +67,15 @@ export class MeetingAddAgendaComponent implements OnInit {
     this.form = this.fb.group({
       selectedValues: this.fb.array([]),
     });
+  }
+
+  fetchAgenda() {
+    this.http
+      .get(environment.baseUrl + '/_agenda_data.php') //ติดต่อไปยัง Api getfaculty.php
+      .subscribe((res: any) => { // ดึงข้อมูลในฟิลด์ fac_id, fac_name
+        //console.log(res);
+        this.agenda_list = res.data;
+      });
   }
 
   get selectedValues() {

@@ -1,0 +1,24 @@
+.card {
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(20px);
+}
+
+
+.topic {
+    padding: 16px;
+    background-color: rgba(50, 115, 220, 0.3);
+    border-color: rgb(82 82 91);
+}
+
+.even-row {
+    background-color: lightgray; /* สีพื้นหลังสำหรับแถวที่เป็นเลขคู่ */
+}
+
+.odd-row {
+    background-color: green;
+    opacity: 0.3; /* สีพื้นหลังสำหรับแถวที่เป็นเลขคี่ */
+}
+
+.card-title {
+    font-size: 12px;
+}

@@ -7,7 +7,7 @@
             <div class="col-md-12 grid-margin">
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-10">
-                        <h3 class="font-weight-bold">กำหนดสิทธิ์ผู้ใช้ (Users setting)</h3>
+                        <h4 class="font-weight-bold">กำหนดสิทธิ์ผู้ใช้ (Users setting)</h4>
                         <h6 class="font-weight-normal mb-0">All users <span class="text-primary"> <strong>{{total_row}}</strong></span>
                         </h6>
                     </div>
@@ -257,7 +257,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" [disabled]="!regisForm.valid" class="btn btn-primary" data-dismiss="modal" (click)="saveUser(user)"
+                    <button type="submit" [disabled]="!regisForm.valid" class="btn btn-primary" data-dismiss="modal" 
+                    (click)="saveUser(user, {fac_name:getFacultyName(user.faculty_code)})"
                     >ยืนยันเพิ่มผู้ใช้</button>
                 </div>
                

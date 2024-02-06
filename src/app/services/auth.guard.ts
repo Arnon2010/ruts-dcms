@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
             return true;
         } else {
             //this.authService.redirectUrl = routeurl;
-            this.router.navigate(['/login']);
+            this.router.navigate(['/auth']);
             console.log('login false');
            return false;
         }

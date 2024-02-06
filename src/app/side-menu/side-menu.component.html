@@ -1,0 +1,157 @@
+<!-- partial -->
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav" *ngIf="user_role == 'A'">
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/masteradmin']" routerLinkActive="router-link-active">
+                <i class="icon-grid menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-setting-meeting" aria-expanded="false"
+                aria-controls="ui-basic">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">ตั้งค่าการประชุม</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-setting-meeting">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/outsider']"
+                            routerLinkActive="router-link-active">ผู้ใช้งานภายนอก</a></li>
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/meeting-setting']">กำหนดชื่อการประชุม</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/user']" routerLinkActive="router-link-active">
+                <i class="icon-head menu-icon"></i>
+                <span class="menu-title">กำหนดสิทธิ์ผู้ใช้</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-set" aria-expanded="false" aria-controls="ui-basic">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">ตั้งค่าระบบ</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-set">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/position']"
+                            routerLinkActive="router-link-active">ตำแหน่งในที่ประชุม</a></li>
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/meeting-type']">ประเภทการจัดประชุม</a>
+                    </li>
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/meeting-agenda']">วาระการประชุม</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="pages/documentation/documentation.html">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">Documentation</span>
+            </a>
+        </li>
+    </ul>
+
+    <ul class="nav" *ngIf="user_role == 'F'">
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/home']" routerLinkActive="router-link-active">
+                <i class="icon-grid menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-setting-meeting" aria-expanded="false"
+                aria-controls="ui-basic">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">ตั้งค่าการประชุม</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-setting-meeting">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/outsider']"
+                        routerLinkActive="router-link-active">ผู้ใช้งานภายนอก</a></li>
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/meeting-setting']" 
+                        routerLinkActive="router-link-active">กำหนดชื่อการประชุม</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-prepare-meeting" aria-expanded="false"
+                aria-controls="ui-basic">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">เตรียมการประชุม</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-prepare-meeting">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/meeting-manage']"
+                        routerLinkActive="router-link-active">จัดการการประชุม</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-conduct-meeting" aria-expanded="false"
+                aria-controls="ui-basic">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">ดำเนินการประชุม</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-conduct-meeting">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/outsider']"
+                        routerLinkActive="router-link-active">บันทึกมติการประชุม</a></li>
+                </ul>
+            </div>
+        </li>
+        <!-- <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/outsider']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">ผู้ใช้งานภายนอก</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/meeting-setting']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">กำหนดชื่อการประชุม</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/outsider']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i> 
+                <span class="menu-title">จัดการการประชุม</span>
+            </a>
+        </li> -->
+        <!-- <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">บันทึกมติการประชุม</span>
+            </a>
+        </li> -->
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">รายละเอียดการประชุม</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">รายงานการประชุม</span>
+            </a>
+        </li>
+
+
+
+        <li class="nav-item">
+            <a class="nav-link" href="pages/documentation/documentation.html">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">Documentation</span>
+            </a>
+        </li>
+    </ul>
+</nav>
