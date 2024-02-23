@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>Install Angular</h2>
+<mat-dialog-content class="mat-typography">
+  <h3>Develop across all platforms</h3>
+  <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+    {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+  </button>
+  <mat-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="meetingForm">
+      <h4 class="card-title">ระบุข้อมูลการประชุม</h4>
+      <p>&nbsp;</p>
+      <form [formGroup]="meetingForm">
+        <ng-template matStepLabel>Fill out your name</ng-template>
+        <h4 class="card-title">ระบุข้อมูลการประชุม</h4>
+        <!-- <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+        </mat-form-field>
+        <h4>Basic mat-select</h4> -->
+        <mat-form-field>
+          <mat-label>ประเภทการประชุม</mat-label>
+          <mat-select
+          formControlName="type_code">            
+            <mat-option *ngFor="let item of type_list" [value]="item.type_code">{{item.type_name}}</mat-option>
+          </mat-select>
+          
+        </mat-form-field>
+
+        
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
+      <form [formGroup]="secondFormGroup">
+        <mat-form-field>
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
+      </div>
+    </mat-step>
+  </mat-stepper>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+</mat-dialog-actions>

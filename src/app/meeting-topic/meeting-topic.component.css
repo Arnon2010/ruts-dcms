@@ -1,0 +1,52 @@
+.display-topic {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.topic-head {
+    /* background-color: blanchedalmond; */
+    padding: 16px;
+    font-size: 20px;
+    font-weight: 800;
+    color: black;
+}
+
+.topic-content {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 16px;
+    /* background-color: azure; */
+}
+
+.modal-header {
+    background-color: RGB(152, 180, 212);
+}
+
+.modal-body {
+    background-color: #eff4ff;
+}
+
+.card-modal {
+    background-color: #eff4ff;
+}
+
+.card {
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    /* height: 300px;
+    width: 250px; */
+    background: linear-gradient(#bfc2c7, #e3e9ef);
+    box-shadow: 0px 6px 6px -3px rgba(0, 0, 0, 0.2), 0px 10px 14px 1px rgba(0, 0, 0, 0.14), 0px 4px 18px 3px rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+}
+
+.topic-title {
+    padding: 16px;
+    background-image: linear-gradient(to left, #c4c2ca, #99b0eb);
+    /* box-shadow: 0px 6px 6px -3px rgba(0, 0, 0, 0.2), 0px 10px 14px 1px rgba(0, 0, 0, 0.14), 0px 4px 18px 3px rgba(0, 0, 0, 0.12); */
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 0px;
+    margin-right: 0px;
+}

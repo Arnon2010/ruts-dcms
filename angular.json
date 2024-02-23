@@ -43,13 +43,13 @@
               "src/assets/vendors/mdi/css/materialdesignicons.min.css",
               "src/assets/vendors/css/vendor.bundle.base.css",
               "src/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css",
-              "src/assets/vendors/ti-icons/css/themify-icons.css",
               "src/assets/js/select.dataTables.min.css",
               "src/assets/vendors/select2/select2.min.css",
               "src/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css",
               "src/assets/css/vertical-layout-light/style.css",
               "node_modules/igniteui-angular/styles/igniteui-angular.css",
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/@angular/cdk/overlay-prebuilt.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -81,8 +81,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "8mb"
                 },
                 {
                   "type": "anyComponentStyle",

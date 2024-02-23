@@ -27,6 +27,14 @@ import { MeetingTimeComponent } from './meeting-time/meeting-time.component';
 import { AgendaManageComponent } from './agenda-manage/agenda-manage.component';
 import { AgencyTopicComponent } from './agency-topic/agency-topic.component';
 import { AgendaTopicComponent } from './agenda-topic/agenda-topic.component';
+import { AgendaTopicAdminComponent } from './agenda-topic-admin/agenda-topic-admin.component';
+import { MeetingSaveComponent } from './meeting-save/meeting-save.component';
+import { MeetingSaveTopicComponent } from './meeting-save-topic/meeting-save-topic.component';
+import { MeetingPrepareComponent } from './meeting-prepare/meeting-prepare.component';
+import { MeetingTimeManageComponent } from './meeting-time-manage/meeting-time-manage.component';
+import { AgendaComponent } from './agenda/agenda.component';
+import { HomeOutsiderComponent } from './home-outsider/home-outsider.component';
+import { MeetingTopicComponent } from './meeting-topic/meeting-topic.component';
 
 const routes: Routes = [
  
@@ -49,9 +57,26 @@ const routes: Routes = [
       { path: 'outsider', component: OutsiderComponent, canActivate: [AuthGuard]}, //เพิ่มผู้ใช้งานภายนอก
       { path: 'admin', component: MasteradminComponent, canActivate: [AuthGuard] }, // route ผู้ดูแลระบบ
       { path: 'meeting-manage', component: MeetingManageComponent, canActivate: [AuthGuard] }, // route ผู้ดูแลระบบ
-      { path: 'meeting-time/:id/:name', component: MeetingTimeComponent, canActivate: [AuthGuard] }, 
-      { path: 'agenda-manage/:open_code/:meeting_code', component: AgendaManageComponent, canActivate: [AuthGuard] }, 
-      { path: 'agenda-topic/:meeting_code', component: AgendaTopicComponent, canActivate: [AuthGuard] },  // เสนอวาระการประชุม
+      { path: 'meeting-time/:open_code/:open_title', component: MeetingTimeComponent, canActivate: [AuthGuard] }, 
+      { path: 'agenda-manage/:open_code/:meeting_code/:open_title', component: AgendaManageComponent, canActivate: [AuthGuard] }, 
+      
+      
+      { path: 'meeting-save', component: MeetingSaveComponent, canActivate: [AuthGuard] }, 
+      { path: 'meeting-save-topic/:open_code/:meeting_code/:open_title/:meeting_thetime', component: MeetingSaveTopicComponent, canActivate: [AuthGuard] }, 
+      { path: 'meeting-prepare', component: MeetingPrepareComponent, canActivate: [AuthGuard] }, 
+      { path: 'meeting-time-manage/:meeting_code/:open_code', component: MeetingTimeManageComponent, canActivate: [AuthGuard] }, 
+      
+      // การเสนอวาระ
+      { path: 'agenda-topic-admin/:meeting_code', component: AgendaTopicAdminComponent, canActivate: [AuthGuard] }, 
+      { path: 'agenda-topic/:meeting_code', component: AgendaTopicComponent, canActivate: [AuthGuard] }, //เสนอวาระตามวาระแต่ละข้อ
+      { path: 'agenda', component: AgendaComponent, canActivate: [AuthGuard] },  // การเสนอวาระการประชุม
+
+      // ผู้ใช้งานภายนอก
+      { path: 'home-outsider', component: HomeOutsiderComponent, canActivate: [AuthGuard] },  // การเสนอวาระการประชุม
+
+      // ผู้เข้าร่วมประชุม
+      { path: 'meeting-topic/:meeting_code/:open_code', component: MeetingTopicComponent, canActivate: [AuthGuard] }, 
+
     ]
   },
   // Auth Routes
@@ -70,6 +95,7 @@ const routes: Routes = [
       }
     ]
   },
+  
   //{ path: 'home', component: HomeComponent, canActivate: [AuthGuard]}, // route Home
   { path: 'report', component: ReportComponent, canActivate: [AuthGuard]}, // route report
   { path: 'loginrutsapp/:token', component: LoginrutsappComponent}, // route ไปหน้าหลักของนักศึกษา

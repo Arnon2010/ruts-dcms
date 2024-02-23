@@ -11,12 +11,12 @@ import { ApiService } from '../services/api.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {    
+export class LoginComponent implements OnInit {
   @ViewChild('sideMenu') sideMenu: ElementRef;
   // กำหนดฟอร์ม frmLogin โดยใช้ FormBuilder ซึ่งประกอบด้วยสองฟิลด์คือ std_id และ std_password 
   // โดยต้องมีการระบุ Validators ที่บังคับให้กรอกข้อมูลเสมอ
   title = 'RUTS Digital Conference Management System';
-  frmLogin = this.formBuilder.group({             
+  frmLogin = this.formBuilder.group({
     user_epassport: ['arnn.l', Validators.required],
     user_password: ['arnonrmutsv', Validators.required]
   });
@@ -30,12 +30,12 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private dataService: ApiService,
-  ) { 
-   
+  ) {
+
     // กำหนดค่าเริ่มต้นให้ sideMenu เป็น ElementRef
     this.sideMenu = {} as ElementRef;
 
-    
+
     //console.log(this.isLogin);
   }
 
@@ -45,36 +45,37 @@ export class LoginComponent implements OnInit {
     //   this.hideSideMenu();
     //   //this.sideMenu.nativeElement.style.display = 'none';
     // }
-   }
+  }
 
-   hideSideMenu() {
+  hideSideMenu() {
     // ซ่อน sidemenu โดยใช้ ViewChild
     console.log('ซ่อน sidemenu โดยใช้ ViewChild');
     this.sideMenu.nativeElement.style.display = 'none';
-    
   }
 
   login() {
+
+    this.user_epass = this.frmLogin.value.user_epassport;
+    this.user_password = this.frmLogin.value.user_password;
+
+    /** ADMIN เลขาจัดประชุม หน่วยงาน */
     this.http.post(environment.baseUrl + '/login_user.php', this.frmLogin.value).subscribe({ //ส่งค่าจาก Form ไป ตรวจสอบกับ API Login ติดต่อไปยัง Api login.php
       next: (data: any) => {
-        console.log('user: ', data); // เเสดงค่าใน consolen 
+        //console.log('user: ', data); // เเสดงค่าใน consolen 
         if (data.status == 'ok') {  //หากเข้าสู่ระบบสำเร็จ
           //this.getStudentData(res['std_id']); //รับค่า จำก std_id
           // elogin
-          this.user_epass = this.frmLogin.value.user_epassport;
-          this.user_password = this.frmLogin.value.user_password;
           this.dataService.eloginUser(this.user_epass, this.user_password, 'https://api.rmutsv.ac.th/elogin')
             .subscribe((res: any) => {
               //console.log(res.token);
               //if (res.status == "ok") {
                 localStorage.setItem('Token', JSON.stringify(data.row)); //เเละเก็บค่าที่ respond ไว้ใน localStorage Key ชื่อ Token 
                 if (data.row.user_role == 'F') {
-                  this.router.navigate(['home'], {}); // คณะ/วิทยาลัย
+                  this.router.navigate(['home'], { state: { 'test': '1' } }); // คณะ/วิทยาลัย
                 } else if (data.row.user_role == 'A') {
-                  
                   this.router.navigate(['admin'], {}); // ผู้ดูแลระบบ
                   //window.location.reload();
-                 
+
                 } else {
                   this.router.navigate(['user'], {}); // ผู้ใช้งาน
                 }
@@ -85,33 +86,61 @@ export class LoginComponent implements OnInit {
               // }
             });
         } else {
-          Swal.fire('ไม่มีสิทธิการเข้าใช้ระบบ กรุณาติดต่อกองพัฒนานักศึกษา !', '', 'error').then(() => {
-            //this.frmAdminLogin.reset();
+
+          /* login person ผู้เข้าร่วม */
+          // บุคคลภายนอก
+          this.http.post(environment.baseUrl + '/login_person.php', this.frmLogin.value).subscribe({ //ส่งค่าจาก Form ไป ตรวจสอบกับ API Login ติดต่อไปยัง Api login.php
+            next: (data: any) => {
+              //console.log('user: ', data); // เเสดงค่าใน consolen 
+              if (data.status == 'ok') {  //หากเข้าสู่ระบบสำเร็จ
+                localStorage.setItem('Token', JSON.stringify(data.row)); 
+                this.router.navigate(['home-outsider'], {}); // ผู้ใช้งานภายนอก
+              } else {
+                // บุคคลภายใน
+                this.dataService.eloginUser(this.user_epass, this.user_password, 'https://api.rmutsv.ac.th/elogin')
+                  .subscribe((res: any) => {
+                    //console.log(res.token);
+                    if (res.status == "ok") {
+                      localStorage.setItem('Token', JSON.stringify(res)); //เเละเก็บค่าที่ respond ไว้ใน localStorage Key ชื่อ Token 
+                      this.router.navigate(['home'], {}); // ผู้ใช้งาน
+                    } else {
+                      Swal.fire('เข้าสู่ระบบไม่สำเร็จ', '', 'error').then(() => {
+                        //this.frmAdminLogin.reset();
+                      });
+                    }
+                  });
+
+              }
+            }
           });
+
+          // Swal.fire('ไม่มีสิทธิการเข้าใช้ระบบ กรุณาติดต่อกองพัฒนานักศึกษา !', '', 'error').then(() => {
+          //   //this.frmAdminLogin.reset();
+          // });
         }
       }
     });
   }
 
-  getStudentDataSis(std_id:any): void {
+  getStudentDataSis(std_id: any): void {
     var data = {
       opt: 'sport',
       studentid: std_id
     }
     this.http.post('https://sis.rmutsv.ac.th/sis/api/pdo_mysql_arit.php', data)
-    .subscribe({ 
-      next: (res: any) => {
-        console.log('std data sis: ',res);
-        //this.updateFacultyId(res.data[0].facultyname, std_id);
-        localStorage.setItem('Token', JSON.stringify(res.data[0])); //เเละเก็บค่าที่ respond ไว้ใน localStorage Key ชื่อ Token 
-         // ดึงข้อมูลในฟิลด์ std_prefix, std_name, std_lastname, std_phone, std_email
-         //const { std_prefix, std_name, std_lastname, std_phone, std_email } = res;
-         const { std_prefix, std_name, std_lastname, std_phone, std_email } = res;
-         //this.router.navigate(['homestudent'], { queryParams: { id: '123' } });
-         this.router.navigate(['homestudent']);
-      
-      }
-    });
+      .subscribe({
+        next: (res: any) => {
+          console.log('std data sis: ', res);
+          //this.updateFacultyId(res.data[0].facultyname, std_id);
+          localStorage.setItem('Token', JSON.stringify(res.data[0])); //เเละเก็บค่าที่ respond ไว้ใน localStorage Key ชื่อ Token 
+          // ดึงข้อมูลในฟิลด์ std_prefix, std_name, std_lastname, std_phone, std_email
+          //const { std_prefix, std_name, std_lastname, std_phone, std_email } = res;
+          const { std_prefix, std_name, std_lastname, std_phone, std_email } = res;
+          //this.router.navigate(['homestudent'], { queryParams: { id: '123' } });
+          this.router.navigate(['homestudent']);
+
+        }
+      });
   }
 
   getStudentData(studentId: string): void {
@@ -133,8 +162,8 @@ export class LoginComponent implements OnInit {
   }
 
   updateFacultyId(fac_name: string, std_id: any) {
-      this.http.get(environment.baseUrl + '/updateFacultyId.php?fac_name=' + fac_name + '&std_id=' + std_id).subscribe((res:any)=>{
-        return res;
-      });
+    this.http.get(environment.baseUrl + '/updateFacultyId.php?fac_name=' + fac_name + '&std_id=' + std_id).subscribe((res: any) => {
+      return res;
+    });
   }
 }

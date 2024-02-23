@@ -1,26 +1,46 @@
-<app-navbar></app-navbar>
 <!-- partial -->
-<div class="container-fluid page-body-wrapper">
+<div class="container-fluid">
 
     <div class="content-wrapper">
+
         <div class="row">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a [routerLink]="['/home']">Home</a></li>
+                    <li class="breadcrumb-item active">
+                        <a [routerLink]="['/meeting-setting']">จัดการเรื่องประชุม </a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        {{open_title}}
+                    </li>
+                </ol>
+            </nav>
             <div class="col-md-12 grid-margin">
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                        <h6 class="font-weight-bold"><a [routerLink]="['/meeting-manage']"
-                                routerLinkActive="router-link-active">จัดการการประชุม >> </a> {{open_title}}</h6>
-                        <h6 class="font-weight-normal mb-0">&nbsp;</h6>
+                        <div class="verticals ten offset-by-one">
+                            <h4>เปิดการประชุมแต่ละครั้ง  
+                                <!-- <button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"
+                                data-toggle="modal" data-target="#addMeetingForm" data-whatever="@getbootstrap">
+                                <span class="badge badge-warning btn-rounded btn-icon"><i class="icon-circle-plus"></i></span>
+                            </button> -->
+                            <button type="button" class="btn btn-primary btn-rounded btn-icon"  
+                            data-toggle="modal" data-target="#addMeetingForm" data-whatever="@getbootstrap">
+                                <i class="mdi mdi-note-plus"></i>
+                              </button>
+                        </h4>
+                            <hr>
+                        </div>
                     </div>
                     <div class="col-12 col-xl-4">
                         <div class="justify-content-end d-flex">
                             <div class="add-items d-flex mb-0 mt-2">
-                                <input type="text" [(ngModel)]="searchText" (input)="onSearch()"
-                                    class="form-control todo-list-input" placeholder="ค้นหา">
-                                <input type="text" class="form-control todo-list-input"
-                                    placeholder="เพิ่มการประชุมแต่ละคร้ัง">
+                                <!-- 
+                                <input type="text" class="form-control todo-list-input" placeholder="เพิ่มการประชุม">
                                 <button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"
-                                    data-toggle="modal" data-target="#addMeetingForm" data-whatever="@getbootstrap"><i
-                                        class="icon-circle-plus"></i></button>
+                                    data-toggle="modal" data-target="#addMeetingForm" data-whatever="@getbootstrap">
+                                    <span class="badge badge-warning"><i class="icon-circle-plus"></i></span>
+                                </button> -->
                             </div>
                         </div>
                     </div>
@@ -32,20 +52,27 @@
             <div class="col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-title mb-0">รายการการจัดประชุม</p>
+                        <!-- <p class="card-title mb-0">การประชุมแต่ละคร้ัง</p>
+                        <p>&nbsp;</p> -->
+                        <h4 class="card-title">การประชุมแต่ละครั้ง</h4>
+                        <p class="card-description">
+                            รายการประชุมทั้งหมด <code>1</code>
+                        </p>
                         <div class="table-responsive">
                             <table class="table table-striped table-borderless">
                                 <thead>
                                     <tr>
                                         <th class="text-center">ลำดับ</th>
                                         <th>การประชุม</th>
-                                        <th class="text-center">จัดการ<br>วาระ</th>
+
+                                        <th class="text-center">ดำเนินการจัดประชุม</th>
                                         <th class="text-center">เพิ่มวาระ</th>
-                                        <th class="text-center">คณะกรรมการ<br>พิจารณาวาระ</th>
-                                        <th class="text-center">หน่วยงาน<br>เข้าร่วม</th>
-                                        
-                                        <th class="text-center">เผยแพร่</th>
-                                        <th class="text-center">พิมพ์<br>รายชื่อ</th>
+
+                                        <th class="text-center">เอกสาร</th>
+                                        <th class="text-center">สถานะ</th>
+                                        <th class="text-center">คัดลอก</th>
+                                        <!-- <th class="text-center">เผยแพร่</th>
+                                        <th class="text-center">พิมพ์<br>รายชื่อ</th> -->
                                         <th class="text-center">จัดการ</th>
 
 
@@ -56,82 +83,93 @@
                                         *ngFor="let data of filteredItems | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
                                         <td class="text-center">{{ i + (p - 1) * 10 + 1 }}</td>
                                         <td>
-                                            {{open_title}} {{data.meeting_thetime}} <br>
+                                            {{open_title}} ({{data.meeting_thetime}})<br>
                                             <small>{{data.meeting_sdate}} เวลา {{data.meeting_time}} น. ณ
                                                 {{data.meeting_location}}</small>
                                         </td>
-                                        <!--จัดการวาระ-->
+
+
+                                        <!--จัดการการประชุม-->
                                         <td class="text-center">
-                                            <a [routerLink]="['/agenda-manage/',data.open_code, data.meeting_code]"
-                                                routerLinkActive="router-link-active" data-toggle="modal"
-                                                data-target="#add-user-meeting">
+                                            <a href="#"
+                                                [routerLink]="['/meeting-time-manage',data.meeting_code,data.open_code]"
+                                                routerLinkActive="router-link-active">
                                                 <span class="badge badge-primary
-                                                "><i class="mdi mdi-format-list-bulleted"></i></span>
+                                                "><i class="mdi mdi-wrench"></i></span>
                                             </a>
                                         </td>
+
                                         <!--เพิ่มวาระ-->
                                         <td class="text-center">
-                                            <a [routerLink]="['/agenda-topic',data.meeting_code]"
+                                            <a [routerLink]="['/agenda-topic-admin',data.meeting_code]"
                                                 routerLinkActive="router-link-active">
                                                 <span class="badge badge-warning"><i
                                                         class="mdi mdi-library-plus"></i></span>
                                             </a>
                                         </td>
-                                        <!--คณะกรรมพิจราณาวาระ-->
+
+                                        <!--เอกสาร-->
                                         <td class="text-center">
-                                            <a href="#" data-toggle="modal" data-target="#add-consider-meeting"
-                                                (click)="onClickConsider(data.meeting_code)">
-                                                <span class="badge badge-primary
-                                                "><i class="mdi mdi-account-multiple-plus"></i></span>
+                                            <button class="btn-action" *ngIf="data.meeting_doc != ''"
+                                                (click)="openAnyFile(data.meeting_doc)">
+                                                <span class="badge badge-info">
+                                                    <i class="mdi mdi-file-check"></i> เอกสาร</span>
+                                            </button>
+                                            <a *ngIf="data.meeting_doc == ''">
+                                                <span class="badge badge-secondary">
+                                                    <i class="mdi mdi-file-hidden"></i></span>
                                             </a>
+
+                                            <!-- <a href="http://localhost/dcms-api/pdf/_create_agenda_topic.php?meeting_code=1" target="_blank">
+                                                <span class="badge badge-info">
+                                                    <i class="mdi mdi-file-check"></i></span>
+                                            </a> -->
                                         </td>
-                                        <!--หน่วยงานเข้าร่วม-->
-                                        <td class="text-center">
-                                            <a href="#" data-toggle="modal" data-target="#add-agency-meeting"
-                                                (click)="onClickAgency(data.meeting_code)">
-                                                <span class="badge badge-primary
-                                                "><i class="mdi mdi-account-multiple-plus"></i></span>
-                                            </a>
+
+                                        <td>
+                                            <!--สถานะ-->
+                                            <span class="badge badge-warning text-dark"
+                                                *ngIf="data.propose_code == '01'">
+                                                เสนอวาระ</span>
+
+                                            <span class="badge badge-secondary" *ngIf="data.propose_code == '02'">
+                                                ไม่เสนอวาระ</span>
                                         </td>
-                                        
-                                        <!--เผยแพร่-->
-                                        <td class="text-center">
-                                            <a [routerLink]="['/meeting-setting']" routerLinkActive="router-link-active"
-                                                data-toggle="modal" data-target="#add-user-meeting">
-                                                <span class="badge badge-primary"><i
-                                                        class="mdi mdi-newspaper"></i></span>
-                                            </a>
-                                        </td>
+
                                         <!--พิมพ์รายชื่อ-->
-                                        <td class="text-center">
+                                        <!-- <td class="text-center">
                                             <a [routerLink]="['/meeting-setting']" routerLinkActive="router-link-active"
                                                 data-toggle="modal" data-target="#myModal">
                                                 <span class="badge badge-primary"><i
                                                         class="mdi mdi-account-multiple"></i>
                                                 </span>
                                             </a>
-                                        </td>
-                                        <!--จัดการข้อมูล-->
+                                        </td> -->
+
+                                        <!--คัดลอก-->
                                         <td class="text-center">
-                                            <!--แก้ไข-->
-                                            <a [routerLink]="['/meeting-setting']" routerLinkActive="router-link-active"
-                                                data-toggle="modal" data-target="#myModal">
-                                                <span class="badge badge-warning m-2"><i
-                                                        class="mdi mdi-grease-pencil"></i>
-                                                </span>
-                                            </a>
-                                            <!--คัดลอก-->
-                                            <a [routerLink]="['/meeting-setting']" routerLinkActive="router-link-active"
-                                                data-toggle="modal" data-target="#myModal">
+                                            <button class="btn-action" data-toggle="modal"
+                                                (click)="copyMeeting(data.meeting_code)">
                                                 <span class="badge badge-primary m-2"><i
                                                         class="mdi mdi-content-copy"></i>
                                                 </span>
-                                            </a>
-                                            <!--ลบ-->
-                                            <a href="#">
-                                                <span class="badge badge-danger m-2"><i class="mdi mdi mdi-delete"></i>
+                                            </button>
+                                        </td>
+
+                                        <!--จัดการข้อมูล-->
+                                        <td class="text-center">
+                                            <!--แก้ไข-->
+                                            <button class="btn-action" data-toggle="modal" data-target="#addMeetingForm"
+                                                (click)="onClickEditMeeting(data)">
+                                                <span class="badge badge-warning"><i class="mdi mdi-grease-pencil"></i>
                                                 </span>
-                                            </a>
+                                            </button>
+
+                                            <!--ลบ-->
+                                            <button class="btn-action" (click)="removeMeeting(data.meeting_code)">
+                                                <span class="badge badge-danger"><i class="mdi mdi mdi-delete"></i>
+                                                </span>
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -165,8 +203,9 @@
         <div class="modal-dialog custom-modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addMeetingModalLabel">เพิ่มการประชุมแต่ละคร้ัง</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="addMeetingModalLabel">เพิ่มการประชุมแต่ละครั้ง</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        (click)="resetFormSubmit()">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -202,6 +241,23 @@
                                                 [(ngModel)]="meeting.meeting_sdate" formControlName="meeting_sdate"
                                                 placeholder="วัน/เดือน/ปี">
                                         </div>
+                                        <!-- <div class="col-sm-5">
+                                            <mat-form-field>
+                                                <input matInput [matDatepicker]="datepicker" placeholder="Select a date">
+                                                <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                                                <mat-datepicker #datepicker></mat-datepicker>
+                                              </mat-form-field>
+                                            <div class="input-group">
+                                                <input class="form-control" placeholder="dd/mm/yyyy" name="dpFromDate"
+                                                    formControlName="meeting_sdate" [(ngModel)]="meeting.meeting_sdate"
+                                                    ngbDatepicker #dpFromDate="ngbDatepicker" />
+                                                <button class="btn btn-outline-secondary bi bi-calendar3"
+                                                    (click)="dpFromDate.toggle()" type="button"></button>
+                                            </div>
+
+                                            <hr />
+                                            <pre>Model: {{meeting.meeting_sdate | json }}</pre>
+                                        </div> -->
                                     </div>
                                     <div class="form-group row">
                                         <label for="outsider_lname" class="col-sm-3 col-form-label">วันที่สิ้นสุดประชุม:
@@ -209,8 +265,18 @@
                                         <div class="col-sm-5">
                                             <input type="date" class="form-control" id="meeting_edate"
                                                 [(ngModel)]="meeting.meeting_edate" formControlName="meeting_edate"
-                                                placeholder="วัน/เดือน/ปี">
+                                                placeholder="วัน/เดือน/ปี"
+                                                (ngModelChange)="meeting.meeting_edate = $event">
                                         </div>
+                                        <!-- <div class="col-sm-5">
+                                            <div class="input-group">
+                                                <input class="form-control" placeholder="yyyy-mm-dd" name="dpToDate"
+                                                    formControlName="meeting_edate" [(ngModel)]="meeting.meeting_edate"
+                                                    ngbDatepicker #dpToDate="ngbDatepicker" />
+                                                <button class="btn btn-outline-secondary bi bi-calendar3"
+                                                    (click)="dpToDate.toggle()" type="button"></button>
+                                            </div>
+                                        </div> -->
                                     </div>
                                     <div class="form-group row">
                                         <label for="outsider_position" class="col-sm-3 col-form-label">เวลาเริ่มประชุม:
@@ -226,45 +292,67 @@
                                             class="col-sm-3 col-form-label">สถานที่ประชุม: *</label>
 
                                         <div class="col-sm-3">
-                                            <div class="form-check1">
-                                                <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input"
-                                                        [(ngModel)]="meeting.channel_code" name="channel_code"
-                                                        formControlName="channel_code" value="01" checked>
-                                                    Onsite
-                                                </label>
-                                            </div>
+                                            <select class="form-control" [(ngModel)]="meeting.channel_code"
+                                                name="channel_code" formControlName="channel_code">
+                                                <option *ngFor="let channel of channels" value="{{ channel.id }}">
+                                                    {{ channel.name }}
+                                                </option>
+                                            </select>
                                         </div>
-                                        <div class="col-sm-4">
-                                            <div class="form-check1">
-                                                <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input"
-                                                        [(ngModel)]="meeting.channel_code" name="channel_code"
-                                                        formControlName="channel_code" value="02">
-                                                    Online
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <label for="exampleInputConfirmPassword2"
-                                            class="col-sm-3 col-form-label">&nbsp;</label>
-                                        <div class="col-sm-8" *ngIf="meeting.channel_code == '01'">
+
+
+                                    </div>
+
+                                    <!--อาคาร/ห้องประชุม-->
+                                    <div class="form-group row"
+                                        *ngIf="meeting.channel_code == '1' || meeting.channel_code == '3'">
+                                        <label for="outsider_position" class="col-sm-3 col-form-label"></label>
+                                        <div class="col-sm-8">
                                             <input type="text" class="form-control"
                                                 [(ngModel)]="meeting.meeting_location" name="meeting_location"
                                                 formControlName="meeting_location" placeholder="อาคาร/ห้องประชุม">
                                         </div>
+                                    </div>
 
-                                        <div class="col-sm-8" *ngIf="meeting.channel_code == '02'">
+                                    <div class="form-group row"
+                                        *ngIf="meeting.channel_code == '2' || meeting.channel_code == '3'">
+                                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label"></label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control" [(ngModel)]="meeting.program_code"
+                                                name="program_code" formControlName="program_code">
+
+                                                <option *ngFor="let item of program_list"
+                                                    value="{{ item.program_code }}">
+                                                    โปรแกรม {{ item.program_name }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row"
+                                        *ngIf="meeting.channel_code == '2' || meeting.channel_code == '3'">
+                                        <label for="outsider_position" class="col-sm-3 col-form-label"></label>
+                                        <div class="col-sm-8">
                                             <input type="text" class="form-control" [(ngModel)]="meeting.meeting_link"
                                                 name="meeting_link" formControlName="meeting_link"
                                                 placeholder="Meeting Link">
                                         </div>
-                                        <label for="exampleInputConfirmPassword2"
-                                            class="col-sm-4 col-form-label">&nbsp;</label>
-                                        <div class="col-sm-3" *ngIf="meeting.channel_code == '02'">
+                                    </div>
+
+                                    <div class="form-group row"
+                                        *ngIf="meeting.channel_code == '2' || meeting.channel_code == '3'">
+                                        <label for="outsider_position" class="col-sm-3 col-form-label"></label>
+                                        <div class="col-sm-4">
                                             <input type="text" class="form-control" [(ngModel)]="meeting.meeting_id"
                                                 name="meeting_id" formControlName="meeting_id" placeholder="Meeting ID">
                                         </div>
-                                        <div class="col-sm-4" *ngIf="meeting.channel_code == '02'">
+                                    </div>
+
+                                    <div class="form-group row"
+                                        *ngIf="meeting.channel_code == '2' || meeting.channel_code == '3'">
+                                        <label for="outsider_position" class="col-sm-3 col-form-label"></label>
+                                        <div class="col-sm-4">
                                             <input type="text" class="form-control"
                                                 [(ngModel)]="meeting.meeting_passcode" name="meeting_passcode"
                                                 formControlName="meeting_passcode" placeholder="Meeting Passcode">
@@ -301,16 +389,23 @@
                                         <label for="exampleInputPassword2"
                                             class="col-sm-3 col-form-label">วันที่สิ้นสุดการเสนอวาระ:
                                             *</label>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-5">
                                             <input type="date" class="form-control" [(ngModel)]="meeting.meeting_fdate"
                                                 name="meeting_fdate" formControlName="meeting_fdate"
                                                 placeholder="วันสุดท้ายการเสนอวาระ">
+                                            <!-- <div class="input-group">
+                                                <input class="form-control" placeholder="yyyy-mm-dd" name="meeting_fdate"
+                                                    formControlName="meeting_fdate" [(ngModel)]="meeting.meeting_fdate"
+                                                    ngbDatepicker #fToDate="ngbDatepicker" />
+                                                <button class="btn btn-outline-secondary bi bi-calendar3"
+                                                    (click)="fToDate.toggle()" type="button"><i class="bi bi-calendar3"></i></button>
+                                            </div> -->
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="outsider_phone"
-                                            class="col-sm-3 col-form-label">เอกสารการประชุมฉบับเต็ม: *</label>
+                                            class="col-sm-3 col-form-label">เอกสารการประชุมฉบับเต็ม:</label>
                                         <div class="col-sm-3">
                                             <input type="file" class="form-control" id="meeting_doc"
                                                 (change)="onFileChange($event)" [(ngModel)]="meeting.meeting_doc"
@@ -319,11 +414,11 @@
                                     </div>
 
                                     <div>
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">ยกเลิก</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                            (click)="resetFormSubmit()">ยกเลิก</button>
                                         <button type="submit" [disabled]="!meetingForm.valid"
                                             class="btn btn-primary m-2" data-dismiss="modal"
-                                            (click)="saveMeeting(meeting)">บันทึก</button>
+                                            (click)="saveMeeting(meeting)">ยืนยันเพิ่มการประชุม</button>
                                     </div>
                                 </form>
                             </div>
@@ -331,7 +426,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                        (click)="resetFormSubmit()">ปิด</button>
                 </div>
             </div>
         </div>
@@ -411,14 +507,14 @@
         </div>
     </div>
 
-    <!-- เพิ่มผู้เข้าร่วมประชุม Add user meeting -->
+    <!-- เพิ่มคณะกรรมการพิจารณาวาระ Add user meeting -->
     <div class="modal fade" id="add-consider-meeting" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog md-modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><i
-                            class="mdi mdi-account-multiple-plus"></i>เพิ่มหน่วยงานเข้าร่วมประชุม</h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="mdi mdi-account-multiple-plus"></i>
+                        เพิ่มคณะกรรมการพิจารณาวาระ</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -436,7 +532,7 @@
                                                 <div class="col-sm-6">
                                                     <div class="ng-autocomplete">
                                                         <ng-autocomplete [data]="data_person" [searchKeyword]="keyword"
-                                                            placeholder="ค้นหาคณะกรรมการ"
+                                                            placeholder="ค้นหาคณะกรรมการพิจารณาวาระ"
                                                             (selected)='selectEvent($event)'
                                                             (inputChanged)='onChangeSearch($event)'
                                                             (inputFocused)='onFocused($event)'
@@ -512,6 +608,151 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ตั้งค่าการประชุม -->
+    <div class="modal fade" id="meeting-manage-time" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">จัดการข้อมูลการประชุม การเสนอวาระ
+                        การเพิ่มผู้เข้าร่วมประชุม</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        (click)="confirmDone(); stepper.reset()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col-md-12 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+
+                                            <mat-stepper headerPosition="top" #stepper>
+                                                <mat-step [stepControl]="firstFormGroup" labelPosition="bottom">
+                                                    <form [formGroup]="firstFormGroup">
+                                                        <ng-template matStepLabel>
+                                                            <mat-icon class="custom-icon">account_balance</mat-icon>
+                                                            <div style="font-size: 16px">หน่วยงานเข้าร่วมเสนอวาระ</div>
+                                                        </ng-template>
+                                                        <!-- Form Content -->
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <form class="forms-agency" name="forms-agency">
+                                                                    <div class="form-group row">
+                                                                        <label for="exampleInputUsername2"
+                                                                            class="col-sm-3 col-form-label">เลือกหน่วยงาน</label>
+                                                                        <div class="col-sm-7">
+                                                                            <select class="form-control"
+                                                                                [(ngModel)]="agencys.faculty_code"
+                                                                                name="faculty_code">
+                                                                                <option *ngFor="let item of FAClist"
+                                                                                    value="{{ item.FACULTY_CODE }}">
+                                                                                    {{ item.FACULTY_TNAME }}
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-sm-2">
+                                                                            <button type="submit"
+                                                                                (click)="addAgency({ code: agencys.faculty_code, name: getFacultyName(agencys.faculty_code) })"
+                                                                                class="btn btn-outline-primary">เพิ่ม</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+
+                                                                <div class="row">
+                                                                    <h2 class="card-title">
+                                                                        หน่วยงานเข้าร่วมเสนอระเบียบวาระ</h2>
+                                                                    <ul class="list-group">
+                                                                        <li *ngFor="let item of agency_list; let i = index"
+                                                                            class="list-group-item d-flex justify-content-between align-items-center">
+                                                                            <div>
+                                                                                <span
+                                                                                    class="badge badge-warning badge-pill">
+                                                                                    <strong>{{i+ 1}}</strong>
+                                                                                </span>
+                                                                                {{item.agency_name}}
+                                                                            </div>
+                                                                            <div>
+
+                                                                                <button
+                                                                                    (click)="removeAgency(item.agency_code, item.meeting_code)"
+                                                                                    class="btn btn-danger btn-sm">ลบ</button>
+                                                                            </div>
+                                                                        </li>
+
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </form>
+                                                </mat-step>
+                                                <mat-step [stepControl]="secondFormGroup" optional
+                                                    labelPosition="bottom">
+                                                    <form [formGroup]="secondFormGroup">
+                                                        <ng-template matStepLabel>
+                                                            <mat-icon
+                                                                style="width: 32px; height: 32px;">person</mat-icon>
+                                                            <!-- <mat-icon style="width: 32px; height: 32px;"><span class="badge badge-info">1</span></mat-icon> -->
+
+                                                            <div style="font-size: 16px">คณะกรรมการพิจารณาวาระ</div>
+                                                        </ng-template>
+                                                        <!-- Form Content -->
+                                                    </form>
+                                                </mat-step>
+                                                <mat-step [stepControl]="thirdFormGroup" optional
+                                                    labelPosition="bottom">
+                                                    <form [formGroup]="thirdFormGroup">
+                                                        <ng-template matStepLabel>
+                                                            <mat-icon style="width: 32px; height: 32px;">home</mat-icon>
+                                                            <!-- <mat-icon style="width: 32px; height: 32px;"><span class="badge badge-info">1</span></mat-icon> -->
+
+                                                            <div style="font-size: 16px">พิจารณาวาระ</div>
+                                                        </ng-template>
+                                                        <!-- Form Content -->
+                                                    </form>
+                                                </mat-step>
+                                                <mat-step [stepControl]="forFormGroup" optional labelPosition="bottom">
+                                                    <form [formGroup]="forFormGroup">
+
+                                                        <ng-template matStepLabel>
+                                                            <mat-icon
+                                                                style="width: 32px; height: 32px;">person</mat-icon>
+                                                            <div style="font-size: 16px">ผู้เข้าร่วมประชุม</div>
+                                                        </ng-template>
+                                                        <!-- Form Content -->
+                                                    </form>
+                                                </mat-step>
+                                                <mat-step labelPosition="bottom">
+                                                    <ng-template matStepLabel>
+                                                        <mat-icon style="width: 32px; height: 32px;">done_all</mat-icon>
+                                                        <div style="font-size: 12px">Done</div>
+                                                    </ng-template>
+                                                    <!-- Content of the last step -->
+                                                </mat-step>
+                                            </mat-stepper>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        (click)="confirmDone(); stepper.reset()">ปิด</button>
+                    <!-- <button type="submit" [disabled]="!regisForm.valid" class="btn btn-primary" data-dismiss="modal"
+                        (click)="saveUser(user)">ยืนยันเพิ่มผู้ใช้</button> -->
+                </div>
+
             </div>
         </div>
     </div>

@@ -6,9 +6,6 @@ import { faUsers, faFilePen, faFilePdf, faCheckToSlot } from '@fortawesome/free-
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../services/api.service';
 import Swal from 'sweetalert2';
-
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Observable } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
@@ -128,10 +125,16 @@ export class AgendaTopicComponent {
   }
 
   // Modal show person
-  personAdd(item: any) {
+  personAdd(item: any, topic_no: any, topic_name: any) {
     this.persons.agendatopic_code = item;
+    this.persons.topic_no = topic_no;
+    this.persons.topic_name = topic_name;
+
     this.fetchPerson(item);
     //this.fetchMtPosition(open_code);
+
+
+    console.log('foreman: ', this.persons);
   }
 
   // เพิ่มผู้เข้าร่วมชี้แจง
@@ -205,6 +208,10 @@ export class AgendaTopicComponent {
     });
   }
 
+  closeModalPerson() {
+    this.fetchAgendaTopic(this.meeting.open_code);
+  }
+
 
   // Fetch data meeting ประชุมแต่ละคร้ัง
 
@@ -273,7 +280,7 @@ export class AgendaTopicComponent {
     // Create form data for file upload
     const formData = new FormData();
     for (let i = 0; i < this.selectedFiles.length; i++) {
-      formData.append('agendatopic_doc[]', this.selectedFiles[i]);
+      formData.append('file_doc[]', this.selectedFiles[i]); //เอกสารแนบ
     }
 
     formData.append('user_id', this.user_id);
@@ -286,6 +293,7 @@ export class AgendaTopicComponent {
     formData.append('agendatopic_origin', this.topic.agendatopic_origin);
     formData.append('agendatopic_offer', this.topic.agendatopic_offer);
     formData.append('agendatopic_code', this.topic.agendatopic_code);
+    formData.append('agendatopic_doc', this.topic.agendatopic_doc);
     formData.append('action_submit', this.topic.action_submit);
 
     //console.log('save formData', formData);
@@ -349,14 +357,13 @@ export class AgendaTopicComponent {
     });
   }
 
-  // edit user
+  // edit 
   onClickUpdate(data: any) {
-    console.log('data update:', data);
+    console.log('topic update:', data);
     this.topic = data;
     this.topic.agendatopic_prarent = data.agendatopic_code; //หัวข้อวาระย่อยของ ?
     this.topic.action_submit = 'Update'; // Update ข้อมูล
   }
-
 
   openWindowWithUrl(url: string): void {
     const sanitizedUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
@@ -367,7 +374,7 @@ export class AgendaTopicComponent {
   }
 
   async openAnyFile(file_path: any) {
-    let path = environment.baseUrlUpload + file_path;
+    let path = environment.vieFile + file_path;
     //console.log(path);
     this.openWindowWithUrl(path);
   }

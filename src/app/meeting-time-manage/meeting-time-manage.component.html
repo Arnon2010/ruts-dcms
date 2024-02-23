@@ -1,0 +1,751 @@
+<!-- partial -->
+<div class="container-fluid page-body-wrapper">
+
+    <div class="content-wrapper">
+        <div class="row">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a [routerLink]="['/home']">Home</a></li>
+                    <li class="breadcrumb-item active">
+                        <a [routerLink]="['/meeting-setting']">จัดการเรื่องประชุม </a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a [routerLink]="['/meeting-time',open_code,open_title]">{{open_title}}</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        ดำเนินการจัดประชุม
+                    </li>
+                </ol>
+            </nav>
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <div class="verticals ten offset-by-one">
+                            <h5>ดำเนินการจัดการประชุม: <strong>{{open_title}} ครั้งที่ {{meeting.meeting_thetime}}</strong>
+
+                                <!-- <button type="button" class="btn btn-primary btn-rounded btn-icon" data-toggle="modal"
+                                    data-target="#addMeetingForm" data-whatever="@getbootstrap">
+                                    <i class="mdi mdi-note-plus"></i>
+                                </button> -->
+                            </h5>
+                            <hr>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <mat-stepper headerPosition="top" #stepper>
+                                        <mat-step [stepControl]="firstFormGroup" labelPosition="bottom">
+                                            <form [formGroup]="firstFormGroup">
+                                                <ng-template matStepLabel>
+                                                    <mat-icon class="custom-icon">account_balance</mat-icon>
+                                                    <div style="font-size: 16px">หน่วยงานเข้าร่วมเสนอวาระ</div>
+                                                </ng-template>
+                                                <!-- Form Content -->
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <form class="forms-agency" name="forms-agency">
+                                                            <div class="form-group row">
+                                                                <label for="exampleInputUsername2"
+                                                                    class="col-sm-3 col-form-label">เลือกหน่วยงาน</label>
+                                                                <div class="col-sm-7">
+                                                                    <select class="form-control"
+                                                                        [(ngModel)]="agencys.faculty_code"
+                                                                        name="faculty_code">
+                                                                        <option *ngFor="let item of FAClist"
+                                                                            value="{{ item.FACULTY_CODE }}">
+                                                                            {{ item.FACULTY_TNAME }}
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <button type="submit"
+                                                                        (click)="addAgency({ code: agencys.faculty_code, name: getFacultyName(agencys.faculty_code) })"
+                                                                        class="btn btn-outline-primary">เพิ่ม</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+
+                                                        <div class="row">
+                                                            <h2 class="card-title">
+                                                                หน่วยงานเข้าร่วมเสนอระเบียบวาระ</h2>
+                                                            <ul class="list-group">
+                                                                <li *ngFor="let item of agency_list; let i = index"
+                                                                    class="list-group-item d-flex justify-content-between align-items-center">
+                                                                    <div>
+                                                                        <span class="badge badge-warning badge-pill">
+                                                                            <strong>{{i+ 1}}</strong>
+                                                                        </span>
+                                                                        {{item.agency_name}}
+                                                                    </div>
+                                                                    <div>
+
+                                                                        <button
+                                                                            (click)="removeAgency(item.agency_code, item.meeting_code)"
+                                                                            class="btn btn-danger btn-sm">ลบ</button>
+                                                                    </div>
+                                                                </li>
+
+                                                            </ul>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between flex-row mb-5 mt-4">
+                                                            <button class="btn btn-outline-primary" matStepperPrevious>
+                                                                <i class="fa fa-angle-left"></i> กลับ
+                                                            </button>
+                                                            <button class="btn btn-warning" matStepperNext>
+                                                                ขั้นตอนถัดไป <i class="fa fa-angle-right"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </mat-step>
+                                        <mat-step [stepControl]="secondFormGroup" labelPosition="bottom">
+                                            <form [formGroup]="secondFormGroup">
+                                                <ng-template matStepLabel>
+                                                    <mat-icon style="width: 32px; height: 32px;">person</mat-icon>
+                                                    <!-- <mat-icon style="width: 32px; height: 32px;"><span class="badge badge-info">1</span></mat-icon> -->
+
+                                                    <div style="font-size: 16px">คณะกรรมการพิจารณาวาระ</div>
+                                                </ng-template>
+                                                <!-- Form Content -->
+                                                <div class="mt-4">
+                                                    <div class="row">
+                                                        <div class="col-md-12 grid-margin stretch-card">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <form class="forms-consider"
+                                                                        [formGroup]="considerForm"
+                                                                        name="forms-consider">
+                                                                        <div class="form-group row">
+                                                                            <label for="exampleInputUsername2"
+                                                                                class="col-sm-3 col-form-label">ค้นหา:</label>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="ng-autocomplete">
+                                                                                    <ng-autocomplete
+                                                                                        [data]="data_person"
+                                                                                        [searchKeyword]="keyword"
+                                                                                        placeholder="ค้นหาคณะกรรมการพิจารณาวาระ"
+                                                                                        (selected)='selectEvent($event)'
+                                                                                        (inputChanged)='onChangeSearch($event)'
+                                                                                        (inputFocused)='onFocused($event)'
+                                                                                        [itemTemplate]="itemTemplate"
+                                                                                        [notFoundTemplate]="notFoundTemplate"
+                                                                                        formControlName="person_id">
+                                                                                    </ng-autocomplete>
+
+                                                                                    <ng-template #itemTemplate let-item>
+                                                                                        <a [innerHTML]="item.name"></a>
+                                                                                    </ng-template>
+
+                                                                                    <ng-template #notFoundTemplate
+                                                                                        let-notFound>
+                                                                                        <div [innerHTML]="notFound">
+                                                                                        </div>
+                                                                                    </ng-template>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group row">
+                                                                            <label for="exampleInputUsername2"
+                                                                                class="col-sm-3 col-form-label">ตำแหน่ง</label>
+                                                                            <div class="col-sm-5">
+                                                                                <select class="form-control"
+                                                                                    [(ngModel)]="position_code"
+                                                                                    formControlName="position_code"
+                                                                                    name="position_code">
+                                                                                    <option
+                                                                                        *ngFor="let item of position_list"
+                                                                                        value="{{ item.position_code }}">
+                                                                                        {{ item.position_name }}
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                    <div class="form-group row">
+                                                                        <label for="exampleInputUsername2"
+                                                                            class="col-sm-3 col-form-label"></label>
+
+                                                                        <div class="col-sm-2">
+                                                                            <button type="submit"
+                                                                                [disabled]="!considerForm.valid"
+                                                                                (click)="addConsider(position_code, person.id, person.name)"
+                                                                                class="btn btn-outline-primary">เพิ่ม</button>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <h2 class="card-title">คณะกรรมการพิจารณาวาระ
+                                                                        </h2>
+                                                                        <ul class="list-group">
+                                                                            <li *ngFor="let item of consider_list; let i = index"
+                                                                                class="list-group-item d-flex justify-content-between align-items-center">
+                                                                                <div>
+                                                                                    <span
+                                                                                        class="badge badge-secondary badge-pill">{{i
+                                                                                        + 1}}</span>
+                                                                                    {{item.person_name}}
+                                                                                </div>
+                                                                                <div>
+                                                                                    <span
+                                                                                        class="badge badge-primary badge-pill">{{item.position_name}}</span>
+                                                                                    <button type="submit"
+                                                                                        (click)="removeConsider(item.consider_code, item.meeting_code)"
+                                                                                        class="btn btn-outline-danger btn-sm m-2">ลบ</button>
+                                                                                </div>
+
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+
+                                                                    <div
+                                                                        class="d-flex justify-content-between flex-row mb-5 mt-4">
+                                                                        <button class="btn btn-outline-primary"
+                                                                            matStepperPrevious>
+                                                                            <i class="fa fa-angle-left"></i> กลับ
+                                                                        </button>
+                                                                        <button class="btn btn-warning" matStepperNext>
+                                                                            ขั้นตอนถัดไป <i
+                                                                                class="fa fa-angle-right"></i>
+                                                                        </button>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </mat-step>
+                                        <mat-step [stepControl]="thirdFormGroup" labelPosition="bottom">
+                                            <form [formGroup]="thirdFormGroup">
+                                                <ng-template matStepLabel>
+                                                    <mat-icon style="width: 32px; height: 32px;">home</mat-icon>
+                                                    <!-- <mat-icon style="width: 32px; height: 32px;"><span class="badge badge-info">1</span></mat-icon> -->
+
+                                                    <div style="font-size: 16px">พิจารณาวาระ</div>
+                                                </ng-template>
+                                                <!-- Form Content -->
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <p class="card-title mb-0">ข้อเสนอวาระการประชุม</p>
+                                                                <br />
+
+                                                                <div class="row">
+                                                                    <div class="d-flex topic mb-3 font-weight-bold">
+                                                                        <div class="p-2">วาระที่</div>
+                                                                        <div class="mr-auto p-2">เรื่อง</div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <!-- วาระหลัก -->
+                                                                <div class="row"
+                                                                    *ngFor="let data of mttopic_list; let i = index">
+                                                                    <div class="d-flex topic font-weight-bold">
+                                                                        <div class="p-2">
+                                                                            <!-- วาระ -->
+                                                                            {{ i + 1 }}
+                                                                        </div>
+                                                                        <div class="mr-auto p-2">
+                                                                            <!-- เรื่อง -->
+                                                                            {{data.topic_name}}
+                                                                        </div>
+                                                                        <div class="p-2">
+                                                                            <!-- วาระที่เสนอ -->
+                                                                            <a>
+                                                                                <span
+                                                                                    class="badge badge-warning font-weight-bold p-1">
+                                                                                    <span
+                                                                                        class="badge badge-danger">{{data.num_topic}}</span>
+                                                                                </span>
+                                                                            </a>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <!-- วาระย่อย 1 -->
+                                                                    <div class="row ml-auto"
+                                                                        *ngFor="let datasub of data.sub_data; let i = index">
+                                                                        <div class="d-flex topic-sub-">
+                                                                            <div class="p-2">
+                                                                                <!-- วาระ -->
+                                                                                <span
+                                                                                    *ngIf="datasub.agendatopic_no != ''">
+                                                                                    {{datasub.agendatopic_no}}
+                                                                                </span>
+                                                                                <span
+                                                                                    *ngIf="datasub.agendatopic_no == ''">
+                                                                                    -
+                                                                                </span>
+
+                                                                            </div>
+                                                                            <div class="mr-auto p-2">
+                                                                                <!-- เรื่อง -->
+                                                                                {{datasub.agendatopic_name}}
+                                                                            </div>
+                                                                            <div class="p-2">
+                                                                                <!-- วาระที่เสนอ -->
+                                                                                <!-- <a href="#">
+                                                                                    <span class="badge badge-primary font-weight-bold p-3">
+                                                                                        {{datasub.num_topic}}
+                                                                                    </span>
+                                                                                </a> -->
+                                                                            </div>
+                                                                            <div class="p-2">
+                                                                                <!-- ตรวจสอบ/พิจารณา -->
+                                                                                <a href="#" data-toggle="modal"
+                                                                                    data-target="#checkconfirm-agenda">
+                                                                                    <span
+                                                                                        class="badge badge-primary p-2 m-2"
+                                                                                        (click)="onClickCheckTopic(datasub)">
+                                                                                        <i
+                                                                                            class="mdi mdi-file-document-box"></i>
+                                                                                        พิจารณา
+                                                                                    </span>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="p-2">
+                                                                                <span
+                                                                                    class="badge badge-outline-success text-dark font-weight-bold p-2 m-2"
+                                                                                    *ngIf="datasub.agendatopic_rstatus == 'Y'">
+                                                                                    <i class="mdi mdi-check"></i> ผ่าน
+                                                                                </span>
+                                                                                <span
+                                                                                    class="badge badge-outline-danger text-dark font-weight-bold p-2 m-2"
+                                                                                    *ngIf="datasub.agendatopic_rstatus == 'N'">
+                                                                                    <i class="mdi mdi-close"></i>
+                                                                                    ไม่ผ่าน
+                                                                                </span>
+                                                                                <span
+                                                                                    class="badge badge-outline-warning text-dark font-weight-bold p-2 m-2"
+                                                                                    *ngIf="datasub.agendatopic_rstatus == '1'">
+                                                                                    <i class="mdi mdi-timer-sand"></i>
+                                                                                    รอตรวจสอบ
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!-- วาระย่อย 2 -->
+                                                                        <div class="row ml-auto"
+                                                                            *ngFor="let datasub of datasub.data_sub2; let i = index">
+                                                                            <div class="d-flex topic-sub-">
+                                                                                <!-- วาระ -->
+                                                                                <div class="p-2">
+                                                                                    <span
+                                                                                        *ngIf="datasub.agendatopic_no != ''">
+                                                                                        {{datasub.agendatopic_no}}
+                                                                                    </span>
+                                                                                    <span
+                                                                                        *ngIf="datasub.agendatopic_no == ''">
+                                                                                        -
+                                                                                    </span>
+                                                                                </div>
+
+                                                                                <!-- เรื่อง -->
+                                                                                <div class="mr-auto p-2">
+                                                                                    {{datasub.agendatopic_name}}
+                                                                                </div>
+                                                                                <!-- ตรวจสอบ/พิจารณา -->
+                                                                                <div class="p-2">
+                                                                                    <a href="#" data-toggle="modal"
+                                                                                        data-target="#checkconfirm-agenda">
+                                                                                        <span
+                                                                                            class="badge badge-primary p-2 m-2"
+                                                                                            (click)="onClickCheckTopic(datasub)">
+                                                                                            <i
+                                                                                                class="mdi mdi-file-document-box"></i>
+                                                                                            พิจารณา
+                                                                                        </span>
+                                                                                    </a>
+                                                                                </div>
+                                                                                <!-- สถานะ-->
+                                                                                <div class="p-2">
+
+                                                                                    <span
+                                                                                        class="badge badge-outline-success text-dark font-weight-bold p-2 m-2"
+                                                                                        *ngIf="datasub.agendatopic_rstatus == 'Y'">
+                                                                                        <i class="mdi mdi-check"></i>
+                                                                                        ผ่าน
+                                                                                    </span>
+                                                                                    <span
+                                                                                        class="badge badge-outline-danger text-dark font-weight-bold p-2 m-2"
+                                                                                        *ngIf="datasub.agendatopic_rstatus == 'N'">
+                                                                                        <i
+                                                                                            class="mdi mdi-close"></i>
+                                                                                        ไม่ผ่าน
+                                                                                    </span>
+                                                                                    <span
+                                                                                        class="badge badge-outline-warning text-dark font-weight-bold p-2 m-2"
+                                                                                        *ngIf="datasub.agendatopic_rstatus == '1'">
+                                                                                        <i
+                                                                                            class="mdi mdi-timer-sand"></i>
+                                                                                        รอตรวจสอบ
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div
+                                                                    class="d-flex justify-content-between flex-row mb-5 mt-4">
+                                                                    <button class="btn btn-outline-primary"
+                                                                        matStepperPrevious>
+                                                                        <i class="fa fa-angle-left"></i> กลับ
+                                                                    </button>
+                                                                    <button class="btn btn-warning" matStepperNext>
+                                                                        ขั้นตอนถัดไป <i class="fa fa-angle-right"></i>
+                                                                    </button>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </mat-step>
+                                        <mat-step [stepControl]="forFormGroup" labelPosition="bottom">
+                                            <form [formGroup]="forFormGroup">
+
+                                                <ng-template matStepLabel>
+                                                    <mat-icon style="width: 32px; height: 32px;">person</mat-icon>
+                                                    <div style="font-size: 16px">ผู้เข้าร่วมประชุม</div>
+                                                </ng-template>
+                                                <!-- Form Content -->
+                                                <div class="mt-4">
+                                                    <div class="row">
+                                                        <div class="col-md-12 grid-margin stretch-card">
+                                                            <div class="card">
+                                                                <!-- <div class="card-title">
+                                                                    <h4 class="card-title">:: คณะกรรมการพิจารณาวาระ</h4>
+                                                                </div> -->
+                                                                <div class="card-body">
+                                                                    <form class="forms-person" [formGroup]="personForm"
+                                                                        name="forms-person">
+                                                                        <div class="form-group row">
+                                                                            <label for="exampleInputUsername2"
+                                                                                class="col-sm-3 col-form-label">บุคคลกร</label>
+                                                                            <div class="col-sm-3">
+                                                                                <div class="form-check1 ml-3">
+                                                                                    <label class="form-check-label">
+                                                                                        <input type="radio"
+                                                                                            class="form-check-input"
+                                                                                            [(ngModel)]="persons.person_type"
+                                                                                            name="person_type"
+                                                                                            formControlName="person_type"
+                                                                                            value="1" checked>
+                                                                                        ภายใน
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-3">
+                                                                                <div class="form-check1 ml-2">
+                                                                                    <label class="form-check-label">
+                                                                                        <input type="radio"
+                                                                                            class="form-check-input"
+                                                                                            [(ngModel)]="persons.person_type"
+                                                                                            name="person_type"
+                                                                                            formControlName="person_type"
+                                                                                            value="2">
+                                                                                        ภายนอก
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <style>
+                                                                            .ng-autocomplete {
+                                                                                width: 100%;
+                                                                            }
+                                                                        </style>
+
+                                                                        <div class="form-group row">
+                                                                            <label for="exampleInputUsername2"
+                                                                                class="col-sm-3 col-form-label">ค้นหา:</label>
+                                                                            <div class="col-sm-5">
+                                                                                <div class="ng-autocomplete">
+                                                                                    <ng-autocomplete
+                                                                                        [data]="data_person"
+                                                                                        [searchKeyword]="keyword"
+                                                                                        placeholder="ผู้เข้าร่วมประชุม"
+                                                                                        (selected)='selectEvent($event)'
+                                                                                        (inputChanged)='onChangeSearch($event)'
+                                                                                        (inputFocused)='onFocused($event)'
+                                                                                        [itemTemplate]="itemTemplate"
+                                                                                        [notFoundTemplate]="notFoundTemplate"
+                                                                                        formControlName="person_id">
+                                                                                    </ng-autocomplete>
+
+                                                                                    <ng-template #itemTemplate let-item>
+                                                                                        <a [innerHTML]="item.name"></a>
+                                                                                    </ng-template>
+
+                                                                                    <ng-template #notFoundTemplate
+                                                                                        let-notFound>
+                                                                                        <div [innerHTML]="notFound">
+                                                                                        </div>
+                                                                                    </ng-template>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group row">
+                                                                            <label for="exampleInputUsername2"
+                                                                                class="col-sm-3 col-form-label">ตำแหน่ง</label>
+                                                                            <div class="col-sm-5">
+                                                                                <select class="form-control"
+                                                                                    [(ngModel)]="persons.mtposition_code"
+                                                                                    formControlName="mtposition_code"
+                                                                                    name="mtposition_code">
+                                                                                    <option
+                                                                                        *ngFor="let item of mtposition_list"
+                                                                                        value="{{ item.mtposition_code }}">
+                                                                                        {{ item.mtposition_name }}
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group row">
+                                                                            <label for="exampleInputUsername2"
+                                                                                class="col-sm-3 col-form-label"></label>
+
+                                                                            <div class="col-sm-2">
+                                                                                <button type="button"
+                                                                                    [disabled]="!personForm.valid"
+                                                                                    (click)="addPerson(persons, person.id, person.name)"
+                                                                                    class="btn btn-outline-primary">เพิ่มผู้เข้าร่วม</button>
+                                                                            </div>
+
+                                                                            <div class="col-sm-2">
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row">
+                                                                            <h2 class="card-title">ผู้เข้าร่วมประชุม
+                                                                            </h2>
+                                                                            <ul class="list-group">
+                                                                                <li *ngFor="let item of person_list; let i = index"
+                                                                                    class="list-group-item d-flex justify-content-between align-items-center">
+                                                                                    <div>
+                                                                                        <span
+                                                                                            class="badge badge-secondary badge-pill">{{i
+                                                                                            + 1}}</span>
+                                                                                        {{item.person_name}}
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        <span
+                                                                                            class="badge badge-primary badge-pill">{{item.mtposition_name}}</span>
+                                                                                        <button type="button"
+                                                                                            (click)="delPerson(item)"
+                                                                                            class="btn btn-outline-danger btn-sm m-2">ลบ</button>
+                                                                                    </div>
+
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+
+                                                                    </form>
+
+                                                                    <div
+                                                                        class="d-flex justify-content-between flex-row mb-5 mt-4">
+                                                                        <button class="btn btn-outline-primary"
+                                                                            matStepperPrevious>
+                                                                            <i class="fa fa-angle-left"></i> กลับ
+                                                                        </button>
+                                                                        <button class="btn btn-warning" matStepperNext>
+                                                                            ถัดไป <i
+                                                                                class="fa fa-angle-right"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </mat-step>
+                                        <mat-step labelPosition="bottom">
+                                            <ng-template matStepLabel>
+                                                <mat-icon style="width: 32px; height: 32px;">done_all</mat-icon>
+                                                <div style="font-size: 12px">เสร็จสิ้น</div>
+                                            </ng-template>
+                                            <!-- Content of the last step -->
+                                        </mat-step>
+                                    </mat-stepper>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- content-wrapper ends -->
+
+    <style>
+        .custom-modal-dialog {
+            max-width: 70%;
+            /* กำหนดความกว้างสูงสุด */
+            max-height: 600px;
+            /* กำหนดความสูงสูงสุด */
+        }
+    </style>
+
+    <div class="modal fade" id="checkconfirm-agenda" tabindex="-1" role="dialog"
+        aria-labelledby="checkConfirmAgendaSubModalLabel" aria-hidden="true">
+        <div class="modal-dialog custom-modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="checkConfirmAgendaSubModalLabel">ตรวจสอบ/พิจารณาวาระ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">{{open_title}}</h4>
+
+                                <form class="forms-sample" [formGroup]="topicForm">
+
+                                    <div class="form-group row">
+                                        <label for="outsider_fname" class="col-sm-3 col-form-label">กำหนดวาระย่อยที่: *
+                                        </label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="meeting_thetime"
+                                                [(ngModel)]="topic.agendatopic_no" formControlName="agendatopic_no"
+                                                placeholder="เช่น 1.1, ๑.๑">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="outsider_lname" class="col-sm-3 col-form-label">เรื่อง: *
+                                        </label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" id="agendatopic_name"
+                                                [(ngModel)]="topic.agendatopic_name" formControlName="agendatopic_name"
+                                                placeholder="เช่น ประธานแจ้งให้ที่ประชุมทราบ">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="outsider_lname" class="col-sm-3 col-form-label">ความเป็นมา:
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <textarea class="form-control" id="agendatopic_origin" rows="5"
+                                                [(ngModel)]="topic.agendatopic_origin"
+                                                formControlName="agendatopic_origin"
+                                                placeholder="ที่มาของประเด็นที่นำเสนอ"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="outsider_position"
+                                            class="col-sm-3 col-form-label">ข้อเสนอเพื่อพิจารณา:
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <textarea class="form-control" id="agendatopic_offer" rows="5"
+                                                [(ngModel)]="topic.agendatopic_offer"
+                                                formControlName="agendatopic_offer"
+                                                placeholder="ประเด็นที่ต้องการขออนุมัติ หรือ เห็นชอบ"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="outsider_phone"
+                                            class="col-sm-3 col-form-label">เอกสารการประชุมฉบับเต็ม:</label>
+                                        <div class="col-sm-3">
+                                            <button class="btn btn-light" *ngIf="topic.agendatopic_doc != ''"
+                                                (click)="openAnyFile(topic.agendatopic_doc)">
+                                                <span class="badge badge-primary">
+                                                    <i class="mdi mdi-file-check"></i></span>
+                                            </button>
+                                            <!-- <a href="#" target="_blank" *ngIf="topic.agendatopic_doc != ''"
+                                            (click)="openAnyFile(topic.agendatopic_doc)">
+                                            <span class="badge badge-primary">
+                                                <i class="mdi mdi-file-check"></i></span>
+                                        </a> -->
+                                            <a *ngIf="topic.agendatopic_doc == ''">
+                                                <span class="badge badge-secondary">
+                                                    <i class="mdi mdi-file-hidden"></i></span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="outsider_phone"
+                                            class="col-sm-3 col-form-label">ผู้ชี้แจงข้อสักถาม:</label>
+                                        <div class="col-sm-8">
+                                            <ul class="list-group">
+                                                <li *ngFor="let item of topic.data_foreman; let i = index"
+                                                    class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <span class="badge badge-info badge-pill">{{i
+                                                            + 1}}</span>
+                                                        {{item.foreman_name}}
+                                                    </div>
+                                                    <div>
+                                                        <span
+                                                            class="badge badge-primary badge-pill">{{item.position_work}}</span>
+
+                                                    </div>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="form-group d-flex "> -->
+                                    <!-- <label for="outsider_phone" class="col-sm-3 col-form-label">66</label> -->
+                                    <!-- <div class="col-auto"> -->
+                                    <div class="row text-center font-weight-bold">
+
+                                        <div class="col d-flex justify-content-center align-items-center">
+
+                                            <button type="button" (click)="confirmCheckAgendaTopic(topic,'Y')"
+                                                class="btn btn-primary m-2 d-flex align-items-center justify-content-center"
+                                                data-dismiss="modal"><i class="mdi mdi-check-circle"></i>
+                                                ผ่านการพิจารณา</button>
+                                            <button type="button" (click)="confirmCheckAgendaTopic(topic,'N')"
+                                                class="btn btn-warning d-flex align-items-center justify-content-center"
+                                                data-dismiss="modal">
+                                                <i class="mdi mdi-close-circle"></i> ไม่ผ่านการพิจารณา</button>
+                                        </div>
+
+
+                                    </div>
+                                    <!-- </div> -->
+                                    <!-- </div> -->
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger d-flex align-items-center justify-content-center"
+                        data-dismiss="modal"><i class="mdi mdi-close-box"></i> ปิด</button>
+                </div>
+            </div>
+        </div>
+    </div>

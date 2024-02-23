@@ -16,6 +16,7 @@ export class FaculutyWebManagementComponent implements OnInit {
   faFilePen = faFilePen;
   faFilePdf = faFilePdf;
   faCheckToSlot = faCheckToSlot;
+  
   userData: any;
   capData: any;
   result: any;

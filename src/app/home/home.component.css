@@ -21,3 +21,27 @@ th {
         padding: 6px;
     }
 }
+
+.circle-0 {
+    display: inline-table;
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    background-color: #bbb;
+    border-radius: 50%;
+  }
+
+.circle-1 {
+    display: inline-table;
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    background-color: #f03f1c;
+    border-radius: 50%;
+  }
+  
+  .circle__content {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+  }

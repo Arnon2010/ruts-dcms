@@ -1,8 +1,61 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;500;600&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;500;600&display=swap');
 
 * {
     font-family: 'Noto Sans Thai', sans-serif;
-  }
+  } */
+
+body {
+    /* background-image: linear-gradient(to right, #2b8196, #a8c0ff); */
+    /* background-image: url("assets/images/bg-1.jpg"); */
+    background-image: url("assets/images/bg-2.jpg");
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(20px);
+}
+
+
+.topic {
+    padding: 16px;
+    background-color: rgba(16, 99, 233, 0.3);
+    border-color: rgb(82 82 91);
+}
+
+.topic-sub-1 {
+    padding: 10px;
+    background-color: rgba(126, 170, 240, 0.3);
+    border-color: rgb(82 82 91);
+}
+
+.topic-sub-2 {
+    padding: 5px;
+    background-color: rgba(112, 150, 212, 0.3);
+    border-color: rgb(82 82 91);
+}
+
+.even-row {
+    background-color: lightgray;
+    /* สีพื้นหลังสำหรับแถวที่เป็นเลขคู่ */
+}
+
+.odd-row {
+    background-color: green;
+    opacity: 0.3;
+    /* สีพื้นหลังสำหรับแถวที่เป็นเลขคี่ */
+}
+
+.sub2-row1 {
+    background-color: rgb(239, 245, 239);
+    opacity: 0.8;
+    /* สีพื้นหลังสำหรับแถวที่เป็นเลขคี่ */
+    margin: auto;
+}
+
+.card-title {
+    font-size: 12px;
+}
+
 
 .custom-modal-dialog {
     max-width: 70%;
@@ -24,10 +77,34 @@
     max-height: 600px;
     /* กำหนดความสูงสูงสุด */
 }
+
 /** icon mdi */
 i.mdi {
-    font-size: 24px; /* ปรับขนาดตามที่ต้องการ */
-   
-  }
+    font-size: 20px;
+    /* ปรับขนาดตามที่ต้องการ */
 
+}
 
+/** icon mdi */
+i.mdi-menu {
+    font-size: 16px;
+    /* ปรับขนาดตามที่ต้องการ */
+
+}
+
+.btn-action {
+    border: 0cap;
+    background-color: transparent;
+}
+
+.badge:hover {
+    background-color: rgba(255, 0, 0, 0.4);
+}
+
+.font-action {
+    font-size: 16px;
+}
+
+.font-status {
+    font-size: 14px;
+}

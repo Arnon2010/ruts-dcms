@@ -1,4 +1,3 @@
-<app-navbar></app-navbar>
 <!-- partial -->
 <div class="container-fluid page-body-wrapper">
 
@@ -7,7 +6,7 @@
             <div class="col-md-12 grid-margin">
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                        <h3 class="font-weight-bold">ผู้ใช้งานภายนอก (Outsider users)</h3>
+                        <h4 class="font-weight-bold">ผู้ใช้งานภายนอก (Outsider users)</h4>
                         <h6 class="font-weight-normal mb-0">All users <span class="text-primary">
                                 <strong>{{total_row}}</strong></span>
                         </h6>
@@ -74,7 +73,8 @@
                                         <td>
                                             <a href="#" (click)="onClickEditUser(user)" data-toggle="modal"
                                             data-target="#addUserForm" data-whatever="@getbootstrap">
-                                                <span class="badge badge-warning"><i class="ti-file btn-icon-append"></i> แก้ไข</span>
+                                            <span class="badge badge-warning"><i class="mdi mdi-grease-pencil"></i> แก้ไข
+                                            </span>
                                             </a>
                                         </td>
                                         <td>
@@ -120,7 +120,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addUserModalLabel">เพิ่มผู้ใช้งานภายนอก</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -210,7 +210,7 @@
 
                                     <div>
                                         <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">ยกเลิก</button>
+                                            data-dismiss="modal" (click)="onClickClearForm()">ยกเลิก</button>
                                         <button type="submit" [disabled]="!outsiderForm.valid" class="btn btn-primary m-2"
                                             data-dismiss="modal" (click)="saveOutsider(user)">ยืนยันเพิ่มบุคคลภายนอก</button>
                                     </div>
@@ -220,7 +220,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onClickClearForm()">ปิด</button>
                 </div>
             </div>
         </div>

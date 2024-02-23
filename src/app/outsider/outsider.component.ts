@@ -16,6 +16,7 @@ export class OutsiderComponent {
   outsiderForm!: FormGroup;
 
   user:any = {};
+  userForm:any = {};
 
   p: number = 1;
   collection: any = [];
@@ -26,6 +27,8 @@ export class OutsiderComponent {
   searchText: any;
   total_row: any;
   prefix_list: any;
+  fac_code: any;
+  user_id: any;
 
   constructor(
     private http: HttpClient,
@@ -48,9 +51,18 @@ export class OutsiderComponent {
   }
 
   ngOnInit(): void {
+    this.getUser();
     this.getPrefix();
-    this.fetchDataOutsider();
+    this.fetchOutsider();
     this.user.action_submit = 'Insert';
+  }
+
+  getUser(): void {
+    const Token: any = localStorage.getItem('Token');
+    this.userData = JSON.parse(Token);
+    console.log('user:, ', this.userData);
+    this.fac_code = this.userData.faculty_code;
+    this.user_id = this.userData.user_id;
   }
 
   onSearch() {
@@ -88,10 +100,10 @@ export class OutsiderComponent {
       });
   }
 
-  fetchDataOutsider() {
+  fetchOutsider() {
     this.http
-      .get(environment.baseUrl + '/_outsider_data.php') //ติดต่อไปยัง Api getfaculty.php
-      .subscribe((res: any) => { // ดึงข้อมูลในฟิลด์ fac_id, fac_name
+      .get(environment.baseUrl + '/_outsider_data.php?faculty_code=' + this.fac_code) 
+      .subscribe((res: any) => {
         //console.log(res);
         this.users = res.data;
         this.filteredItems = res.data;
@@ -100,9 +112,11 @@ export class OutsiderComponent {
       });
   }
 
-  // Add and Update User.
+  // เพิ่มผู้ใช้งานภายนอก
   saveOutsider(item:any) {
     this.user = item;
+    this.user.faculty_code = this.fac_code;
+    this.user.user_id = this.user_id;
     //console.log('test adduser', this.user);
     this.http.post(environment.baseUrl + '/_outsider_add.php', this.user).subscribe(
       (response:any) => {
@@ -110,7 +124,8 @@ export class OutsiderComponent {
         if(response.status == 'Ok') {
           Swal.fire('บันทึกข้อมูลสำเร็จ', '', 'success').then(() => {
             // get users
-            this.fetchDataOutsider();
+            this.fetchOutsider();
+            this.outsiderForm.reset();
           })
         }        
       },
@@ -146,7 +161,7 @@ export class OutsiderComponent {
             //console.log(response);
             if(res.status == 'Ok') {
               Swal.fire('ลบข้อมูลเรียบร้อย!', '', 'success').then(() => {
-                this.fetchDataOutsider();
+                this.fetchOutsider();
                })
             }
           },
@@ -168,5 +183,12 @@ export class OutsiderComponent {
     this.user = data;
     this.user.outsider_code = data.outsider_code; // id user
     this.user.action_submit = 'Update'; // Update ข้อมูล
+
+    console.log('outsiderForm: ',this.outsiderForm);
+  }
+
+  onClickClearForm() {
+    this.outsiderForm.reset();
+    this.fetchOutsider();
   }
 }

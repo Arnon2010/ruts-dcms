@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {  FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -7,8 +7,13 @@ import { ApiService } from '../services/api.service';
 import Swal from 'sweetalert2';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Observable } from 'rxjs';
-import { DomSanitizer } from '@angular/platform-browser';
-
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatInputModule } from '@angular/material/input';
 
 
 @Component({
@@ -35,7 +40,7 @@ export class MeetingSettingComponent implements OnInit {
   options: string[] = ['Option 1', 'Option 2', 'Option 3'];
   filteredOptions!: Observable<string[]>;
 
-  isLinear = false;
+  isLinear = true;
 
   title = 'stepper';
   meetingForm!: FormGroup;
@@ -99,6 +104,7 @@ export class MeetingSettingComponent implements OnInit {
   isLogin: boolean | Observable<boolean>;
   open: any = {};
   image: any;
+  open_file: any;
   positions: any = {};
   fac_code: any;
   user_id: any;
@@ -109,13 +115,14 @@ export class MeetingSettingComponent implements OnInit {
     private router: Router,
     private dataService: ApiService,
     private sanitizer: DomSanitizer,
+    public dialog: MatDialog
   ) {
     this.isLogin = this.dataService.isLoggedIn();
     this.meetingForm = this.fb.group({
       type_code: ['1', Validators.required],
       open_title: ['', Validators.required],
-      open_order: ['', Validators.required],
-      open_path: ['', Validators.required],
+      open_order: ['', Validators.nullValidator],
+      open_path: ['', Validators.nullValidator],
       open_year: ['', Validators.required],
     });
 
@@ -152,12 +159,64 @@ export class MeetingSettingComponent implements OnInit {
     this.meeting.user_id = this.user_id;
   }
 
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogFormOpenDialog);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
   getUser(): void {
     const Token: any = localStorage.getItem('Token');
     this.userData = JSON.parse(Token);
     console.log('user:, ', this.userData);
     this.fac_code = this.userData.faculty_code;
     this.user_id = this.userData.user_id;
+  }
+
+  fetchDocument(fileUrl: any) {
+    //pass document url to the service
+    return this.http.post(
+      `http://localhost:3000/mydocuments/${fileUrl}`,
+      {},
+      {
+        responseType: 'arraybuffer',
+      }
+    );
+  }
+
+  downloadPDF(content: any) {
+    //make a call to the service passing in document url
+    this.fetchDocument(content)
+      .subscribe(
+        (response: any) => {
+          let array = new Uint8Array(response);
+          //service returns an array buffer so convert array buffer to blob
+          let file = new Blob([array], { type: 'application/pdf' });
+          let fileURL = URL.createObjectURL(file);
+          window.open(fileURL);
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
+  }
+
+  // Open file
+  openWindowWithUrl(url: string): void {
+    const sanitizedUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    //console.log(sanitizedUrl);
+    window.open(url, '_blank');
+    //window.open(sanitizedUrl.toString(), '_blank');
+  }
+
+  // view file
+  async openAnyFile(file_path: any) {
+    let path = environment.vieFile + file_path;
+    //this.open_file =path;
+    //console.log(path);
+    this.openWindowWithUrl(path);
   }
 
   getFac(): void {
@@ -176,6 +235,30 @@ export class MeetingSettingComponent implements OnInit {
 
   /** Open meeting. */
 
+  // ลบไฟล์
+  removeFile(path: any, open_code: any) {
+    let data = {
+      "action": 'Delete',
+      "open_code": open_code,
+      "path": path
+    };
+    console.log('del: ', data);
+    this.http.post(environment.baseUrl + '/_meetingopen_file_remove.php', data).subscribe(
+      (response: any) => {
+        console.log('response: ', response);
+        if (response.status == 'Ok') {
+          this.meeting.open_path = '';
+        }
+      },
+      (error) => {
+        Swal.fire('ไม่สามารถบันทึกข้อมูลได้', '', 'error').then(() => {
+          //this.reloadPage(); //ทำการรีโหลดหน้า Web
+        })
+        console.log('Error adduser: ', error);
+      }
+    );
+  }
+
   // upload file book order
   onFileChange(event: any) {
     const files: FileList = event.target.files;
@@ -185,11 +268,11 @@ export class MeetingSettingComponent implements OnInit {
     }
     //console.log('Files: ', this.selectedFiles);
 
-    this.image = this.sanitizer.bypassSecurityTrustUrl(
+    this.open_file = this.sanitizer.bypassSecurityTrustUrl(
       window.URL.createObjectURL(event.target.files[0])
     );
 
-    console.log('image: ', this.image);
+    console.log('file view uploading: ', this.open_file);
   }
 
   // Open meeting save.
@@ -225,6 +308,8 @@ export class MeetingSettingComponent implements OnInit {
           this.meeting.open_code = response.open_code;
           this.fetchTopic(this.meeting.open_code); // หัวข้อระเบียบวาระ
           this.fetchTopicDone(this.meeting.open_code); // หัวข้อวาระที่เลือก
+          this.isLinear = false;
+          this.selectedFiles = [];
 
           //this.meeting.action_submit = 'Update'; // Update ข้อมูล
           //})
@@ -238,6 +323,9 @@ export class MeetingSettingComponent implements OnInit {
       }
     );
   }
+
+  // Copy meeting
+
 
   // Open meeting data
 
@@ -304,7 +392,7 @@ export class MeetingSettingComponent implements OnInit {
   /** Position meeting */
 
   // add position
-  addMtPosition(item:any): void {
+  addMtPosition(item: any): void {
     this.positions.mtposition_name = item;
     this.positions.open_code = this.meeting.open_code;
     this.positions.action = "Insert";
@@ -314,6 +402,7 @@ export class MeetingSettingComponent implements OnInit {
       (response: any) => {
         console.log('response: ', response);
         if (response.status == 'Ok') {
+          this.mtpositionForm.reset();
           this.fetchMtPosition(this.meeting.open_code);
         }
       },
@@ -349,7 +438,7 @@ export class MeetingSettingComponent implements OnInit {
   }
 
   // Meeting position
-  fetchMtPosition(open_code:any) {
+  fetchMtPosition(open_code: any) {
     console.log('open_code: ', open_code);
     this.http
       .get(environment.baseUrl + '/_meeting_position_data.php?open_code=' + open_code) //ติดต่อไปยัง Api getfaculty.php
@@ -381,7 +470,7 @@ export class MeetingSettingComponent implements OnInit {
     // do something when input is focused
   }
 
-  
+
   // บุคคลภายใน
   getPerson(search_query: string): void {
     var data = {
@@ -557,7 +646,7 @@ export class MeetingSettingComponent implements OnInit {
       return (
         item.open_title.toLowerCase().includes(this.searchText.toLowerCase()) ||
         item.open_order.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        item.open_year.toLowerCase().includes(this.searchText.toLowerCase()) 
+        item.open_year.toLowerCase().includes(this.searchText.toLowerCase())
       );
     });
   }
@@ -665,15 +754,17 @@ export class MeetingSettingComponent implements OnInit {
 
   /** พิจารณาวาระการประชุม */
 
-  // Modal show consider agenda
-  considerAgenda(item: any) {
 
-  }
+  // edit open meeting
+  onClickEditMeetingOpen(data: any) {
 
-  // edit user
-  onClickEditUser(data: any) {
+    this.isLinear = false;
     this.meeting = data;
-    this.meeting.meeting_code = data.meeting_code; // id user
+    console.log(this.meeting);
+    this.meeting.open_code = data.open_code; // id user
+    this.fetchTopic(data.open_code); // หัวข้อระเบียบวาระ
+    this.fetchTopicDone(data.open_code); // หัวข้อวาระที่เลือก
+    this.fetchMtPosition(data.open_code); // ตำแหน่งการประชุม
     this.meeting.action_submit = 'Update'; // Update ข้อมูล
   }
 
@@ -681,10 +772,11 @@ export class MeetingSettingComponent implements OnInit {
 
   // ระเบียบวาระ
   fetchTopic(open_code: any) {
+    console.log(open_code);
     this.http
       .get(environment.baseUrl + '/_topic_data.php?open_code=' + open_code)
       .subscribe((res: any) => {
-        console.log('topic: ', res);
+        //console.log('topic list: ', res);
         this.topic_list = res.data;
       });
   }
@@ -694,7 +786,7 @@ export class MeetingSettingComponent implements OnInit {
     this.http
       .get(environment.baseUrl + '/_meetingtopic_data.php?open_code=' + open_code)
       .subscribe((res: any) => {
-        console.log('topic done: ', res);
+        //console.log('topic done: ', res);
         this.topic_done = res.data;
       });
   }
@@ -708,6 +800,49 @@ export class MeetingSettingComponent implements OnInit {
         console.log('response: ', response);
         if (response.status == 'Ok') {
           //
+        }
+      },
+      (error) => {
+
+        console.log('Error adduser: ', error);
+      }
+    );
+  }
+
+  addTopic(topic_code: any) {
+
+    var data = {
+      "opt":"Insert",
+      "open_code": this.meeting.open_code,
+      "topic_code": topic_code,
+    }
+    //console.log('meeting add', data);
+    this.http.post(environment.baseUrl + '/_meetingtopic_add.php', data).subscribe(
+      (response: any) => {
+        console.log('response: ', response);
+        if (response.status == 'Ok') {
+          this.fetchTopicDone(this.meeting.open_code);
+          this.fetchTopic(this.meeting.open_code);
+        }
+      },
+      (error) => {
+
+        console.log('Error adduser: ', error);
+      }
+    );
+  }
+
+  removeTopicDone(mttopic_code: any) {
+    var data = {
+      "opt": 'Delete',
+      "mttopic_code": mttopic_code
+    }
+    this.http.post(environment.baseUrl + '/_meetingtopic_remove.php', data).subscribe(
+      (response: any) => {
+        console.log('response: ', response);
+        if (response.status == 'Ok') {
+          this.fetchTopicDone(this.meeting.open_code);
+          this.fetchTopic(this.meeting.open_code);
         }
       },
       (error) => {
@@ -736,10 +871,18 @@ export class MeetingSettingComponent implements OnInit {
   }
 
   //step 5 confirm
-  confirmDone(){
+  confirmDone() {
     this.mtpositionForm.reset();
     this.meetingForm.reset();
+    this.fetchOpenMeeting();
+    this.isLinear = true;
+    this.mtposition_list = [];
+    this.topic_done = [];
+    this.topic_list = [];
+    this.selectedFiles = [];
   }
+
+
   confirmMeetingSet(meeting_code: any) {
     console.log('confirm: ', meeting_code);
     let data = {
@@ -763,4 +906,83 @@ export class MeetingSettingComponent implements OnInit {
     );
   }
 
+  // copy meetin open
+  copyOpenMeeting(open_code: any): void {
+    let data = {
+      "open_code": open_code,
+      "user_id": this.user_id,
+      "action": "Copy"
+    }
+    this.http.post(environment.baseUrl + '/_meetingopen_copy.php', data).subscribe(
+      (response: any) => {
+        console.log('response: ', response);
+        if (response.status == 'Ok') {
+          Swal.fire('ทำสำเนาสำเร็จ!', '', 'success').then(() => {
+            this.fetchOpenMeeting();
+          })
+        }
+      },
+      (error) => {
+        Swal.fire('ไม่สามารถบันทึกข้อมูลได้', '', 'error').then(() => {
+          //this.reloadPage(); //ทำการรีโหลดหน้า Web
+        })
+        console.log('Error adduser: ', error);
+      }
+    );
+  }
+
+}
+
+@Component({
+  selector: 'dialog-form-open-dialog',
+  templateUrl: 'dialog-form-open-dialog.html',
+  standalone: true,
+  imports: [
+    MatDialogModule,
+    MatButtonModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
+})
+export class DialogFormOpenDialog {
+  firstFormGroup = this._formBuilder.group({
+    firstCtrl: ['', Validators.required],
+  });
+  secondFormGroup = this._formBuilder.group({
+    secondCtrl: ['', Validators.required],
+  });
+  isLinear = false;
+
+  meetingForm!: FormGroup;
+
+  meeting: any = {};
+  type_list: any;
+
+  constructor(
+    private _formBuilder: FormBuilder,
+    private http: HttpClient,
+  ) {
+    this.meetingForm = this._formBuilder.group({
+      type_code: ['1', Validators.required],
+      open_title: ['', Validators.required],
+      open_order: ['', Validators.required],
+      open_path: ['', Validators.required],
+      open_year: ['', Validators.required],
+    });
+
+    this.fetchTypeMeeting();
+  }
+
+  fetchTypeMeeting() {
+    this.http
+      .get(environment.baseUrl + '/_type_data.php') //ติดต่อไปยัง Api getfaculty.php
+      .subscribe((res: any) => { // ดึงข้อมูลในฟิลด์ fac_id, fac_name
+        console.log(res);
+        this.type_list = res.data;
+      });
+  }
 }

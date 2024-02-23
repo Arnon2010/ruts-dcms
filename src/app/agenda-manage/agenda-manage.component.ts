@@ -2,12 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { faUsers, faFilePen, faFilePdf, faCheckToSlot } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../services/api.service';
 import Swal from 'sweetalert2';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-
 
 @Component({
   selector: 'app-agenda-manage',
@@ -71,6 +69,7 @@ export class AgendaManageComponent {
     this.user.action_submit = 'Insert';
     this.meeting_code = this.route.snapshot.paramMap.get('meeting_code');
     this.open_code = this.route.snapshot.paramMap.get('open_code');
+    this.open_title = this.route.snapshot.paramMap.get('open_title');
 
     this.fetchTopicMeeting();
     this.getUser();
@@ -133,7 +132,7 @@ export class AgendaManageComponent {
     console.log(this.topic);
   }
 
-  confirmCheckAgendaTopic(item: any, confirm_status:string) {
+  confirmCheckAgendaTopic(item: any, confirm_status:any) {
     
     // var data = {
     //   "opt":"confirmAgendaTopic",
@@ -162,6 +161,31 @@ export class AgendaManageComponent {
         console.log('Error adduser: ', error);
       }
     );
+  }
+
+  //สร้างไฟล์ระเบียบวาระ pdf
+  createAgenda(meeting_code: any) {
+    var data = {
+      "opt": "createPdfAgendaTopic",
+      "meeting_code": this.meeting_code,
+    }
+    //console.log('save formData', formData);
+    this.http.post(environment.baseUrl + '/pdf/_create_agenda_topic.php', data).subscribe(
+      (res: any) => {
+        console.log('mttopic_list: ', res);
+        this.mttopic_list = res.data;
+      },
+      (error) => {
+        console.log('Error adduser: ', error);
+      }
+    );
+  }
+
+   // view file
+   async createFilePdfAgenda(meeting_code: any) {
+    let path = environment.pdfUrl + '/_create_agenda_topic.php?meeting_code=' + meeting_code;
+    //console.log(path);
+    this.openWindowWithUrl(path);
   }
 
 

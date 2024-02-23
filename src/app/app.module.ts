@@ -24,7 +24,7 @@ import { NavbarAdminComponent } from './navbar-admin/navbar-admin.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FooterComponent } from './footer/footer.component'; // <-- import the module
 import { AuthGuard } from './services/auth.guard';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { CommonModule, HashLocationStrategy, JsonPipe, LocationStrategy } from '@angular/common';
 import { LoginrutsappComponent } from './loginrutsapp/loginrutsapp.component';
 import { ReportComponent } from './report/report.component';
 import { HomeComponent } from './home/home.component';
@@ -47,10 +47,12 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MeetingAddTopicComponent } from './meeting-add-topic/meeting-add-topic.component';
 import { MeetingComponent } from './meeting/meeting.component';
 
+import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatButtonModule} from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import {MatSelectModule} from '@angular/material/select';
@@ -66,6 +68,22 @@ import { MeetingTimeComponent } from './meeting-time/meeting-time.component';
 import { AgendaManageComponent } from './agenda-manage/agenda-manage.component';
 import { AgencyTopicComponent } from './agency-topic/agency-topic.component';
 import { AgendaTopicComponent } from './agenda-topic/agenda-topic.component';
+
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { NgbModule, NgbPaginationModule, NgbAlertModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { AgendaTopAdminComponent } from './agenda-top-admin/agenda-top-admin.component';
+import { AgendaTopicAdminComponent } from './agenda-topic-admin/agenda-topic-admin.component';
+import { MeetingSaveComponent } from './meeting-save/meeting-save.component';
+import { MeetingSaveTopicComponent } from './meeting-save-topic/meeting-save-topic.component';
+import { AgendaTopicListComponent } from './agenda-topic-list/agenda-topic-list.component';
+import { MeetingPrepareComponent } from './meeting-prepare/meeting-prepare.component';
+import { MeetingTimeManageComponent } from './meeting-time-manage/meeting-time-manage.component';
+import { AgendaComponent } from './agenda/agenda.component';
+import { HomeOutsiderComponent } from './home-outsider/home-outsider.component';
+import { MeetingTopicComponent } from './meeting-topic/meeting-topic.component';
+
+
 
 
 @NgModule({
@@ -112,10 +130,22 @@ import { AgendaTopicComponent } from './agenda-topic/agenda-topic.component';
     AgendaManageComponent,
     AgencyTopicComponent,
     AgendaTopicComponent,
+    AgendaTopAdminComponent,
+    AgendaTopicAdminComponent,
+    MeetingSaveComponent,
+    MeetingSaveTopicComponent,
+    AgendaTopicListComponent,
+    MeetingPrepareComponent,
+    MeetingTimeManageComponent,
+    AgendaComponent,
+    HomeOutsiderComponent,
+    MeetingTopicComponent
 
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    CommonModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
@@ -125,6 +155,7 @@ import { AgendaTopicComponent } from './agenda-topic/agenda-topic.component';
     NgxPaginationModule,
     CdkStepperModule,
     BrowserAnimationsModule,
+    MatDialogModule,
     MatSlideToggleModule,
     MatInputModule,
     MatButtonModule,
@@ -139,10 +170,22 @@ import { AgendaTopicComponent } from './agenda-topic/agenda-topic.component';
     NgxMatSelectSearchModule,
     MatSelectModule,
     MatAutocompleteModule,
-    AutocompleteLibModule
+    AutocompleteLibModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    NgbModule,
+    NgbPaginationModule, 
+    NgbAlertModule,
+    NgbDatepickerModule, 
+    JsonPipe,
+    MatIconModule
+
   ],
   exports:[CdkStepperModule],
-  providers: [AuthGuard, { provide: LocationStrategy, useClass: HashLocationStrategy }],
+  providers: [
+    AuthGuard, 
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,8 +1,8 @@
 <main>
     <div class="container-scroller">
-      <div>
+      <!-- <div>
         <app-navbar></app-navbar>
-      </div>
+      </div> -->
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_settings-panel.html -->
@@ -190,7 +190,19 @@
         </div>
 
         <app-side-menu></app-side-menu>
+
         <div class="main-panel">
+          <div class="row mb-4">
+            <div class="d-flex justify-content-end">
+              <div class="ml-auto p-2">
+                <!-- <h4 class="font-weight-bold">ยินดีตอนรับ RUTS Digital Conference :DCMS</h4> -->
+                <h6 class="font-weight-normal mb-0">{{user.user_fname}} {{user.user_lname}}<span class="text-primary">
+                    {{user.fac_name}}</span></h6>
+              </div>
+            </div>
+            
+          </div>
+            <app-navbar></app-navbar>
             <router-outlet></router-outlet>
              <!-- partial:../../partials/_footer.html -->
             <footer class="footer">

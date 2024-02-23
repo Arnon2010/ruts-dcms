@@ -1,0 +1,123 @@
+<app-navbar></app-navbar>
+<!-- partial -->
+<div class="container-fluid page-body-wrapper">
+
+    <div class="content-wrapper">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a [routerLink]="['/home']" routerLinkActive="router-link-active">Home</a>
+                </li>
+                <li class="breadcrumb-item active">เตรียมการประชุม</li>
+            </ol>
+        </nav>
+        <div class="row">
+            <div class="col-md-12 grid-margin transparent">
+
+
+            </div>
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h6 class="font-weight-bold">เตรียมการประชุม</h6>
+                    </div>
+                    <div class="col-12 col-xl-4">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-lg-7 col-md-6 grid-margin stretch-card">
+                <div class="card tale-bg p-2">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-6 mb-4" *ngFor="let item of meeting_list">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <img src="assets/img/icons8-meeting-64.png" alt=""
+                                                style="width: 45px; height: 45px" class="rounded-circle" />
+                                            <div class="ms-3">
+                                                <p class="fw-bold mb-1">{{item.open_title}} คร้ังที่
+                                                    {{item.meeting_thetime}}
+                                                    <!-- <br>
+                          <small><strong>วันสุดท้ายที่เสนอวาระ: </strong>{{item.meeting_sdate}}</small> -->
+                                                </p>
+                                                <p *ngIf="item.channel_code == '1'">
+                                                    <small><strong>ณ </strong>{{item.meeting_location}}</small>
+                                                </p>
+                                                <p *ngIf="item.channel_code == '2'">
+                                                    <small><strong>โปรแกรมออนไลน์ </strong>{{item.program_name}}</small>
+                                                </p>
+                                                <p *ngIf="item.channel_code == '3'">
+                                                    <small><strong>ณ </strong>{{item.meeting_location}}</small>
+                                                    <br>
+                                                    <small><strong>และโปรแกรมออนไลน์ </strong>{{item.program_name}}</small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <span class="badge rounded-pill badge-success">อยู่ระหว่างเสนอวาระ</span>
+                                    </div>
+                                </div>
+                                <div class="card-footer border-0 bg-body-tertiary p-2 d-flex justify-content-around">
+                                    <a class="btn btn-link m-0 text-reset"
+                                        [routerLink]="['/meeting-time',item.open_code,item.open_title]"
+                                        routerLinkActive="router-link-active" role="button" data-ripple-color="primary"
+                                        data-mdb-ripple-init>
+                                        <span class="badge badge-primary font-weight-bold"><i class="mdi mdi-wrench"></i> จัดการการประชุม</span></a>
+                                    <a class="btn btn-link m-0 text-reset" href="#" role="button"
+                                        data-ripple-color="primary" data-mdb-ripple-init><small><strong>
+                                            </strong>{{item.meeting_sdate}} เวลา {{item.meeting_time}} น.</small><i
+                                            class="fas fa-phone ms-2"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 grid-margin transparent">
+
+            </div>
+            <!-- content-wrapper ends -->
+
+            <div class="modal fade" id="addUserForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">เปิดประชุม วาระการประชุม ระบุผู้เกี่ยวข้อง
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="col-md-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <!-- <button type="submit" [disabled]="!regisForm.valid" class="btn btn-primary" data-dismiss="modal"
+                        (click)="saveUser(user)">ยืนยันเพิ่มผู้ใช้</button> -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        ...
+                    </div>
+                </div>
+            </div>
+        </div>

@@ -4,10 +4,16 @@
 
     <div class="content-wrapper">
         <div class="row">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a [routerLink]="['/home']" routerLinkActive="router-link-active">Home</a></li>
+                  <li class="breadcrumb-item active">เตรียมการประชุม</li>
+                </ol>
+              </nav>
             <div class="col-md-12 grid-margin">
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                        <h4 class="font-weight-bold">จัดการการประชุม (Manage meeting)</h4>
+                        <h4 class="font-weight-bold">เตรียมการประชุม</h4>
                         <h6 class="font-weight-normal mb-0">&nbsp;</h6>
                     </div>
                     <div class="col-12 col-xl-4">
@@ -15,10 +21,6 @@
                             <div class="add-items d-flex mb-0 mt-2">
                                 <input type="text" [(ngModel)]="searchText" (input)="onSearch()"
                                     class="form-control todo-list-input" placeholder="ค้นหา">
-                                <input type="text" class="form-control todo-list-input" placeholder="เพิ่มบุคคลภายนอก">
-                                <button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"
-                                    data-toggle="modal" data-target="#addUserForm" data-whatever="@getbootstrap"><i
-                                        class="icon-circle-plus"></i></button>
                             </div>
                         </div>
                     </div>
@@ -54,7 +56,8 @@
                                        
                                         <td>
                                             <a href="#" [routerLink]="['/meeting-time/',data.open_code,data.open_title]" routerLinkActive="router-link-active" >
-                                                <span class="badge badge-primary"><i class="ti-file btn-icon-append"></i> จัดการการประชุม</span>
+                                                <span class="badge badge-primary">
+                                                    <i class="mdi mdi-brightness-7"></i> จัดการการประชุม</span>
                                             </a>
                                         </td>
                                        
