@@ -8,7 +8,7 @@ header("Content-Type: application/json");
 // $hostAuth = "localhost";
 // $userAuth = "root";
 // $passAuth = "arnonrmutsv";
-// $database = "studycheck";
+// $database = "dcmsdb";
 
 $hostAuth = "linuxdb2.rmutsv.ac.th";
 $userAuth = "dcmsdb";

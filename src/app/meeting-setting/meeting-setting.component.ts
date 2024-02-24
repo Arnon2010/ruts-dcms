@@ -776,7 +776,7 @@ export class MeetingSettingComponent implements OnInit {
     this.http
       .get(environment.baseUrl + '/_topic_data.php?open_code=' + open_code)
       .subscribe((res: any) => {
-        //console.log('topic list: ', res);
+        console.log('topic list: ', res);
         this.topic_list = res.data;
       });
   }

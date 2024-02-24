@@ -160,6 +160,7 @@ export class MeetingTimeComponent {
   user_id: any;
   channels:any;
   program_list: any;
+  opens: any = {};
 
 
   constructor(
@@ -210,11 +211,31 @@ export class MeetingTimeComponent {
     this.getUser();
     this.user.action_submit = 'Insert';
     this.open_code = this.route.snapshot.paramMap.get('open_code');
-    this.open_title = this.route.snapshot.paramMap.get('open_title');
+    //this.open_title = this.route.snapshot.paramMap.get('open_title');
     this.fetchMeeting(this.open_code);
     this.getFac();
     this.fetchPosition();
     this.fetchProgram();
+    this.getOpenMeeting(this.open_code);
+  }
+
+   getOpenMeeting(open_code: any) {
+    let data = {
+      "opt": 'viewOpenMeeting',
+      "open_code": open_code,
+      
+    };
+    //console.log('open meeting data: ', data);
+    this.http.post(environment.baseUrl + '/_view_data.php', data).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.opens = res.data[0];
+
+      },
+      (error) => {
+        console.log('Error: ', error);
+      }
+    );
   }
 
   get today() {

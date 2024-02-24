@@ -8,6 +8,12 @@
             </a>
         </li>
         <li class="nav-item" *ngIf="user_role == 'A'">
+            <a class="nav-link" [routerLink]="['/user']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">กำหนดสิทธิ์ผู้ใช้</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'A'">
             <a class="nav-link" data-toggle="collapse" href="#ui-set" aria-expanded="false" aria-controls="ui-basic">
                 <i class="icon-layout menu-icon"></i>
                 <span class="menu-title">ตั้งค่าระบบ</span>
@@ -33,11 +39,17 @@
         <li class="nav-item" *ngIf="user_role == 'F'">
             <a class="nav-link" [routerLink]="['/meeting-setting']" routerLinkActive="router-link-active">
                 <i class="icon-layout menu-icon"></i>
-                <span class="menu-title">จัดการเรื่องประชุม</span>
+                <span class="menu-title">กำหนดชื่อการประชุม</span>
             </a>
-        </li>        
+        </li>
         <li class="nav-item" *ngIf="user_role == 'F'">
-            <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
+            <a class="nav-link" [routerLink]="['/meeting-manage']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">เตรียมการประชุม</span>
+            </a>
+        </li>      
+        <li class="nav-item" *ngIf="user_role == 'F'">
+            <a class="nav-link" [routerLink]="['/meeting-save']" routerLinkActive="router-link-active">
                 <i class="icon-paper menu-icon"></i>
                 <span class="menu-title">บันทึกมติการประชุม</span>
             </a>

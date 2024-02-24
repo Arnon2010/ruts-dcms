@@ -73,6 +73,7 @@ import { MeetingTimeManageComponent } from './meeting-time-manage/meeting-time-m
 import { AgendaComponent } from './agenda/agenda.component';
 import { HomeOutsiderComponent } from './home-outsider/home-outsider.component';
 import { MeetingTopicComponent } from './meeting-topic/meeting-topic.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 
@@ -121,7 +122,8 @@ import { MeetingTopicComponent } from './meeting-topic/meeting-topic.component';
     MeetingTimeManageComponent,
     AgendaComponent,
     HomeOutsiderComponent,
-    MeetingTopicComponent
+    MeetingTopicComponent,
+    AdminComponent
 
   ],
   imports: [

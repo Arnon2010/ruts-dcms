@@ -7,17 +7,17 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a [routerLink]="['/home']"
                             routerLinkActive="router-link-active">Home</a></li>
-                    <li class="breadcrumb-item active">จัดการเรื่องประชุม</li>
+                    <li class="breadcrumb-item active">กำหนดชื่อการประชุม</li>
                 </ol>
             </nav>
             <div class="col-md-12 grid-margin">
                 <div class="row">
                     
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                        <h4 class="font-weight-bold">จัดการเรื่องประชุม <a href="#" data-toggle="modal"
+                        <h4 class="font-weight-bold">เพิ่มชื่อการประชุม <a href="#" data-toggle="modal"
                                 data-target="#meeting-setting" data-whatever="@getbootstrap">
-                                <span class="badge badge-primary"></span>
-                                <i class="icon-circle-plus"></i>
+                                <span class="badge badge-primary"><i class="mdi mdi-shape-square-plus"></i></span>
+                                
                             </a>
                         </h4>
 
@@ -46,7 +46,7 @@
             <div class="col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-title mb-0">เรื่องหรือหัวข้อการประชุม</p>
+                        <!-- <p class="card-title mb-0">เรื่องหรือหัวข้อการประชุม</p> -->
 
                         <div class="table-responsive">
                             <table class="table table-striped table-borderless">
@@ -60,7 +60,7 @@
                                         <!-- <th>ผู้ร่วมประชุม</th> -->
                                         <th>คัดลอก</th>
                                         <th>แก้ไข</th>
-                                        <th>เพิ่มครั้งการประชุม</th>
+                                        <th>ลบ</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -111,18 +111,18 @@
                                                 </span></button> -->
                                         </td>
 
-                                        <td class="font-weight-medium">
+                                        <!-- <td class="font-weight-medium">
                                             <a href="#" [routerLink]="['/meeting-time/',item.open_code,item.open_title]"
                                                 routerLinkActive="router-link-active">
                                                 <span class="badge badge-warning font-weight-bold">
                                                     <i class="mdi mdi-shape-square-plus"></i> เพิ่ม</span>
                                             </a>
-                                        </td>
-                                        <!-- <td class="font-weight-medium">
-                                            <a (click)="delMeeting(item.meeting_code)">
+                                        </td> -->
+                                        <td class="font-weight-medium">
+                                            <a (click)="delOpenMeeting(item.open_code)">
                                                 <span class="badge badge-danger"><i class="mdi mdi-delete"></i> ลบ</span>
                                             </a>
-                                        </td> -->
+                                        </td>
                                     </tr>
 
                                 </tbody>
@@ -785,7 +785,7 @@
                                                     </div>
                                                 </mat-step> -->
                                                 <mat-step>
-                                                    <ng-template matStepLabel>เสร็จสิ้น</ng-template>
+                                                    <ng-template matStepLabel>เตรียมการประชุม</ng-template>
                                                     <!-- <p>ยืนยันการประชุมเพื่อแจ้งไปยังหน่วยงานดำเนินการเสนอวาระการประชุม
                                                     </p> -->
                                                     <div class="d-flex justify-content-between flex-row mb-5 mt-4">
@@ -798,9 +798,11 @@
                                                         เสร็จสิ้นกระบวนการ<i class="fa fa-angle-right"></i>
                                                         </button> -->
 
-                                                        <button class="btn btn-primary" data-dismiss="modal"
+                                                        <button class="btn btn-primary" data-dismiss="modal" 
+                                                            [routerLink]="['/meeting-time',meeting.open_code]" routerLinkActive="router-link-active" 
                                                             (click)="confirmDone(); stepper.reset()">
-                                                            เสร็จสิ้นกระบวนการ<i class="fa fa-angle-right"></i>
+                                                            <span class="badge badge-primary">
+                                                                <i class="mdi mdi-wrench"></i> จัดการการประชุม</span>
                                                         </button>
                                                     </div>
                                                     <!-- <div>

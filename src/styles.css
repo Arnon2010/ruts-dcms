@@ -80,7 +80,7 @@ body {
 
 /** icon mdi */
 i.mdi {
-    font-size: 20px;
+    font-size: 22px;
     /* ปรับขนาดตามที่ต้องการ */
 
 }
@@ -107,4 +107,12 @@ i.mdi-menu {
 
 .font-status {
     font-size: 14px;
+}
+
+.mdi-item-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 16px;
 }

@@ -17,7 +17,9 @@ if ($opt == 'viewMeetingSave') {
     $sql = "SELECT * FROM  mt_meeting mt
     LEFT JOIN mt_meeting_open mto ON mt.open_code = mto.open_code
     LEFT JOIN mt_program p ON mt.program_code = p.program_code
-    WHERE meeting_astatus = '1' AND mto.faculty_code = '$faculty_code'";
+    WHERE mt.meeting_astatus = '1' 
+    AND mt.meeting_rstatus = '1'  
+    AND mto.faculty_code = '$faculty_code'";
 
     // ดำเนินการส่งคำสั่ง SQL และรับผลลัพธ์
     $result = $conn->query($sql);

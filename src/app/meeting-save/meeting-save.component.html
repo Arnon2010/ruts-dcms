@@ -4,17 +4,26 @@
 
     <div class="content-wrapper">
         <div class="row">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a [routerLink]="['/home']" routerLinkActive="router-link-active">Home</a></li>
+                  <li class="breadcrumb-item active">บันทึกมติการประชุม</li>
+                </ol>
+              </nav>
             <div class="col-md-12 grid-margin">
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                        <h4 class="font-weight-bold">บันทึกมติการประชุม</h4>
-                        <!-- <h6 class="font-weight-normal mb-0">{{user_fname}} {{user_lname}}<span class="text-primary">
-                {{fac_name}}</span></h6> -->
+                        <h5 class="font-weight-bold">บันทึกมติการประชุม</h5>
+                        <h6 class="font-weight-normal mb-0">&nbsp;</h6>
                     </div>
-                    <div class="col-12 col-xl-4">
-
-
-                    </div>
+                    <!-- <div class="col-12 col-xl-4">
+                        <div class="justify-content-end d-flex">
+                            <div class="add-items d-flex mb-0 mt-2">
+                                <input type="text" [(ngModel)]="searchText" (input)="onSearch()"
+                                    class="form-control todo-list-input" placeholder="ค้นหา">
+                            </div>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -23,11 +32,11 @@
             <div class="col-md-12 grid-margin stretch-card">
 
                 <div class="card tale-bg p-2">
-                    <div class="row mb-4">
+                    <!-- <div class="row mb-4">
                         <div class="col">
                             <h5 class="font-weight-bold ml-2">อยู่ระหว่างดำเนินการ</h5>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row">
                         <div class="col-sm-6 mb-4" *ngFor="let item of meeting_list">
                             <div class="card">
@@ -59,10 +68,11 @@
                                 </div>
                                 <div class="card-footer border-0 bg-body-tertiary p-2 d-flex justify-content-around">
                                     <a class="btn btn-link m-0 text-reset"
-                                        [routerLink]="['/meeting-save-topic',item.open_code,item.meeting_code,item.open_title,item.meeting_thetime]"
+                                        [routerLink]="['/meeting-save-topic',item.meeting_code]"
                                         routerLinkActive="router-link-active" role="button" data-ripple-color="primary"
                                         data-mdb-ripple-init>
-                                        <span class="badge badge-outline-primary">บันทึก</span></a>
+                                        <span class="badge badge-warning mdi-item-center">
+                                            <i class="mdi mdi-content-save"></i> บันทึกมติการประชุม</span></a>
                                     <a class="btn btn-link m-0 text-reset" href="#" role="button"
                                         data-ripple-color="primary" data-mdb-ripple-init><small><strong>
                                             </strong>{{item.meeting_sdate}} เวลา {{item.meeting_time}} น.</small><i

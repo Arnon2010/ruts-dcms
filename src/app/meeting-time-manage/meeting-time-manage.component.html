@@ -7,10 +7,10 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a [routerLink]="['/home']">Home</a></li>
                     <li class="breadcrumb-item active">
-                        <a [routerLink]="['/meeting-setting']">จัดการเรื่องประชุม </a>
+                        <a [routerLink]="['/meeting-setting']">กำหนดชื่อการประชุม </a>
                     </li>
                     <li class="breadcrumb-item active">
-                        <a [routerLink]="['/meeting-time',open_code,open_title]">{{open_title}}</a>
+                        <a [routerLink]="['/meeting-time',open_code]">{{open_title}}</a>
                     </li>
                     <li class="breadcrumb-item active">
                         ดำเนินการจัดประชุม
@@ -571,7 +571,7 @@
                                                                             <i class="fa fa-angle-left"></i> กลับ
                                                                         </button>
                                                                         <button class="btn btn-warning" matStepperNext>
-                                                                            ถัดไป <i
+                                                                            ขั้นตอนถัดไป <i
                                                                                 class="fa fa-angle-right"></i>
                                                                         </button>
                                                                     </div>
@@ -585,13 +585,39 @@
                                         <mat-step labelPosition="bottom">
                                             <ng-template matStepLabel>
                                                 <mat-icon style="width: 32px; height: 32px;">done_all</mat-icon>
-                                                <div style="font-size: 12px">เสร็จสิ้น</div>
+                                                <div style="font-size: 12px">บันทึกมติการประชุม</div>
                                             </ng-template>
                                             <!-- Content of the last step -->
+                                            <!-- Form Content -->
+                                            <div class="mt-4">
+                                                <div class="row">
+                                                    <div class="col-md-12 grid-margin stretch-card">
+                                                        <div class="card">
+                                                            <!-- <div class="card-title">
+                                                                <h4 class="card-title">:: คณะกรรมการพิจารณาวาระ</h4>
+                                                            </div> -->
+                                                            <div class="card-body">
+                                                                
+
+                                                                <div
+                                                                    class="d-flex justify-content-between flex-row mb-5 mt-4">
+                                                                    <button class="btn btn-outline-primary"
+                                                                        matStepperPrevious>
+                                                                        <i class="fa fa-angle-left"></i> กลับ
+                                                                    </button>
+                                                                    <button class="btn btn-warning" 
+                                                                        [routerLink]="['/meeting-save']" routerLinkActive="router-link-active" >
+                                                                        <span class="font-weight-bold">
+                                                                            <i class="mdi mdi-content-save"></i> บันทึกมติการประชุม</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </mat-step>
                                     </mat-stepper>
-
-
                                 </div>
                             </div>
                         </div>

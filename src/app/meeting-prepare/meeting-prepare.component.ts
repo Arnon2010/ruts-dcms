@@ -80,7 +80,7 @@ export class MeetingPrepareComponent {
     this.http.post(environment.baseUrl + '/_meeting_view.php', data)
       .subscribe({
         next: (res: any) => {
-          console.log('meeting list ', res); // เเสดงค่าใน console
+          console.log('viewMeetingSave ', res); // เเสดงค่าใน console
           this.meeting_list = res.data;
         }
       });

@@ -118,6 +118,8 @@ export class UsersComponent {
           Swal.fire('บันทึกข้อมูลสำเร็จ', '', 'success').then(() => {
             // get users
             this.fetchDataUser();
+            this.regisForm.reset();
+            this.user.action_submit = 'Insert';
           })
         }        
       },

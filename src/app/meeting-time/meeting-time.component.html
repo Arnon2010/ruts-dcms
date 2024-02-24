@@ -8,10 +8,10 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a [routerLink]="['/home']">Home</a></li>
                     <li class="breadcrumb-item active">
-                        <a [routerLink]="['/meeting-setting']">จัดการเรื่องประชุม </a>
+                        <a [routerLink]="['/meeting-setting']">กำหนดชื่อการประชุม </a>
                     </li>
                     <li class="breadcrumb-item active">
-                        {{open_title}}
+                        {{opens.open_title}}
                     </li>
                 </ol>
             </nav>
@@ -19,16 +19,12 @@
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                         <div class="verticals ten offset-by-one">
-                            <h4>เปิดการประชุมแต่ละครั้ง  
-                                <!-- <button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"
-                                data-toggle="modal" data-target="#addMeetingForm" data-whatever="@getbootstrap">
-                                <span class="badge badge-warning btn-rounded btn-icon"><i class="icon-circle-plus"></i></span>
-                            </button> -->
+                            <h4>เพิ่มการประชุมแต่ละครั้ง  
                             <button type="button" class="btn btn-primary btn-rounded btn-icon"  
                             data-toggle="modal" data-target="#addMeetingForm" data-whatever="@getbootstrap">
-                                <i class="mdi mdi-note-plus"></i>
+                            <i class="mdi mdi-shape-square-plus"></i>
                               </button>
-                        </h4>
+                            </h4>
                             <hr>
                         </div>
                     </div>
@@ -67,7 +63,6 @@
 
                                         <th class="text-center">ดำเนินการจัดประชุม</th>
                                         <th class="text-center">เพิ่มวาระ</th>
-
                                         <th class="text-center">เอกสาร</th>
                                         <th class="text-center">สถานะ</th>
                                         <th class="text-center">คัดลอก</th>
@@ -83,7 +78,7 @@
                                         *ngFor="let data of filteredItems | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
                                         <td class="text-center">{{ i + (p - 1) * 10 + 1 }}</td>
                                         <td>
-                                            {{open_title}} ({{data.meeting_thetime}})<br>
+                                            {{opens.open_title}} ({{data.meeting_thetime}})<br>
                                             <small>{{data.meeting_sdate}} เวลา {{data.meeting_time}} น. ณ
                                                 {{data.meeting_location}}</small>
                                         </td>

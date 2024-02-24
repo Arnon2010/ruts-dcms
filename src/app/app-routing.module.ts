@@ -28,6 +28,7 @@ import { MeetingTimeManageComponent } from './meeting-time-manage/meeting-time-m
 import { AgendaComponent } from './agenda/agenda.component';
 import { HomeOutsiderComponent } from './home-outsider/home-outsider.component';
 import { MeetingTopicComponent } from './meeting-topic/meeting-topic.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
  
@@ -49,12 +50,11 @@ const routes: Routes = [
       { path: 'user', component: UsersComponent, canActivate: [AuthGuard]}, //เพิ่มผู้ใช้ระบบ Admin,user
       { path: 'outsider', component: OutsiderComponent, canActivate: [AuthGuard]}, //เพิ่มผู้ใช้งานภายนอก
       { path: 'meeting-manage', component: MeetingManageComponent, canActivate: [AuthGuard] }, // route ผู้ดูแลระบบ
-      { path: 'meeting-time/:open_code/:open_title', component: MeetingTimeComponent, canActivate: [AuthGuard] }, 
+      { path: 'meeting-time/:open_code', component: MeetingTimeComponent, canActivate: [AuthGuard] }, 
       { path: 'agenda-manage/:open_code/:meeting_code/:open_title', component: AgendaManageComponent, canActivate: [AuthGuard] }, 
       
-      
       { path: 'meeting-save', component: MeetingSaveComponent, canActivate: [AuthGuard] }, 
-      { path: 'meeting-save-topic/:open_code/:meeting_code/:open_title/:meeting_thetime', component: MeetingSaveTopicComponent, canActivate: [AuthGuard] }, 
+      { path: 'meeting-save-topic/:meeting_code', component: MeetingSaveTopicComponent, canActivate: [AuthGuard] }, 
       { path: 'meeting-prepare', component: MeetingPrepareComponent, canActivate: [AuthGuard] }, 
       { path: 'meeting-time-manage/:meeting_code/:open_code', component: MeetingTimeManageComponent, canActivate: [AuthGuard] }, 
       
@@ -68,6 +68,9 @@ const routes: Routes = [
 
       // ผู้เข้าร่วมประชุม
       { path: 'meeting-topic/:meeting_code/:open_code', component: MeetingTopicComponent, canActivate: [AuthGuard] }, 
+
+       // ผู้ดูแลระบบ
+       { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] }, 
 
     ]
   },

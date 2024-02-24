@@ -47,6 +47,9 @@ export class MeetingSaveTopicComponent {
   user_id: any;
   meeting_code: any;
   fac_code: any;
+  meeting: any = {};
+
+  meeting_endtime:any;
 
   constructor(
     private http: HttpClient,
@@ -58,12 +61,8 @@ export class MeetingSaveTopicComponent {
   ) {
 
     this.topicForm = this.fb.group({
-      agendatopic_no: ['', Validators.required],
-      agendatopic_name: ['', Validators.required],
-      agendatopic_origin: ['', Validators.required],
-      agendatopic_offer: ['', Validators.required],
-      agendatopic_doc: ['', Validators.required],
-      foreman_code: ['', Validators.required]
+      agendatopic_note: ['', Validators.nullValidator],
+      
     });
   }
 
@@ -71,11 +70,8 @@ export class MeetingSaveTopicComponent {
 
     this.user.action_submit = 'Insert';
     this.meeting_code = this.route.snapshot.paramMap.get('meeting_code');
-    this.open_code = this.route.snapshot.paramMap.get('open_code');
-    this.open_title = this.route.snapshot.paramMap.get('open_title');
-
-    this.fetchTopicMeeting();
     this.getUser();
+    this.getMeetingData(this.meeting_code);
   }
 
   getUser(): void {
@@ -83,20 +79,39 @@ export class MeetingSaveTopicComponent {
     this.userData = JSON.parse(Token) //ให้ตัวเเปล studentData เท่ากับ ค่าจาก local storage ใน Key Token ที่อยู่ใน รูปเเบบ Json
     this.user_id = this.userData.user_id;
     this.fac_code = this.userData.faculty_code;
-    console.log('user:, ', this.user_id);
+    //console.log('user:, ', this.user_id);
+  }
+
+  getMeetingData(meeting_code:any) {
+    var data = {
+      "opt": "viewMeetingData",
+      "meeting_code": meeting_code,
+    }
+    //console.log('save formData', formData);
+    this.http.post(environment.baseUrl + '/_view_data.php', data).subscribe(
+      (res: any) => {
+        //console.log(res);
+        this.meeting = res.data;
+        //console.log(this.meeting);
+        this.fetchTopicMeeting(this.meeting.open_code);
+      },
+      (error) => {
+        console.log('Error adduser: ', error);
+      }
+    );
   }
 
   // ระเบียบวาระ
-  fetchTopicMeeting() {
+  fetchTopicMeeting(open_code:any) {
     var data = {
       "opt": "veiwAgendaManage",
-      "open_code": this.open_code,
+      "open_code": open_code,
       "meeting_code": this.meeting_code,
     }
     //console.log('save formData', formData);
     this.http.post(environment.baseUrl + '/_view_data.php', data).subscribe(
       (res: any) => {
-        console.log('mttopic_list: ', res);
+        //console.log('mttopic_list: ', res);
         this.mttopic_list = res.data;
       },
       (error) => {
@@ -131,7 +146,7 @@ export class MeetingSaveTopicComponent {
 
   // Agenda topic.
 
-  onClickCheckTopic(item: any) {
+  onClickTopic(item: any) {
     this.topic = item;
     console.log(this.topic);
   }
@@ -154,7 +169,7 @@ export class MeetingSaveTopicComponent {
         console.log('response: ', response);
         if (response.status == 'Ok') {
           Swal.fire('บันทึกข้อมูลสำเร็จ', '', 'success').then(() => {
-            this.fetchTopicMeeting();
+            //this.fetchTopicMeeting();
           })
         }
       },
@@ -228,7 +243,7 @@ export class MeetingSaveTopicComponent {
         console.log('response: ', response);
         if (response.status == 'Ok') {
           Swal.fire('บันทึกข้อมูลสำเร็จ', '', 'success').then(() => {
-            this.fetchTopicMeeting();
+            //this.fetchTopicMeeting();
             this.topicForm.reset();
             this.selectedFiles = [];
           })
@@ -239,6 +254,62 @@ export class MeetingSaveTopicComponent {
           //this.reloadPage(); //ทำการรีโหลดหน้า Web
         })
         console.log('Error adduser: ', error);
+      }
+    );
+  }
+
+  noteAgendaTopic(item:any) {
+    var data = {
+      "action_submit": "Update",
+      "agendatopic_code": item.agendatopic_code,
+      "agendatopic_note": item.agendatopic_note,
+    }
+    //console.log('save formData', formData);
+    this.http.post(environment.baseUrl + '/_agenda_topic_note.php', data).subscribe(
+      (res: any) => {
+        //console.log('topic_note: ', res);
+        this.topicForm.reset();
+        //this.mttopic_list = res.data;
+      },
+      (error) => {
+        console.log('Error adduser: ', error);
+      }
+    );
+  }
+
+  // เลิกประชุม
+  endMeetingTime(meeting_code:any) {
+    var data = {
+      "action": "endMeeting",
+      "meeting_code": meeting_code,
+      "meeting_endtime": this.meeting_endtime,
+    }
+    //console.log('save formData', formData);
+    this.http.post(environment.baseUrl + '/_meeting_endtime.php', data).subscribe(
+      (res: any) => {
+        if (res.status == 'Ok') {
+          // Swal.fire('บันทึกเวลาเลิกประชุมสำเร็จ', '', 'success').then(() => {
+          //   //this.fetchTopicMeeting();
+          // })
+          Swal.fire({
+            title: 'บันทึกเวลาเลิกประชุมสำเร็จ',
+            text: 'คุณต้องการที่จะกลับไปหน้าหลักหรือไม่?',
+            icon: 'success',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'กลับหน้าหลัก',
+            cancelButtonText: 'ไม่'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate(['home'], {}); // ผู้ดูแลระบบ
+            }
+          });
+        }
+
+      },
+      (error) => {
+        console.log('Error: ', error);
       }
     );
   }

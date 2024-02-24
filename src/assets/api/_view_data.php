@@ -473,5 +473,23 @@ else if ($opt == 'viewTopicDetail') {
    
 }
 
+/** ชื่อการประชุม */
+else if ($opt == 'viewOpenMeeting') {
+
+    $open_code = $request->open_code;
+
+    // จัดการประชุม
+    $sql = "SELECT * FROM  mt_meeting_open
+    WHERE open_code = '$open_code'";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+      
+    $data[] = $row;
+
+    header('Content-Type: application/json');
+    echo json_encode(array('data' => $data, 'resp'=>''));
+   
+}
+
 // ปิดการเชื่อมต่อฐานข้อมูล
 $conn->close();

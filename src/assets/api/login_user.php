@@ -24,7 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // check permission.
 
-    $sql = "SELECT * FROM mt_user WHERE USER_EPASSPORT = '$user_epassport' AND USER_PASSWORD = '$user_password'";
+    $sql = "SELECT * FROM mt_user 
+    WHERE user_epassport = '$user_epassport' 
+    AND user_password = '$user_password'";
 
     if ($result = $conn->query($sql)) {
         if ($result->num_rows > 0) {
