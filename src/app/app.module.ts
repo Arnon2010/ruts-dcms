@@ -4,21 +4,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeStudentComponent } from './home-student/home-student.component';
 import { LoginComponent } from './login/login.component';
-import { FaculutyWebManagementComponent } from './faculuty-web-management/faculuty-web-management.component';
-import { MasteradminComponent } from './masteradmin/masteradmin.component';
 import { UploadComponent } from './uploadfile/uploadfile.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RegisterComponent } from './register/register.component';
-import { AdduserComponent } from './adduser/adduser.component';
-import { AdminloginComponent } from './adminlogin/adminlogin.component';
-import { SelectloginComponent } from './selectlogin/selectlogin.component';
 import { LogoutComponent } from './logout/logout.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { ExamplePdfViewerComponent } from './example-pdf-viewer/example-pdf-viewer.component';
-import { FacultyCapconfirmComponent } from './faculty-capconfirm/faculty-capconfirm.component';
 import { NavbarFacComponent } from './navbar-fac/navbar-fac.component';
 import { NavbarAdminComponent } from './navbar-admin/navbar-admin.component';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -37,7 +29,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StepperComponent } from './stepper/stepper.component';
 import { SecurityComponent } from './security/security.component';
 import { InformationComponent } from './information/information.component';
-import { FinishComponent } from './finish/finish.component';
 import { ContactComponent } from './contact/contact.component';
 import { MeetingCreateComponent } from './meeting-create/meeting-create.component';
 import { MeetingAddAgendaComponent } from './meeting-add-agenda/meeting-add-agenda.component';
@@ -89,19 +80,11 @@ import { MeetingTopicComponent } from './meeting-topic/meeting-topic.component';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeStudentComponent,
     LoginComponent,
-    FaculutyWebManagementComponent,
-    MasteradminComponent,
     UploadComponent,
     NavbarComponent,
     RegisterComponent,
-    AdduserComponent,
-    AdminloginComponent,
-    SelectloginComponent,
     LogoutComponent,
-    ExamplePdfViewerComponent,
-    FacultyCapconfirmComponent,
     NavbarFacComponent,
     NavbarAdminComponent,
     FooterComponent,
@@ -114,7 +97,6 @@ import { MeetingTopicComponent } from './meeting-topic/meeting-topic.component';
     StepperComponent,
     SecurityComponent,
     InformationComponent,
-    FinishComponent,
     ContactComponent,
     MeetingCreateComponent,
     MeetingAddAgendaComponent,

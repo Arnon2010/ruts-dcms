@@ -60,7 +60,7 @@
                                         <!-- <th>ผู้ร่วมประชุม</th> -->
                                         <th>คัดลอก</th>
                                         <th>แก้ไข</th>
-                                        <th>เปิดการประชุม</th>
+                                        <th>เพิ่มครั้งการประชุม</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -115,7 +115,7 @@
                                             <a href="#" [routerLink]="['/meeting-time/',item.open_code,item.open_title]"
                                                 routerLinkActive="router-link-active">
                                                 <span class="badge badge-warning font-weight-bold">
-                                                    <i class="mdi mdi-wrench"></i> เปิดการประชุม</span>
+                                                    <i class="mdi mdi-shape-square-plus"></i> เพิ่ม</span>
                                             </a>
                                         </td>
                                         <!-- <td class="font-weight-medium">
@@ -352,7 +352,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">เปิดประชุม วาระการประชุม ระบุผู้เกี่ยวข้อง</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">สร้างชื่อประชุม เพิ่มตำแหน่งในการประชุม กำหนดวาระการประชุม</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         (click)="confirmDone(); stepper.reset()">
                         <span aria-hidden="true">&times;</span>
