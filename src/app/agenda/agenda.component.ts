@@ -21,6 +21,7 @@ export class AgendaComponent {
   user_lname: any;
   agency_list: any;
   fac_name: any;
+  agenda_list: any;
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
@@ -35,20 +36,12 @@ export class AgendaComponent {
    
     this.getUser();
     this.fetchAgency(this.fac_code);
-
-    console.log('Home...');
-    // const navigation = this.router.getCurrentNavigation();
-    // if (navigation && navigation.extras && navigation.extras.state) {
-    //   const state = navigation?.extras;
-    //   console.log('state',state); // แสดงค่า state ที่ถูกส่งมา
-    // }
-  
   }
 
   getUser(): void {
     const Token: any = localStorage.getItem('Token');
     this.userData = JSON.parse(Token);
-    console.log('user:, ', this.userData);
+    //console.log('user:, ', this.userData);
     this.fac_code = this.userData.faculty_code;
     this.fac_name = this.userData.faculty_name;
     this.user_id = this.userData.user_id;
@@ -62,8 +55,8 @@ export class AgendaComponent {
     this.http
       .get(environment.baseUrl + '/_agency_data.php?faculty_code=' + fac_code) //ติดต่อไปยัง Api getfaculty.php
       .subscribe((res: any) => { // ดึงข้อมูลในฟิลด์ fac_id, fac_name
-        console.log( 'agency_list: ',res);
-        this.agency_list = res.data;
+        console.log( 'agenda_list: ',res);
+        this.agenda_list = res.data;
       });
   }
 }

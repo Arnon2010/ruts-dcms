@@ -24,6 +24,8 @@ export class HomeComponent {
   meeting_list: any;
   user_role: any;
   counts: any = {};
+  total_meeting: any;
+  total_meeting_pass: any;
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
@@ -95,6 +97,8 @@ export class HomeComponent {
         next: (res: any) => {
           console.log('meeting user:  ', res); // เเสดงค่าใน console
           this.meeting_list = res.data;
+          this.total_meeting = res.row_meeting;
+          this.total_meeting_pass = res.row_meeting_pass;
         }
       });
   }

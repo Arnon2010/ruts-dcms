@@ -47,7 +47,7 @@
                 <div class="card tale-bg p-2">
                     <div class="row">
                        
-                        <div class="col-lg-6 mb-4" *ngFor="let item of agency_list">
+                        <div class="col-lg-6 mb-4" *ngFor="let item of agenda_list">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
@@ -62,7 +62,12 @@
                                                 <p class="text-muted mb-0">{{item.faculty_name}}</p>
                                             </div>
                                         </div>
-                                        <span class="badge rounded-pill badge-success">Active</span>
+                                        <span class="badge rounded-pill badge-primary" *ngIf="item.meeting_rstatus == '0'">ยกเลิก</span>
+                                        <span class="badge rounded-pill badge-primary" *ngIf="item.meeting_rstatus == '1'">รอดำเนินการ</span>
+                                        <span class="badge rounded-pill badge-primary" *ngIf="item.meeting_rstatus == '2'">อยู่ระหว่างเสนอวาระ</span>
+                                        <span class="badge rounded-pill badge-success" *ngIf="item.meeting_rstatus == '3'">อยู่ระหว่างพิจารณาวาระ</span>
+                                        <span class="badge rounded-pill badge-success" *ngIf="item.meeting_rstatus == '4'">อยู่ระหว่างบันทึกการประชุม</span>
+
                                     </div>
                                 </div>
                                 <div class="card-footer border-0 bg-body-tertiary p-2 d-flex justify-content-around">
@@ -70,7 +75,7 @@
                                         [routerLink]="['/agenda-topic',item.meeting_code]"
                                         routerLinkActive="router-link-active" role="button" data-ripple-color="primary"
                                         data-mdb-ripple-init>
-                                        <span class="badge badge-primary font-weight-bold">เสนอวาระ</span></a>
+                                        <span class="badge badge-primary font-weight-bold"><i class="mdi mdi-grease-pencil"></i>เสนอวาระ</span></a>
                                     <a class="btn btn-link m-0 text-reset" href="#" role="button"
                                         data-ripple-color="primary"
                                         data-mdb-ripple-init><strong>วันสุดท้ายที่เสนอวาระ:

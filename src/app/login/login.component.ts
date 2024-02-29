@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 import { ApiService } from '../services/api.service';
 
 @Component({
-  selector: 'app-home-student',
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })

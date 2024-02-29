@@ -681,10 +681,10 @@ export class MeetingTimeManageComponent {
     this.topic_confirm.confirm_status = confirm_status;
     this.topic_confirm.opt = "confirmAgendaTopic";
 
-    console.log('topic_confirm', this.topic_confirm);
+    //console.log('topic_confirm', this.topic_confirm);
     this.http.post(environment.baseUrl + '/_agenda_manage_confirm.php', this.topic_confirm).subscribe(
       (response: any) => {
-        console.log('response: ', response);
+        //console.log('response: ', response);
         if (response.status == 'Ok') {
           Swal.fire('บันทึกข้อมูลสำเร็จ', '', 'success').then(() => {
             this.fetchTopicMeeting();

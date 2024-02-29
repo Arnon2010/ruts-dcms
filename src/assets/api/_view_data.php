@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Bangkok');
 header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -8,6 +9,8 @@ $content = file_get_contents('php://input');
 $request = json_decode($content);
 $opt = $request->opt;
 
+$datetoday = date('Y-m-d');
+
 /** ข้อมูลการเสนอวาระจากหน่วยงานเข้าร่วม */
 if ($opt == 'viewMeetingData') {
 
@@ -15,7 +18,9 @@ if ($opt == 'viewMeetingData') {
     $meeting_code = $request->meeting_code;
 
     // สร้างคำสั่ง SQL เพื่อดึงข้อมูลนักศึกษาจากฐานข้อมูล
-    $sql = "SELECT * FROM  mt_meeting mt 
+    $sql = "SELECT *,  CASE
+    WHEN meeting_sdate > CURDATE() THEN 'W' ELSE 'Y' END AS meeting_ostatus
+    FROM  mt_meeting mt 
     LEFT JOIN mt_meeting_open mto ON mt.open_code = mto.open_code
     WHERE mt.meeting_code = '$meeting_code'";
 
@@ -26,6 +31,7 @@ if ($opt == 'viewMeetingData') {
     // ตรวจสอบผลลัพธ์
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
+        //$data[] = $row;
         // แปลงข้อมูลเป็นรูปแบบ JSON และส่งกลับไปยังแอปพลิเคชัน Angular
         header('Content-Type: application/json');
         echo json_encode(array('data' => $row, 'row' => $numrow));
@@ -87,7 +93,7 @@ else if ($opt == 'viewAgendaTopic') {
                 $data_foreman = [];
                 // ตรวจสอบผลลัพธ์
                 while ($row_foreman = $resultForeman->fetch_assoc()) {
-                    
+
                     $data_foreman[] = $row_foreman;
                 }
                 // วาระย่อย 2
@@ -111,7 +117,7 @@ else if ($opt == 'viewAgendaTopic') {
                     $data_foreman2 = [];
                     // ตรวจสอบผลลัพธ์
                     while ($row_foreman2 = $resultForeman2->fetch_assoc()) {
-                        
+
                         $data_foreman2[] = $row_foreman2;
                     }
 
@@ -234,7 +240,7 @@ else if ($opt == 'veiwAgendaManage') {
         }
         // แปลงข้อมูลเป็นรูปแบบ JSON และส่งกลับไปยังแอปพลิเคชัน Angular
         header('Content-Type: application/json');
-        echo json_encode(array('data' => $rows, 'row' => $numrow, 'resp'=>$sql));
+        echo json_encode(array('data' => $rows, 'row' => $numrow, 'resp' => $sql));
     } else {
         $data = array();
         // ถ้าไม่พบข้อมูลนักศึกษา
@@ -243,7 +249,7 @@ else if ($opt == 'veiwAgendaManage') {
 }
 
 /**  ข้อมูลประชุมของผู้เข้าร่วมประชุม */
-else if($opt == 'viewMeetingUser') {
+else if ($opt == 'viewMeetingUser') {
     // รับค่าจากคำขอ
     $person_id = $request->person_id;
     // สร้างคำสั่ง SQL เพื่อดึงข้อมูลนักศึกษาจากฐานข้อมูล
@@ -252,27 +258,32 @@ else if($opt == 'viewMeetingUser') {
     LEFT JOIN mt_program pg ON mt.program_code = pg.program_code
     LEFT JOIN mt_meeting_open mto ON mt.open_code = mto.open_code
     WHERE p.citizen_id = '$person_id' 
+    AND mt.meeting_sdate >= CURDATE()
     GROUP BY p.meeting_code 
     ORDER BY mt.meeting_sdate ASC
     ";
 
     // ดำเนินการส่งคำสั่ง SQL และรับผลลัพธ์
     $result = $conn->query($sql);
+    // จำนวนประชุมที่จะมีขึ้น
     $numrow = $result->num_rows;
-    $No = 0;
-    // ตรวจสอบผลลัพธ์
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $data[] = $row;
-        }
-        // แปลงข้อมูลเป็นรูปแบบ JSON และส่งกลับไปยังแอปพลิเคชัน Angular
-        header('Content-Type: application/json');
-        echo json_encode(array('data' => $data, 'row' => $numrow));
-    } else {
-        $data = array();
-        // ถ้าไม่พบข้อมูลนักศึกษา
-        echo json_encode(array('data' => $data, 'resp' => ''));
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
     }
+
+    // จำนวนประชุมที่ผ่านมา
+    $sql2 = "SELECT * FROM  mt_person p
+        LEFT JOIN mt_meeting mt ON p.meeting_code = mt.meeting_code
+        LEFT JOIN mt_program pg ON mt.program_code = pg.program_code
+        LEFT JOIN mt_meeting_open mto ON mt.open_code = mto.open_code
+        WHERE p.citizen_id = '$person_id' 
+        AND mt.meeting_edate < CURDATE()
+        ";
+    $result2 = $conn->query($sql2);
+    $numrow_pass = $result2->num_rows;
+
+    header('Content-Type: application/json');
+    echo json_encode(array('data' => $data, 'row_meeting' => $numrow, 'row_meeting_pass' => $numrow_pass));
 }
 
 /** วาระการประชุมของผู้เข้าร่วมประชุม */
@@ -326,7 +337,7 @@ else if ($opt == 'viewAgendaTopicUser') {
                 $data_foreman = [];
                 // ตรวจสอบผลลัพธ์
                 while ($row_foreman = $resultForeman->fetch_assoc()) {
-                    
+
                     $data_foreman[] = $row_foreman;
                 }
                 // วาระย่อย 2
@@ -351,7 +362,7 @@ else if ($opt == 'viewAgendaTopicUser') {
                     $data_foreman2 = [];
                     // ตรวจสอบผลลัพธ์
                     while ($row_foreman2 = $resultForeman2->fetch_assoc()) {
-                        
+
                         $data_foreman2[] = $row_foreman2;
                     }
 
@@ -375,7 +386,7 @@ else if ($opt == 'viewAgendaTopicUser') {
                 'topic_name' => $row['topic_name'],
                 'agendatopic_code' => '0',
                 'sub_data' => $data_sub,
-                
+
             );
         }
 
@@ -386,7 +397,7 @@ else if ($opt == 'viewAgendaTopicUser') {
         AND p.meeting_code = '$meeting_code' ";
 
         $result_person = $conn->query($sqlPerson);
-        
+
         while ($row_person = $result_person->fetch_assoc()) {
             $data_person[] = $row_person;
         }
@@ -413,7 +424,7 @@ else if ($opt == 'viewMeetingCount') {
     $sql = "SELECT open_code FROM  mt_meeting_open
     WHERE faculty_code = '$fac_code'";
     $result = $conn->query($sql);
-    $total_meeting = $result->num_rows; 
+    $total_meeting = $result->num_rows;
 
     // เสนอวาระ
     $sql_agency = "SELECT agency_code FROM  mt_agency
@@ -421,37 +432,36 @@ else if ($opt == 'viewMeetingCount') {
     AND agency_rstatus = '1' 
     AND agency_astatus = '1'";
     $result_agency = $conn->query($sql_agency);
-    $total_agency = $result_agency->num_rows; 
+    $total_agency = $result_agency->num_rows;
 
     // ดำเนินการจัดการประชุม
     $sql_conduct = "SELECT meeting_code FROM  mt_meeting mt 
     LEFT JOIN mt_user u ON mt.user_id = u.user_id
     WHERE u.faculty_code = '$fac_code'
-    AND meeting_rstatus = '1'
+    AND meeting_rstatus IN ('1','2','3','4')
     AND meeting_astatus = '1'";
     $result_conduct = $conn->query($sql_conduct);
-    $total_conduct = $result_conduct->num_rows; 
+    $total_conduct = $result_conduct->num_rows;
 
     // บันทึกมติการประชุม
-    
+
     $sql_save = "SELECT meeting_code FROM  mt_meeting mt 
     LEFT JOIN mt_user u ON mt.user_id = u.user_id
     WHERE u.faculty_code = '$fac_code'
-    AND meeting_rstatus = '2'
+    AND meeting_rstatus = '4'
     AND meeting_astatus = '1'";
     $result_save = $conn->query($sql_save);
-    $total_save = $result_save->num_rows; 
+    $total_save = $result_save->num_rows;
 
     $data = array(
-        "total_meeting"=>$total_meeting,
-        "total_agency"=>$total_agency,
-        "total_conduct"=>$total_conduct,
-        "total_save"=>$total_save
+        "total_meeting" => $total_meeting,
+        "total_agency" => $total_agency,
+        "total_conduct" => $total_conduct,
+        "total_save" => $total_save
     );
 
     header('Content-Type: application/json');
     echo json_encode(array('data' => $data));
-   
 }
 
 /** วาระการประชุมของผู้เข้าร่วมประชุม */
@@ -465,12 +475,11 @@ else if ($opt == 'viewTopicDetail') {
     $result = $conn->query($sql);
 
     $row = $result->fetch_assoc();
-      
+
     $data[] = $row;
 
     header('Content-Type: application/json');
-    echo json_encode(array('data' => $data, 'resp'=>$sql));
-   
+    echo json_encode(array('data' => $data, 'resp' => $sql));
 }
 
 /** ชื่อการประชุม */
@@ -483,12 +492,11 @@ else if ($opt == 'viewOpenMeeting') {
     WHERE open_code = '$open_code'";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
-      
+
     $data[] = $row;
 
     header('Content-Type: application/json');
-    echo json_encode(array('data' => $data, 'resp'=>''));
-   
+    echo json_encode(array('data' => $data, 'resp' => ''));
 }
 
 // ปิดการเชื่อมต่อฐานข้อมูล

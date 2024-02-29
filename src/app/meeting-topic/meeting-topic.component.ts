@@ -86,6 +86,23 @@ export class MeetingTopicComponent {
           this.meeting = res.data;
           this.open_title = this.meeting.open_title;
           this.open_code = this.meeting.open_code;
+
+          // // วันที่ปัจจุบัน
+          // const currentDate: Date = new Date();
+
+          // // วันที่เราต้องการเปรียบเทียบ
+          // const targetDate: Date = new Date(this.meeting.meeting_sdate);
+
+          // // เปรียบเทียบวันที่
+          // if (currentDate.getTime() < targetDate.getTime()) {
+          //     console.log("วันที่ปัจจุบันน้อยกว่าวันที่ " + targetDate);
+          //     console.log("วันที่จาก database " + currentDate.getTime());
+          //     this.meeting.meeting_ostatus = 'W';
+          // } else if (currentDate.getTime() > targetDate.getTime()) {
+          //     console.log("วันที่ปัจจุบันมากกว่าวันที่ " + this.meeting.meeting_sdate);
+          // } else {
+          //     console.log("วันที่ปัจจุบันเท่ากับวันที่ " + this.meeting.meeting_sdate);
+          // }
         }
       });
   }

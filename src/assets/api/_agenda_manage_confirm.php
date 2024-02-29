@@ -13,6 +13,8 @@ $agendatopic_origin = $dataFrm->agendatopic_origin;
 $agendatopic_offer = $dataFrm->agendatopic_offer;
 $confirm_status = $dataFrm->confirm_status;
 
+$meeting_code = $dataFrm->meeting_code;
+
 $rows = array();
 $obj = new stdClass();
 if($opt == 'confirmAgendaTopic'){
@@ -23,7 +25,12 @@ if($opt == 'confirmAgendaTopic'){
     agendatopic_origin = '$agendatopic_origin',
     agendatopic_offer = '$agendatopic_offer' WHERE agendatopic_code = '$agendatopic_code'";
     if ($conn->query($sql)) {
-        // Add $rows_regis to array
+        
+        // ปรับสถานะให้มีการพิจารณาวาระ
+        $sql2 = "UPDATE  mt_meeting  SET meeting_rstatus = '3' 
+        WHERE meeting_code = '$meeting_code'";
+        $conn->query($sql2);
+
         $obj->status = 'Ok';
         $rows = $obj;
     } else {

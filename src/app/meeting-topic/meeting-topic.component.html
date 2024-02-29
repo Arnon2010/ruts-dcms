@@ -117,11 +117,11 @@
                                                     </div>
                                                     <div class="p-2">
                                                         <span *ngIf="person.person_rstatus == '0'"
-                                                            class="badge badge-warning font-weight-bold font-status">รอการยืนยัน</span>
+                                                            class="font-status">รอการยืนยัน</span>
                                                         <span *ngIf="person.person_rstatus == '1'"
-                                                            class="badge badge-primary font-weight-bold font-status">เข้าร่วมด้วยตนเอง</span>
+                                                            class="font-status">เข้าร่วมแล้ว</span>
                                                         <span *ngIf="person.person_rstatus == '2'"
-                                                            class="badge badge-outline-primary font-weight-bold font-status">ผู้อื่นเข้าร่วมประชุมแทน</span>
+                                                            class="font-status">ผู้อื่นเข้าร่วมประชุมแทน</span>
                                                     </div>
                                                 </div>
 
@@ -212,14 +212,27 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" *ngIf="person.person_rstatus == '1'">
             <div class="col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">วาระการประชุม</h4>
-                        
-                        <!-- วาระหลัก -->
-                        <div class="row" *ngFor="let data of agendatopic_list; let i = index">
+
+                        <div *ngIf="meeting.meeting_ostatus != 'Y'" class="d-flex justify-content-around mb-4 font-status">
+                            <div>
+                                <h4>
+                                    <span class="badge badge-primary font-status font-weight-bold" *ngIf="meeting.meeting_rstatus == '0'">ยกเลิก</span>
+                                    <span class="badge badge-primary font-status font-weight-bold" *ngIf="meeting.meeting_rstatus == '1'">รอดำเนินการ</span>
+                                    <span class="badge badge-primary font-status font-weight-bold" *ngIf="meeting.meeting_rstatus == '2'">อยู่ระหว่างเสนอวาระ</span>
+                                    <span class="badge badge-primary font-status font-weight-bold" *ngIf="meeting.meeting_rstatus == '3'">อยู่ระหว่างพิจารณาวาระ</span>
+                                    <span class="badge badge-primary font-status font-weight-bold" *ngIf="meeting.meeting_rstatus == '4'">อยู่ระหว่างบันทึกการประชุม</span>
+                                </h4>
+                            </div>
+                        </div>
+
+                        <div *ngIf="meeting.meeting_ostatus == 'Y'">
+                                 <!-- วาระหลัก -->
+                        <div class="row"  *ngFor="let data of agendatopic_list; let i = index">
                             <div class="d-flex topic-title mb-1">
                                 <div class="p-2"><strong>ระเบียนวาระที่ {{data.No}}</strong></div>
                                 <div class="mr-auto p-2"><strong>{{data.topic_name}}</strong></div>
@@ -279,6 +292,9 @@
 
                         </div>
                         <!-- ./row วาระหลัก -->
+                        </div>
+
+                   
                     </div>
                     <!-- ./card-body -->
                 </div>

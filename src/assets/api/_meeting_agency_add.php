@@ -26,6 +26,11 @@ if ($action == 'Insert') {
     VALUES (null, '$meeting_code', '$faculty_code', '$agency_name')";
     
     if ($conn->query($sqlIns)) {
+
+        $sqlUpdate = "UPDATE mt_meeting SET meeting_rstatus = '2' 
+        WHERE meeting_code = '$meeting_code'";
+        $conn->query($sqlUpdate);
+
         $i++;
         // Add $rows_regis to array
         $obj->status = 'Ok';

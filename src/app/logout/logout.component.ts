@@ -16,12 +16,13 @@ export class LogoutComponent {
     private formBuilder: FormBuilder,
     private router: Router
   ) {
-    this.router.navigate(['login'], {});
+    
     this.clearToken()
   }
     clearToken(){
       localStorage.removeItem('Token');
       this.isLogin = false;
+      this.router.navigate(['login'], {});
     }
   
 }

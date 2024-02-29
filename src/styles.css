@@ -8,6 +8,9 @@ body {
     /* background-image: linear-gradient(to right, #2b8196, #a8c0ff); */
     /* background-image: url("assets/images/bg-1.jpg"); */
     background-image: url("assets/images/bg-2.jpg");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .card {
