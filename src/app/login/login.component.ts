@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit {
   // โดยต้องมีการระบุ Validators ที่บังคับให้กรอกข้อมูลเสมอ
   title = 'RUTS Digital Conference Management System';
   frmLogin = this.formBuilder.group({
-    user_epassport: ['arnn.l', Validators.required],
-    user_password: ['arnonrmutsv', Validators.required]
+    user_epassport: ['', Validators.required],
+    user_password: ['', Validators.required]
   });
   user_epass: any;
   user_password: string | null | undefined;

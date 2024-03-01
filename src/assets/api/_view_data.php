@@ -69,7 +69,8 @@ else if ($opt == 'viewAgendaTopic') {
             WHERE agt.faculty_code = '$faculty_code' 
             AND agt.topic_code = '$topic_code'
             AND agt.meeting_code = '$meeting_code' 
-            AND agt.agendatopic_prarent = '0'
+            AND agt.agendatopic_prarent = '0' 
+            AND agt.agendatopic_astatus = '1' 
             ORDER BY agt.agendatopic_code ASC";
 
             // ดำเนินการส่งคำสั่ง SQL และรับผลลัพธ์
@@ -99,6 +100,7 @@ else if ($opt == 'viewAgendaTopic') {
                 // วาระย่อย 2
                 $sqlTopicSub2 = "SELECT * FROM  mt_agendatopic agt 
                         WHERE agt.agendatopic_prarent = '$row_sub[agendatopic_code]' 
+                        AND agt.agendatopic_astatus = '1' 
                         ORDER BY agt.agendatopic_code ASC";
 
                 // ดำเนินการส่งคำสั่ง SQL และรับผลลัพธ์

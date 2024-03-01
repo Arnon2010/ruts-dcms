@@ -95,7 +95,7 @@ export class MeetingManageComponent {
     this.http.post('https://eis.rmutsv.ac.th/api/eis/userpermission.php', data)
       .subscribe({
         next: (res: any) => {
-          console.log('REF_PREFIX ', res); // เเสดงค่าใน console
+          //console.log('REF_PREFIX ', res); // เเสดงค่าใน console
           this.prefix_list = res;
         }
       });

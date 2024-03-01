@@ -1,5 +1,5 @@
-const url = 'http://localhost:8010/';  //docker
-//const url = 'http://localhost/'; //localhost
+//const url = 'http://localhost:8010/';  //docker
+const url = 'http://localhost/'; //localhost
 export const environment = {
     production: false,
     baseUrl: url + 'dcms-api/api',

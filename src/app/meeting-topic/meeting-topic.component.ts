@@ -51,12 +51,9 @@ export class MeetingTopicComponent {
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
   ) {
-
-
   }
 
   ngOnInit(): void {
-
     //this.agency_code = this.route.snapshot.paramMap.get('id');
     this.meeting_code = this.route.snapshot.paramMap.get('meeting_code');
     this.open_code = this.route.snapshot.paramMap.get('open_code');

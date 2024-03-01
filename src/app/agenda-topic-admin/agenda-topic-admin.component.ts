@@ -28,7 +28,10 @@ export class AgendaTopicAdminComponent {
 
   //meeting
   topic: any = {
-    action_submit: 'Insert'
+    action_submit: 'Insert',
+    agendatopic_offer: '',
+    agendatopic_doc: '',
+    agendatopic_origin: ''
   };
 
   selectedFiles: File[] = [];
@@ -51,6 +54,7 @@ export class AgendaTopicAdminComponent {
   };
   person_list: any;
 
+
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
@@ -61,10 +65,10 @@ export class AgendaTopicAdminComponent {
   ) {
 
     this.topicForm = this.fb.group({
-      //agendatopic_no: ['', Validators.required],
+      agendatopic_no: ['', Validators.required],
       agendatopic_name: ['', Validators.required], 
       agendatopic_origin: ['', Validators.required],
-      agendatopic_offer: ['', Validators.required],
+      agendatopic_offer: ['', Validators.nullValidator],
       agendatopic_doc: ['', Validators.nullValidator],
       //foreman_code: ['', Validators.required]
     });
@@ -128,10 +132,14 @@ export class AgendaTopicAdminComponent {
   }
 
   // Modal show person
-  personAdd(item: any) {
+  personAdd(item: any, topic_no: any, topic_name: any) {
     this.persons.agendatopic_code = item;
+    this.persons.topic_no = topic_no;
+    this.persons.topic_name = topic_name;
+
     this.fetchPerson(item);
     //this.fetchMtPosition(open_code);
+    console.log('foreman: ', this.persons);
   }
 
   // เพิ่มผู้เข้าร่วมชี้แจง
@@ -205,6 +213,10 @@ export class AgendaTopicAdminComponent {
     });
   }
 
+  closeModalPerson() {
+    this.fetchAgendaTopic(this.meeting.open_code);
+  }
+
 
   // Fetch data meeting ประชุมแต่ละคร้ัง
 
@@ -273,7 +285,7 @@ export class AgendaTopicAdminComponent {
     // Create form data for file upload
     const formData = new FormData();
     for (let i = 0; i < this.selectedFiles.length; i++) {
-      formData.append('agendatopic_doc[]', this.selectedFiles[i]);
+      formData.append('file_doc[]', this.selectedFiles[i]); //เอกสารแนบ
     }
 
     formData.append('user_id', this.user_id);
@@ -286,10 +298,11 @@ export class AgendaTopicAdminComponent {
     formData.append('agendatopic_origin', this.topic.agendatopic_origin);
     formData.append('agendatopic_offer', this.topic.agendatopic_offer);
     formData.append('agendatopic_code', this.topic.agendatopic_code);
+    formData.append('agendatopic_doc', this.topic.agendatopic_doc);
     formData.append('action_submit', this.topic.action_submit);
 
     //console.log('save formData', formData);
-    this.http.post(environment.baseUrl + '/_agenda_topic_admin_save.php', formData).subscribe(
+    this.http.post(environment.baseUrl + '/_agenda_topic_save_admin.php', formData).subscribe(
       (response: any) => {
         console.log('response: ', response);
         if (response.status == 'Ok') {
@@ -349,14 +362,13 @@ export class AgendaTopicAdminComponent {
     });
   }
 
-  // edit user
+  // edit 
   onClickUpdate(data: any) {
-    console.log('data update:', data);
+    console.log('topic update:', data);
     this.topic = data;
     this.topic.agendatopic_prarent = data.agendatopic_code; //หัวข้อวาระย่อยของ ?
     this.topic.action_submit = 'Update'; // Update ข้อมูล
   }
-
 
   openWindowWithUrl(url: string): void {
     const sanitizedUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
@@ -371,4 +383,10 @@ export class AgendaTopicAdminComponent {
     //console.log(path);
     this.openWindowWithUrl(path);
   }
+
+  defaultForm() {
+    this.topicForm.reset();
+    this.topic.action_submit = 'Insert';
+  }
+
 }

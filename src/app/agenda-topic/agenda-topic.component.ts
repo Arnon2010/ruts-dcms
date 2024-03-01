@@ -132,8 +132,6 @@ export class AgendaTopicComponent {
 
     this.fetchPerson(item);
     //this.fetchMtPosition(open_code);
-
-
     console.log('foreman: ', this.persons);
   }
 

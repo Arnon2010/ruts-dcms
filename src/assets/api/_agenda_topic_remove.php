@@ -21,7 +21,8 @@ $obj = new stdClass();
 //
 if($opt == 'DelAgendaTopic'){
     // Remove topic of meeting
-    $sql = "DELETE FROM mt_agendatopic WHERE agendatopic_code = '$agendatopic_code'";
+    $sql = "UPDATE  mt_agendatopic set agendatopic_astatus = '0'  
+    WHERE agendatopic_code = '$agendatopic_code'";
     if ($conn->query($sql)) {
         //Delete file
 

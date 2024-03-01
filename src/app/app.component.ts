@@ -14,8 +14,7 @@ export class AppComponent implements OnInit {
   isLogin: any;
   constructor(private dataService: ApiService) {
     this.isLogin = this.dataService.isLoggedIn();
-    console.log(this.isLogin);
-
+    //console.log(this.isLogin);
   }
 
   ngOnInit() {

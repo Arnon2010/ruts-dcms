@@ -7,7 +7,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a [routerLink]="['/home']">Home</a></li>
                     <li class="breadcrumb-item active">
-                        <a [routerLink]="['/meeting-setting']">กำหนดชื่อการประชุม </a>
+                        <a [routerLink]="['/meeting-manage']">เตรียมการประชุม </a>
                     </li>
                     <li class="breadcrumb-item active">
                         <a [routerLink]="['/meeting-time',open_code]">{{open_title}}</a>
@@ -45,7 +45,7 @@
                                 <div class="card-body">
 
                                     <mat-stepper headerPosition="top" #stepper>
-                                        <mat-step [stepControl]="firstFormGroup" labelPosition="bottom">
+                                        <mat-step [stepControl]="firstFormGroup" *ngIf="meeting.propose_code == '01'" labelPosition="bottom">
                                             <form [formGroup]="firstFormGroup">
                                                 <ng-template matStepLabel>
                                                     <mat-icon class="custom-icon">account_balance</mat-icon>
@@ -111,7 +111,8 @@
 
                                             </form>
                                         </mat-step>
-                                        <mat-step [stepControl]="secondFormGroup" labelPosition="bottom">
+                                        <!-- คณะกรรมการพิจารณาวาระ -->
+                                        <mat-step [stepControl]="secondFormGroup" *ngIf="meeting.propose_code == '01'" labelPosition="bottom">
                                             <form [formGroup]="secondFormGroup">
                                                 <ng-template matStepLabel>
                                                     <mat-icon style="width: 32px; height: 32px;">person</mat-icon>
@@ -230,7 +231,8 @@
                                                 </div>
                                             </form>
                                         </mat-step>
-                                        <mat-step [stepControl]="thirdFormGroup" labelPosition="bottom">
+                                        <!-- พิจารณาวาระ -->
+                                        <mat-step [stepControl]="thirdFormGroup" *ngIf="meeting.propose_code == '01'" labelPosition="bottom">
                                             <form [formGroup]="thirdFormGroup">
                                                 <ng-template matStepLabel>
                                                     <mat-icon style="width: 32px; height: 32px;">home</mat-icon>

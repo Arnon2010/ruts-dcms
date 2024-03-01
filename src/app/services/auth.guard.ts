@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
 
     isLogin(routeurl: string): boolean {
         if (this.authService.isLoggedIn()) {
-            console.log('login true');
+            //console.log('login true');
             return true;
         } else {
             //this.authService.redirectUrl = routeurl;

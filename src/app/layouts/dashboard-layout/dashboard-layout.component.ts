@@ -20,6 +20,9 @@ export class DashboardLayoutComponent {
 
   user:any = {};
 
+  isSidebarClosed = false;
+  items: any[] = []; // Define your array of items here
+  
   constructor(
     private dataService: ApiService,
     private router: Router,
@@ -31,12 +34,19 @@ export class DashboardLayoutComponent {
     this.getUser();
   }
 
+  toggleMenu(event: any) {
+    let arrowParent = event.target.parentElement.parentElement;
+    arrowParent.classList.toggle('showMenu');
+  }
+
+  toggleSidebar() {
+    this.isSidebarClosed = !this.isSidebarClosed;
+  }
 
   getUser(): void {
     const Token: any = localStorage.getItem('Token');
     this.userData = JSON.parse(Token);
-    console.log('user:, ', this.userData);
-
+    //console.log('user:, ', this.userData);
     this.user.fac_code = this.userData.faculty_code;
     this.user.fac_name = this.userData.faculty_name;
     this.user.user_id = this.userData.user_id;
@@ -44,6 +54,6 @@ export class DashboardLayoutComponent {
     this.user.user_lname = this.userData.user_lname;
     this.user.citizen_id = this.userData.cid;
     this.user.user_role = this.userData.user_role; //สิทธิ์การใช้งาน
-
   }
+
 }

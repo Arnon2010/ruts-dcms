@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, OnInit, HostListener, HostBinding } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit, HostListener, HostBinding, Renderer2 } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { Router } from '@angular/router';
 import { faUsers, faHome, faFilePen, faFilePdf, faCheckToSlot } from '@fortawesome/free-solid-svg-icons';
@@ -11,9 +11,10 @@ import { faUsers, faHome, faFilePen, faFilePdf, faCheckToSlot } from '@fortaweso
 export class SideMenuComponent implements OnInit {
 
   @ViewChild('sideMenu') sideMenu: ElementRef;
+  @ViewChild('mySidenav') mySidenav: ElementRef | undefined;
+  @ViewChild('main') main: ElementRef | undefined;
 
   // menuslist = [1, 2, 3, 4, 5, 6, 7, 8];
-
   // @HostBinding('class.active') isMenuOpen: boolean = false;
   faHome = faHome;
   faFilePen = faFilePen;
@@ -25,9 +26,14 @@ export class SideMenuComponent implements OnInit {
   userData: any;
 
   user:any = {};
+
+  isSidebarClosed = true;
+  items: any[] = []; // Define your array of items here
+
   constructor(
     private dataService: ApiService,
     private router: Router,
+    private renderer: Renderer2, private elRef: ElementRef
     ) {
     // กำหนดค่าเริ่มต้นให้ sideMenu เป็น ElementRef
     this.sideMenu = {} as ElementRef;
@@ -50,11 +56,32 @@ export class SideMenuComponent implements OnInit {
     } else {
       this.isNavHidden = 'block';
     }
-
     this.getUser();
     
   }
 
+  toggleMenu(event: any) {
+    let arrowParent = event.target.parentElement.parentElement;
+    arrowParent.classList.toggle('showMenu');
+  }
+
+  toggleSidebar() {
+    this.isSidebarClosed = !this.isSidebarClosed;
+  }
+
+  openNav() {
+    if (this.mySidenav && this.main) {
+      this.mySidenav.nativeElement.style.width = "250px";
+      this.main.nativeElement.style.marginLeft = "250px";
+    }
+  }
+  
+  closeNav() {
+    if (this.mySidenav && this.main) {
+      this.mySidenav.nativeElement.style.width = "0";
+      this.main.nativeElement.style.marginLeft = "0";
+    }
+  }
 
   getUser(): void {
     const Token: any = localStorage.getItem('Token');

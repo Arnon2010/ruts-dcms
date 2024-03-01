@@ -1,4 +1,4 @@
-<app-navbar></app-navbar>
+<!-- <app-navbar></app-navbar> -->
 <!-- partial -->
 <div class="container-fluid page-body-wrapper">
 
@@ -19,8 +19,8 @@
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                         <div class="verticals ten offset-by-one">
                             <h5>เสนอวาระการประชุม: <strong>{{meeting.open_title}} คร้ังที่
-                                {{meeting.meeting_thetime}}</strong></h5>
-                           
+                                    {{meeting.meeting_thetime}}</strong></h5>
+
                         </div>
                     </div>
 
@@ -79,7 +79,7 @@
                                     <div class="p-2">
                                         <a href="#" data-toggle="modal" data-target="#add-agenda-sub"
                                             *ngIf="item.topic_code != '1' && item.topic_code != '2'">
-                                            <span class="badge badge-warning" (click)="onClickAddTopic(item, '0')"><i
+                                            <span class="badge badge-warning" (click)="onClickAddTopic(item, item.agendatopic_code)"><i
                                                     class="mdi mdi-library-plus"></i>
 
                                             </span>
@@ -112,11 +112,11 @@
                                     <div class="p-2">
                                         <span class="badge badge-outline-success text-dark font-weight-bold"
                                             *ngIf="item.agendatopic_rstatus == 'Y'">
-                                            ผ่าน
+                                            อนุมัติ
                                         </span>
                                         <span class="badge badge-outline-danger text-dark font-weight-bold"
                                             *ngIf="item.agendatopic_rstatus == 'N'">
-                                            ไม่ผ่าน
+                                            ไม่ผ่านอนุมัติ
                                         </span>
                                         <span class="badge badge-outline-warning text-dark font-weight-bold"
                                             *ngIf="item.agendatopic_rstatus == '1'">
@@ -147,7 +147,7 @@
                                             <a href="#" data-toggle="modal" data-target="#add-agenda-sub"
                                                 *ngIf="item_sub2.topic_code != '1' && item_sub2.topic_code != '2'">
                                                 <span class="badge badge-warning"
-                                                    (click)="onClickAddTopic(item_sub2, '0')"><i
+                                                    (click)="onClickAddTopic(item_sub2, item_sub2.agendatopic_code)"><i
                                                         class="mdi mdi-library-plus"></i>
 
                                                 </span>
@@ -180,11 +180,11 @@
                                         <div class="p-2">
                                             <span class="badge badge-outline-success text-dark font-weight-bold"
                                                 *ngIf="item_sub2.agendatopic_rstatus == 'Y'">
-                                                ผ่าน
+                                                อนุมัติ
                                             </span>
                                             <span class="badge badge-outline-danger text-dark font-weight-bold"
                                                 *ngIf="item_sub2.agendatopic_rstatus == 'N'">
-                                                ไม่ผ่าน
+                                                ไม่ผ่านอนุมัติ
                                             </span>
                                             <span class="badge badge-outline-warning text-dark font-weight-bold"
                                                 *ngIf="item_sub2.agendatopic_rstatus == '1'">
