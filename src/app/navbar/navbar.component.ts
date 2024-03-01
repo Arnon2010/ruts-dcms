@@ -7,35 +7,26 @@ import { faHouse } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-
-  menuslist = [1, 2, 3, 4, 5, 6, 7, 8];
-
-  @HostBinding('class.active') isMenuOpen: boolean = false;
-
-  constructor() { 
-
-    console.log('navbar test ...');
-  }
-
-  faHouse = faHouse;
-
-  menuItemClickHandler(e:any, index:any) {
-    e.stopPropagation();
-    // something magical  🧙‍♂️✨
-    console.log(index);
-    this.toggle(e);
-  }
-  @HostListener('click', ['$event']) click(e:any) {
-    e.stopPropagation();
+  sidenavWidth = 4;
+  ngStyle: string | undefined;
+  constructor() {
 
   }
-  @HostListener("document:click") resetToggle() {
-    this.isMenuOpen = false;
+
+  ngOnInit() {
+
   }
 
-  toggle(e:any) {
-    e.stopPropagation();
-    console.log('toggle')
-    this.isMenuOpen = !this.isMenuOpen;
+  increase() {
+    this.sidenavWidth = 15;
+    console.log('increase sidenav width');
   }
+  decrease() {
+    this.sidenavWidth = 4;
+    console.log('decrease sidenav width');
+  }
+  // sidenavToggle() {
+  //   this.ngStyle = 'this.sidenavWidth = 15';
+  //   console.log('sidenav width incrases');
+  // }
 }

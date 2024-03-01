@@ -74,6 +74,7 @@ import { AgendaComponent } from './agenda/agenda.component';
 import { HomeOutsiderComponent } from './home-outsider/home-outsider.component';
 import { MeetingTopicComponent } from './meeting-topic/meeting-topic.component';
 import { AdminComponent } from './admin/admin.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 
@@ -162,7 +163,8 @@ import { AdminComponent } from './admin/admin.component';
     NgbAlertModule,
     NgbDatepickerModule, 
     JsonPipe,
-    MatIconModule
+    MatIconModule,
+    MatSidenavModule,
 
   ],
   exports:[CdkStepperModule],

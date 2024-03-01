@@ -1,5 +1,5 @@
 <!-- partial -->
-<nav class="sidebar sidebar-offcanvas sidebar-color" id="sidebar">
+<!-- <nav class="sidebar sidebar-offcanvas sidebar-color" id="sidebar">
     <ul class="nav">
         <li class="nav-item">
             <a class="nav-link" [routerLink]="['/home']" routerLinkActive="router-link-active">
@@ -76,19 +76,7 @@
             </a>
         </li>
 
-        <!-- <li class="nav-item">
-            <a class="nav-link" href="pages/documentation/documentation.html">
-                <i class="mdi mdi-file-document"></i>
-                <span class="menu-title"> Documentation</span>
-            </a>
-        </li> -->
 
-        <!-- <li class="nav-item mt-4">
-            <a class="nav-link" [routerLink]="['/logout']" routerLinkActive="router-link-active" >
-                <i class="mdi mdi-logout-variant"></i>
-                <span class="menu-title"> ออกจากระบบ</span>
-            </a>
-        </li> -->
 
         <li class="nav-item mt-4">
             <a class="nav-link" [routerLink]="['/logout']" routerLinkActive="router-link-active" >
@@ -97,4 +85,451 @@
             </a>
         </li>
     </ul>
-</nav>
+</nav> -->
+
+<!-- partial -->
+<!-- <nav class="sidebar sidebar-offcanvas sidebar-color" id="sidebar">
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/home']" routerLinkActive="router-link-active">
+                <i class="mdi mdi-home"></i>
+                <span class="menu-title"> หน้าหลัก</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'A'">
+            <a class="nav-link" [routerLink]="['/user']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">กำหนดสิทธิ์ผู้ใช้</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'A'">
+            <a class="nav-link" data-toggle="collapse" href="#ui-set" aria-expanded="false" aria-controls="ui-basic">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">ตั้งค่าระบบ</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-set">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/position']"
+                            routerLinkActive="router-link-active">ตำแหน่งในที่ประชุม</a></li>
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/meeting-type']">ประเภทการจัดประชุม</a>
+                    </li>
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/meeting-agenda']">วาระการประชุม</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'F'">
+            <a class="nav-link" [routerLink]="['/outsider']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">ผู้ใช้งานภายนอก</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'F'">
+            <a class="nav-link" [routerLink]="['/meeting-setting']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">กำหนดชื่อการประชุม</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'F'">
+            <a class="nav-link" [routerLink]="['/meeting-manage']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">เตรียมการประชุม</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'F'">
+            <a class="nav-link" [routerLink]="['/meeting-save']" routerLinkActive="router-link-active">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">บันทึกมติการประชุม</span>
+            </a>
+        </li>
+
+        <li class="nav-item" *ngIf="user_role == 'F'">
+            <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">รายงานการประชุม</span>
+            </a>
+        </li>
+
+        <li class="nav-item" *ngIf="user_role != 'F' && user_role != 'A'">
+            <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
+                <i class="mdi mdi-view-agenda"></i>
+                <span class="menu-title">การประชุมทั้งหมด</span>
+            </a>
+        </li>
+
+        <li class="nav-item" *ngIf="user_role != 'F' && user_role != 'A'">
+            <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
+                <i class="mdi mdi-view-agenda"></i>
+                <span class="menu-title">งานที่ได้รับมอบหมาย</span>
+            </a>
+        </li>
+
+
+
+        <li class="nav-item mt-4">
+            <a class="nav-link" [routerLink]="['/logout']" routerLinkActive="router-link-active">
+                <i class="mdi mdi-logout-variant"></i>
+                <span class="menu-title"> ออกจากระบบ</span>
+            </a>
+        </li>
+    </ul>
+</nav> -->
+
+
+<!-- <input type="checkbox" id="check">
+<label for="check">
+    <i class="fas fa-bars" id="btn"></i>
+    <i class="fas fa-times" id="cancel"></i>
+</label>
+<nav class="sidebar">
+
+    <header>เมนู</header>
+    <ul class="nav">
+        <a [routerLink]="['/home']" routerLinkActive="router-link-active" class="active">
+            <i class="fas fa-qrcode"></i>
+            <span>หน้าหลัก</span>
+        </a>
+        <a class="nav-link" [routerLink]="['/user']" routerLinkActive="router-link-active">
+            <i class="icon-layout menu-icon"></i>
+            <span class="menu-title">กำหนดสิทธิ์ผู้ใช้</span>
+        </a>
+        <a href="#">
+            <i class="fas fa-stream"></i>
+            <span>Overview</span>
+        </a>
+        <a href="#">
+            <i class="fas fa-calendar"></i>
+            <span>Events</span>
+        </a>
+        <a href="#">
+            <i class="far fa-question-circle"></i>
+            <span>About</span>
+        </a>
+        <a href="#">
+            <i class="fas fa-sliders-h"></i>
+            <span>Services</span>
+        </a>
+        <a href="#">
+            <i class="far fa-envelope"></i>
+            <span>Contact</span>
+        </a>
+    </ul>
+
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/home']" routerLinkActive="router-link-active">
+                <i class="fas fa-qrcode"></i>
+                <span class="menu-title"> หน้าหลัก</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'A'">
+            <a class="nav-link" [routerLink]="['/user']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">กำหนดสิทธิ์ผู้ใช้</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'A'">
+            <a class="nav-link" data-toggle="collapse" href="#ui-set" aria-expanded="false" aria-controls="ui-basic">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">ตั้งค่าระบบ</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-set">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/position']"
+                            routerLinkActive="router-link-active">ตำแหน่งในที่ประชุม</a></li>
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/meeting-type']">ประเภทการจัดประชุม</a>
+                    </li>
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/meeting-agenda']">วาระการประชุม</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'F'">
+            <a class="nav-link" [routerLink]="['/outsider']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">ผู้ใช้งานภายนอก</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'F'">
+            <a class="nav-link" [routerLink]="['/meeting-setting']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">กำหนดชื่อการประชุม</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'F'">
+            <a class="nav-link" [routerLink]="['/meeting-manage']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">เตรียมการประชุม</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'F'">
+            <a class="nav-link" [routerLink]="['/meeting-save']" routerLinkActive="router-link-active">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">บันทึกมติการประชุม</span>
+            </a>
+        </li>
+
+        <li class="nav-item" *ngIf="user_role == 'F'">
+            <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">รายงานการประชุม</span>
+            </a>
+        </li>
+
+        <li class="nav-item" *ngIf="user_role != 'F' && user_role != 'A'">
+            <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
+                <i class="mdi mdi-view-agenda"></i>
+                <span class="menu-title">การประชุมทั้งหมด</span>
+            </a>
+        </li>
+
+        <li class="nav-item" *ngIf="user_role != 'F' && user_role != 'A'">
+            <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
+                <i class="mdi mdi-view-agenda"></i>
+                <span class="menu-title">งานที่ได้รับมอบหมาย</span>
+            </a>
+        </li>
+        <li class="nav-item mt-4">
+            <a class="nav-link" [routerLink]="['/logout']" routerLinkActive="router-link-active">
+                <i class="mdi mdi-logout-variant"></i>
+                <span class="menu-title"> ออกจากระบบ</span>
+            </a>
+        </li>
+    </ul>
+    
+</nav> -->
+
+
+<div class="sidebar close">
+    <div class="logo-details">
+        <i class='bx bxl-c-plus-plus'></i>
+        <span class="logo_name">CodingLab</span>
+    </div>
+    <ul class="nav-links">
+        <!-- <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/home']" routerLinkActive="router-link-active">
+                <i class="fas fa-qrcode"></i>
+                <span class="menu-title"> หน้าหลัก</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'A'">
+            <a class="nav-link" [routerLink]="['/user']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">กำหนดสิทธิ์ผู้ใช้</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'A'">
+            <a class="nav-link" data-toggle="collapse" href="#ui-set" aria-expanded="false" aria-controls="ui-basic">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">ตั้งค่าระบบ</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-set">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/position']"
+                            routerLinkActive="router-link-active">ตำแหน่งในที่ประชุม</a></li>
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/meeting-type']">ประเภทการจัดประชุม</a>
+                    </li>
+                    <li class="nav-item"> <a class="nav-link" [routerLink]="['/meeting-agenda']">วาระการประชุม</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'F'">
+            <a class="nav-link" [routerLink]="['/outsider']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">ผู้ใช้งานภายนอก</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'F'">
+            <a class="nav-link" [routerLink]="['/meeting-setting']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">กำหนดชื่อการประชุม</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'F'">
+            <a class="nav-link" [routerLink]="['/meeting-manage']" routerLinkActive="router-link-active">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">เตรียมการประชุม</span>
+            </a>
+        </li>
+        <li class="nav-item" *ngIf="user_role == 'F'">
+            <a class="nav-link" [routerLink]="['/meeting-save']" routerLinkActive="router-link-active">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">บันทึกมติการประชุม</span>
+            </a>
+        </li>
+
+        <li class="nav-item" *ngIf="user_role == 'F'">
+            <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
+                <i class="icon-paper menu-icon"></i>
+                <span class="menu-title">รายงานการประชุม</span>
+            </a>
+        </li>
+
+        <li class="nav-item" *ngIf="user_role != 'F' && user_role != 'A'">
+            <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
+                <i class="mdi mdi-view-agenda"></i>
+                <span class="menu-title">การประชุมทั้งหมด</span>
+            </a>
+        </li>
+
+        <li class="nav-item" *ngIf="user_role != 'F' && user_role != 'A'">
+            <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
+                <i class="mdi mdi-view-agenda"></i>
+                <span class="menu-title">งานที่ได้รับมอบหมาย</span>
+            </a>
+        </li>
+        <li class="nav-item mt-4">
+            <a class="nav-link" [routerLink]="['/logout']" routerLinkActive="router-link-active">
+                <i class="mdi mdi-logout-variant"></i>
+                <span class="menu-title"> ออกจากระบบ</span>
+            </a>
+        </li> -->
+
+        <li>
+            <a href="#" [routerLink]="['/home']">
+               <i class="fas fa-qrcode"></i>
+                <span class="link_name">Dashboard</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" [routerLink]="['/']" routerLinkActive="router-link-active">หน้าหลัก</a></li>
+            </ul>
+        </li>
+
+        <li *ngIf="user_role == 'F'">
+            <a href="#" [routerLink]="['/outsider']">
+                <i class="mdi mdi-account"></i>
+                <span class="link_name">ผู้ใช้งานภายนอก</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" [routerLink]="['/outsider']" routerLinkActive="router-link-active">ผู้ใช้งานภายนอก</a></li>
+            </ul>
+        </li>
+        <li *ngIf="user_role == 'F'">
+            <a href="#"  [routerLink]="['/meeting-setting']">
+                <i class="mdi mdi-settings"></i>
+                <span class="link_name">กำหนดชื่อการประชุม</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" [routerLink]="['/meeting-setting']" routerLinkActive="router-link-active">กำหนดชื่อการประชุม</a></li>
+            </ul>
+        </li>
+        <li  *ngIf="user_role == 'F'">
+            <a href="#" [routerLink]="['/meeting-manage']">
+                <i class="mdi mdi-wrench"></i>
+                <span class="link_name">เตรียมการประชุม</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" [routerLink]="['/meeting-manage']" routerLinkActive="router-link-active">เตรียมการประชุม</a></li>
+            </ul>
+        </li>
+
+        <li *ngIf="user_role == 'F'">
+            <a href="#" [routerLink]="['/meeting-save']">
+                <i class="mdi mdi-content-save-settings"></i>
+                <span class="link_name">Assignment</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" [routerLink]="['/meeting-save']" routerLinkActive="router-link-active">บันทึกมติการประชุม</a></li>
+            </ul>
+        </li>
+
+        <li *ngIf="user_role == 'F'">
+            <a href="#" [routerLink]="['/']">
+                <i class="mdi mdi-note"></i>
+                <span class="link_name">Report</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" [routerLink]="['/']" routerLinkActive="router-link-active">รายงานการประชุม</a></li>
+            </ul>
+        </li>
+
+        <li *ngIf="user_role != 'F' && user_role != 'A'">
+            <a href="#" [routerLink]="['/']">
+                <i class="mdi mdi-view-agenda"></i>
+                <span class="link_name">Assignment</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" [routerLink]="['/']" routerLinkActive="router-link-active">งานที่ได้รับมอบหมาย</a></li>
+            </ul>
+        </li>
+        
+        <li *ngIf="user_role == 'A'">
+            <a href="#" [routerLink]="['/user']">
+                <i class="mdi mdi-account"></i>
+                 <span class="link_name">User</span>
+             </a>
+             <ul class="sub-menu blank">
+                 <li>
+                    <a class="nav-link" [routerLink]="['/user']" routerLinkActive="router-link-active">
+                        กำหนดสิทธิ์ผู้ใช้
+                    </a>                
+                </li>
+             </ul>
+        </li>
+
+        <li [routerLink]="['/home']" *ngIf="user_role != 'F' && user_role != 'A'">
+            <a href="#">
+                <i class="mdi mdi-view-agenda"></i>
+                <span class="link_name">Meeting All</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" [routerLink]="['/home']" routerLinkActive="router-link-active">ประชุมทั้งหมด</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="#" [routerLink]="['/logout']">
+                <i class="mdi mdi-logout-variant"></i>
+                <span class="link_name">Logout</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" [routerLink]="['/logout']" routerLinkActive="router-link-active">ออกจากระบบ</a></li>
+            </ul>
+        </li>
+        
+        <!-- <li>
+            <div class="iocn-link">
+                <a href="#">
+                    <i class='bx bx-collection'></i>
+                    <span class="link_name">Category</span>
+                </a>
+                <i class='bx bxs-chevron-down arrow'></i>
+            </div>
+            <ul class="sub-menu">
+                <li><a class="link_name" href="#">Category</a></li>
+                <li><a href="#">HTML & CSS</a></li>
+                <li><a href="#">JavaScript</a></li>
+                <li><a href="#">PHP & MySQL</a></li>
+            </ul>
+        </li> -->
+        
+        
+    </ul>
+</div>
+<section class="home-section">
+    <div class="home-content">
+        <i class='bx bx-menu'></i>
+        <!-- <span class="text">Drop Down Sidebar</span> -->
+    </div>
+</section>
+
+<div class="one"></div>
+<script>
+    let arrow = document.querySelectorAll(".arrow");
+    for (var i = 0; i < arrow.length; i++) {
+        arrow[i].addEventListener("click", (e) => {
+            let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+            arrowParent.classList.toggle("showMenu");
+        });
+    }
+    let sidebar = document.querySelector(".sidebar");
+    let sidebarBtn = document.querySelector(".bx-menu");
+    console.log(sidebarBtn);
+    sidebarBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("close");
+    });
+</script>
