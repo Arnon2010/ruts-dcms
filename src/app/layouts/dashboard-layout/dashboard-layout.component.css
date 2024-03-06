@@ -254,5 +254,8 @@ header {
     .sidebar.close .nav-links li .sub-menu{
       display: none;
     }
+    * {
+    font-size: 12px;
+    }
   }
   

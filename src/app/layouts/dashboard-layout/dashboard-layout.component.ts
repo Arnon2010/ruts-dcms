@@ -23,15 +23,25 @@ export class DashboardLayoutComponent {
   isSidebarClosed = false;
   items: any[] = []; // Define your array of items here
   
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreenSize();
+  } 
+
   constructor(
     private dataService: ApiService,
     private router: Router,
     ) {
-
+      this.checkScreenSize();
   }
 
   ngOnInit() {
     this.getUser();
+  }
+
+  checkScreenSize() {
+    this.isSidebarClosed = window.innerWidth < 780;
+    //console.log(this.isSidebarClosed);
   }
 
   toggleMenu(event: any) {

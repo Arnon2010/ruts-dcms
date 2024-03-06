@@ -133,8 +133,6 @@
                                         <div class="col-md-12 col-xl-6">
                                             <div class="row">
                                                 <div class="col-md-12 border-right">
-
-
                                                     <!-- <div class="d-flex mb-3 mb-md-0 mt-3">
                                                         <div class="p-2">
                                                             <span class=""> 
@@ -250,17 +248,17 @@
                                     </div>
                                     <!--เอกสาร-->
                                     <div class="p-2">
-                                        <a href="#" target="_blank" *ngIf="item.agendatopic_doc != ''"
+                                        <a href="#" target="_blank"
                                             data-toggle="modal" data-target="#meeting-topic"
                                             data-whatever="@getbootstrap"
                                             (click)="onClickModalTopic(item.agendatopic_code)">
                                             <span class="badge badge-primary">
                                                 <i class="mdi mdi-file-check"></i></span>
                                         </a>
-                                        <a *ngIf="item.agendatopic_doc == ''">
+                                        <!-- <a *ngIf="item.agendatopic_doc == ''">
                                             <span class="badge badge-secondary">
                                                 <i class="mdi mdi-file-hidden"></i></span>
-                                        </a>
+                                        </a> -->
                                     </div>
 
                                 </div>
@@ -272,29 +270,22 @@
                                         <div class="mr-auto p-2"><strong>{{item_sub2.agendatopic_name}}</strong></div>
                                         <!-- เอกสาร -->
                                         <div class="p-2">
-                                            <a href="#" target="_blank" *ngIf="item_sub2.agendatopic_doc != ''"
+                                            <a href="#" target="_blank"
                                                 data-toggle="modal" data-target="#meeting-topic"
                                                 data-whatever="@getbootstrap"
                                                 (click)="onClickModalTopic(item.agendatopic_code)">
                                                 <span class="badge badge-primary">
                                                     <i class="mdi mdi-file-check"></i></span>
                                             </a>
-                                            <a *ngIf="item_sub2.agendatopic_doc == ''">
-                                                <span class="badge badge-secondary">
-                                                    <i class="mdi mdi-file-hidden"></i></span>
-                                            </a>
+                                            
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                         <!-- ./row วาระหลัก -->
                         </div>
-
-                   
                     </div>
                     <!-- ./card-body -->
                 </div>
@@ -358,18 +349,25 @@
                                 <div class="form-group">
                                     <div class="topic-head">เอกสารประกอบ:</div>
                                     <div class="display-4">
-                                        <button class="btn-action" (click)="openAnyFile(topics.agendatopic_doc)">
+                                        <button *ngIf="topics.agendatopic_doc != ''" class="btn-action" (click)="openAnyFile(topics.agendatopic_doc)">
                                             <span class="badge badge-info">
                                                 <i class="mdi mdi-file-document-box"></i></span>
                                         </button>
+
+                                         <a *ngIf="topics.agendatopic_doc == ''">
+                                            <span class="badge badge-secondary">
+                                                <i class="mdi mdi-file-hidden"></i> ไม่มีเอกสารแนบ</span>
+                                        </a>
+
+                                        
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputConfirmPassword1">บันทึกมติการประชุม</label>
-                                    <textarea class="form-control" id="agendatopic_origin" rows="3"
+                                    <textarea class="form-control" id="agendatopic_origin" rows="3" [(ngModel)]="topics.agendatopic_note"
                                         placeholder="มติการประชุม"></textarea>
 
-                                    <button type="submit" class="btn btn-warning btn-sm mt-4 mr-2">บันทึก</button>
+                                    <button type="submit" class="btn btn-warning btn-sm mt-4 mr-2" (click)="savNoteTopic(topics)">บันทึก</button>
 
                                 </div>
                             </form>

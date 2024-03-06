@@ -170,7 +170,7 @@ export class MeetingTopicComponent {
       "agendatopic_code": agendatopic_code,
     }
 
-    console.log('Topic detail:', data);
+    //console.log('Topic detail:', data);
 
     this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({
@@ -181,10 +181,11 @@ export class MeetingTopicComponent {
       });
   }
 
-  savNoteTopic(agendatopic_code: any) {
+  savNoteTopic(item: any) {
     var data = {
       "opt": "saveNoteTopic",
-      "agendatopic_code": agendatopic_code,
+      "agendatopic_code": item.agendatopic_code,
+      "agendatopic_note": item.agendatopic_note,
     }
 
     console.log('Topic detail:', data);
