@@ -63,7 +63,6 @@ import { AgendaTopicComponent } from './agenda-topic/agenda-topic.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgbModule, NgbPaginationModule, NgbAlertModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { AgendaTopAdminComponent } from './agenda-top-admin/agenda-top-admin.component';
 import { AgendaTopicAdminComponent } from './agenda-topic-admin/agenda-topic-admin.component';
 import { MeetingSaveComponent } from './meeting-save/meeting-save.component';
 import { MeetingSaveTopicComponent } from './meeting-save-topic/meeting-save-topic.component';
@@ -75,9 +74,13 @@ import { HomeOutsiderComponent } from './home-outsider/home-outsider.component';
 import { MeetingTopicComponent } from './meeting-topic/meeting-topic.component';
 import { AdminComponent } from './admin/admin.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { MeetingAllComponent } from './meeting-all/meeting-all.component';
+import { AssignedComponent } from './assigned/assigned.component';
+import { MeetingPersonComponent } from './meeting-person/meeting-person.component';
 
-
-
+import {NgxSimpleTextEditorModule} from 'ngx-simple-text-editor';
+import { ReportDetailComponent } from './report-detail/report-detail.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -114,7 +117,6 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     AgendaManageComponent,
     AgencyTopicComponent,
     AgendaTopicComponent,
-    AgendaTopAdminComponent,
     AgendaTopicAdminComponent,
     MeetingSaveComponent,
     MeetingSaveTopicComponent,
@@ -124,7 +126,11 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     AgendaComponent,
     HomeOutsiderComponent,
     MeetingTopicComponent,
-    AdminComponent
+    AdminComponent,
+    MeetingAllComponent,
+    AssignedComponent,
+    MeetingPersonComponent,
+    ReportDetailComponent
 
   ],
   imports: [
@@ -165,7 +171,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     JsonPipe,
     MatIconModule,
     MatSidenavModule,
-
+    NgxSimpleTextEditorModule,
+    PdfViewerModule
   ],
   exports:[CdkStepperModule],
   providers: [

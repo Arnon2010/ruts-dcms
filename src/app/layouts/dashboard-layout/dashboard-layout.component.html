@@ -67,15 +67,40 @@
             </li>
 
             <li *ngIf="user.user_role == 'F'">
-              <a href="#" [routerLink]="['/']">
+              <a href="#" [routerLink]="['/report']">
                 <i class="mdi mdi-note"></i>
                 <span class="link_name">รายงานการประชุม</span>
               </a>
               <ul class="sub-menu blank">
-                <li><a class="link_name" [routerLink]="['/']" routerLinkActive="router-link-active">รายงานการประชุม</a>
+                <li><a class="link_name" [routerLink]="['/report']" routerLinkActive="router-link-active">รายงานการประชุม</a>
                 </li>
               </ul>
             </li>
+
+            <!-- <li *ngIf="user.user_role == 'F' && user.user_role == 'A'">
+              <a href="#" [routerLink]="['/meeting-all']" >
+                <i class="mdi mdi-view-agenda"></i>
+                <span class="link_name">การประชุมทั้งหมด</span>
+              </a>
+              <ul class="sub-menu blank">
+                <li><a class="link_name" [routerLink]="['/meeting-all']"
+                    routerLinkActive="router-link-active">การประชุมทั้งหมด</a>
+                </li>
+              </ul>
+            </li> -->
+
+            <li *ngIf="user.user_role != 'F' && user.user_role != 'A'">
+              <a href="#" [routerLink]="['/meeting-all']" >
+                <i class="mdi mdi-view-agenda"></i>
+                <span class="link_name">การประชุมทั้งหมด</span>
+              </a>
+              <ul class="sub-menu blank">
+                <li><a class="link_name" [routerLink]="['/meeting-all']"
+                    routerLinkActive="router-link-active">การประชุมทั้งหมด</a>
+                </li>
+              </ul>
+            </li>
+
             <li *ngIf="user.user_role != 'F' && user.user_role != 'A'">
               <a href="#" [routerLink]="['/']">
                 <i class="mdi mdi-view-agenda"></i>
@@ -97,18 +122,6 @@
                   <a class="nav-link" [routerLink]="['/user']" routerLinkActive="router-link-active">
                     กำหนดสิทธิ์ผู้ใช้
                   </a>
-                </li>
-              </ul>
-            </li>
-
-            <li [routerLink]="['/home']" *ngIf="user.user_role != 'F' && user.user_role != 'A'">
-              <a href="#">
-                <i class="mdi mdi-view-agenda"></i>
-                <span class="link_name">ประชุมทั้งหมด</span>
-              </a>
-              <ul class="sub-menu blank">
-                <li><a class="link_name" [routerLink]="['/home']"
-                    routerLinkActive="router-link-active">ประชุมทั้งหมด</a>
                 </li>
               </ul>
             </li>
@@ -156,10 +169,11 @@
         <!-- partial:../../partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021. Premium <a
-                href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash.
-              All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"> ©2023
+              <a href="https://arit.rmutsv.ac.th/" class="font-weight-bold" target="_blank">ARIT.RMUTSV.AC.TH.
+                สำนักวิทยบริการและเทคโนโลยีสารสนเทศ สวส. มทร.ศรีวิชัย</a>
+              ALL RIGHTS RESERVED.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">ARIT-RUTS <i
                 class="ti-heart text-danger ml-1"></i></span>
           </div>
         </footer>

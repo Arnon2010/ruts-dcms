@@ -17,11 +17,11 @@
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                         <div class="verticals ten offset-by-one">
-                            <h4>เพิ่มการประชุมแต่ละครั้ง  
-                            <button type="button" class="btn btn-primary btn-rounded btn-icon"  
-                            data-toggle="modal" data-target="#addMeetingForm" data-whatever="@getbootstrap">
-                            <i class="mdi mdi-shape-square-plus"></i>
-                              </button>
+                            <h4>เพิ่มการประชุมแต่ละครั้ง
+                                <button type="button" class="btn btn-primary btn-rounded btn-icon" data-toggle="modal"
+                                    data-target="#addMeetingForm" data-whatever="@getbootstrap">
+                                    <i class="mdi mdi-shape-square-plus"></i>
+                                </button>
                             </h4>
                             <hr>
                         </div>
@@ -103,12 +103,13 @@
 
                                         <!--เอกสาร-->
                                         <td class="text-center">
-                                            <button class="btn-action" *ngIf="data.meeting_doc != ''"
-                                                (click)="openAnyFile(data.meeting_doc)">
+                                            <button class="btn-action" *ngIf="data.doc_files.length != 0"
+                                                (click)="onClickOpenFile(data.doc_files)"
+                                                data-toggle="modal" data-target="#open-filedocument">
                                                 <span class="badge badge-info">
                                                     <i class="mdi mdi-file-check"></i> เอกสาร</span>
                                             </button>
-                                            <a *ngIf="data.meeting_doc == ''">
+                                            <a *ngIf="data.doc_files.length == 0">
                                                 <span class="badge badge-secondary">
                                                     <i class="mdi mdi-file-hidden"></i></span>
                                             </a>
@@ -197,24 +198,26 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addMeetingModalLabel">เพิ่มการประชุมแต่ละครั้ง</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         (click)="resetFormSubmit()">
                         <span aria-hidden="true">&times;</span>
-                    </button>
+                    </button> -->
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close"
+                        (click)="resetFormSubmit()">&times; ปิด</button>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">{{open_title}}</h4>
+                                <!-- <h4 class="card-title">{{opens.open_title}}</h4> -->
 
                                 <form class="forms-sample" [formGroup]="meetingForm">
                                     <div class="form-group row">
                                         <label for="prefix_name" class="col-sm-3 col-form-label">ชื่อการประชุม:
                                             *</label>
-                                        <div class="col-sm-9">
-                                            {{open_title}}
-                                        </div>
+                                        <label for="prefix_name" class="col-sm-9 col-form-label">
+                                            <strong>{{opens.open_title}}</strong>
+                                        </label>
                                     </div>
 
                                     <div class="form-group row">
@@ -402,17 +405,77 @@
                                         <div class="col-sm-3">
                                             <input type="file" class="form-control" id="meeting_doc"
                                                 (change)="onFileChange($event)" [(ngModel)]="meeting.meeting_doc"
-                                                formControlName="meeting_doc" placeholder="">
+                                                formControlName="meeting_doc" placeholder="" accept="application/pdf"
+                                                multiple>
                                         </div>
                                     </div>
 
-                                    <div>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                            (click)="resetFormSubmit()">ยกเลิก</button>
-                                        <button type="submit" [disabled]="!meetingForm.valid"
-                                            class="btn btn-primary m-2" data-dismiss="modal"
-                                            (click)="saveMeeting(meeting)">ยืนยันเพิ่มการประชุม</button>
+                                    <div class="form-group row" *ngIf="selectedFiles.length != 0">
+                                        <label for="exampleInputMobile" class="col-sm-3 col-form-label"></label>
+                                        <!-- Add new -->
+                                        <div class="col-sm-8">
+                                            <ul class="list-group">
+                                                <li *ngFor="let file of selectedFiles; let i = index"
+                                                    class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <div class="col-sm-6 col-md-8 col-lg-8">
+                                                        <span class="badge badge-secondary badge-pill">{{i
+                                                            + 1}}</span> {{file.name}}
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-4 col-lg-4">
+                                                        <span class="badge badge-info badge-pill">
+                                                            <a href="#" (click)="viewFile(file)" [href]="open_file"
+                                                                target="_blank">
+                                                                <span class="badge badge-info">
+                                                                    เอกสาร</span></a>
+                                                        </span>
+                                                    </div>
+                                                   
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
+
+                                    <!-- Update -->
+                                    <div class="form-group row">
+                                        <label for="exampleInputMobile" class="col-sm-3 col-form-label"></label>
+
+                                        <div class="col-sm-8">
+                                            <ul class="list-group">
+                                                <li *ngFor="let file of meeting.doc_files; let i = index"
+                                                    class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <div class="col-sm-6 col-md-8 col-lg-8">
+                                                        <span class="badge badge-secondary badge-pill">
+                                                            {{i + 1}}</span> {{file.meetingdoc_name}}
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-4 col-lg-4">
+                                                        <span class="badge badge-info badge-pill m-2">
+                                                            <a href="#"  (click)="openAnyFile(file.meetingdoc_path)" [href]="open_file"
+                                                                target="_blank">
+                                                                <span class="badge badge-info">
+                                                                    เอกสาร</span></a>
+                                                        </span>
+                                                        
+                                                        <button (click)="delFile(file,i)" 
+                                                            class="btn btn-outline-danger btn-sm">ลบ</button>
+                                                        
+                                                    </div>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="exampleInputMobile" class="col-sm-3 col-form-label"></label>
+                                        <div class="col-sm-8">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                (click)="resetFormSubmit()">ยกเลิก</button>
+                                            <button type="submit" [disabled]="!meetingForm.valid"
+                                                class="btn btn-primary m-2" data-dismiss="modal"
+                                                (click)="saveMeeting(meeting)">ยืนยันเพิ่มการประชุม</button>
+                                        </div>
+                                    </div>
+
                                 </form>
                             </div>
                         </div>
@@ -742,6 +805,63 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                         (click)="confirmDone(); stepper.reset()">ปิด</button>
+                    <!-- <button type="submit" [disabled]="!regisForm.valid" class="btn btn-primary" data-dismiss="modal"
+                        (click)="saveUser(user)">ยืนยันเพิ่มผู้ใช้</button> -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- open-filedocument -->
+    <div class="modal fade" id="open-filedocument" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">เอกสารคำสั่งในการประชุม</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col-md-12 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+
+                                            <div class="row mb-3" *ngFor="let item of datafiles; let i = index">
+                                                <div class="d-flex topic font-weight-bold">
+                                                    <div class="p-2">
+                                                        <!-- วาระ -->
+                                                        {{ i + 1 }}
+                                                    </div>
+                                                    <div class="mr-auto p-2">
+                                                        <!-- เรื่อง -->
+                                                        {{item.meetingdoc_name}}
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <!-- วาระที่เสนอ -->
+                                                        <a href="#" (click)="openAnyFile(item.meetingdoc_path)" [href]="open_file"
+                                                        target="_blank">
+                                                        <span class="badge badge-info">
+                                                            เอกสาร</span></a>
+                                                    </div>
+                
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
                     <!-- <button type="submit" [disabled]="!regisForm.valid" class="btn btn-primary" data-dismiss="modal"
                         (click)="saveUser(user)">ยืนยันเพิ่มผู้ใช้</button> -->
                 </div>

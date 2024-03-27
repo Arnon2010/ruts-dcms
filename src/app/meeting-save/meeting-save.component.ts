@@ -70,7 +70,7 @@ export class MeetingSaveComponent {
       "faculty_code": this.fac_code
     }
 
-    this.http.post(environment.baseUrl + '/_meeting_view.php', data)
+    this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({
         next: (res: any) => {
           console.log('meeting list ', res); // เเสดงค่าใน console

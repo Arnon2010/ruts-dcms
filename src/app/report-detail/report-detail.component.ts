@@ -5,14 +5,14 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../services/api.service';
 import Swal from 'sweetalert2';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-report',
-  templateUrl: './report.component.html',
-  styleUrls: ['./report.component.css']
+  selector: 'app-report-detail',
+  templateUrl: './report-detail.component.html',
+  styleUrls: ['./report-detail.component.css']
 })
-export class ReportComponent {
+export class ReportDetailComponent {
   userData: any;
   fac_code: any;
   user_id: any;
@@ -25,14 +25,10 @@ export class ReportComponent {
   counts: any = {};
   total_meeting: any;
   total_meeting_pass: any;
-  reportData: any;
-
-  //pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
-
-  src = 'https://mcps.rmutsv.ac.th/cert/assets/document/2567/165201020015/165201020015-20240207184347.pdf';
-
-  //sanitizedUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://e-doc.rmutsv.ac.th/document/edoc/D0026/2022/DOC180D1663832881_edoc_2022-09-22-11.pdf');
-
+  meeting_person: any;
+  meeting_person_past: any;
+  total_meeting_all: any;
+  total_meeting_assigned: any;
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
@@ -44,8 +40,10 @@ export class ReportComponent {
   }
 
   ngOnInit(): void {
+   
     this.getUser();
-    this.fetchReport(this.fac_code);
+    this.fetchAgency(this.fac_code);
+    this.fetchMeetingUser(this.citizen_id);
     this.fetchMeetingCount(this.fac_code);
   }
 
@@ -60,7 +58,6 @@ export class ReportComponent {
     this.user_lname = this.userData.user_lname;
     this.citizen_id = this.userData.cid;
     this.user_role = this.userData.user_role; //สิทธิ์การใช้งาน
-
   }
 
   // จำนวนประชุมที่เกี่ยวข้อง
@@ -78,17 +75,35 @@ export class ReportComponent {
       });
   }
 
-  // รายงาน
-  fetchReport(faculty_code: string): void {
+  // Consider data list คณะกรรมการพิจารณาวาระ
+  fetchAgency(fac_code:any) {
+    //console.log('meeting_code: ', this.meeting.meeting_code);
+    this.http
+      .get(environment.baseUrl + '/_agency_data.php?faculty_code=' + fac_code) //ติดต่อไปยัง Api getfaculty.php
+      .subscribe((res: any) => { // ดึงข้อมูลในฟิลด์ fac_id, fac_name
+        //console.log( 'agency_list: ',res);
+        this.agency_list = res.data;
+       
+      });
+  }
+
+  // ประชุมของผู้เข้าร่วม
+  fetchMeetingUser(person_id: string): void {
     var data = {
-      "opt": "viewReport",
-      "faculty_code": faculty_code
+      "opt": "viewMeetingUser",
+      "person_id": person_id
     }
-    this.http.post(environment.baseUrl + '/_view_report.php', data)
+    this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({
         next: (res: any) => {
-          console.log('report:  ', res); // เเสดงค่าใน console
-          this.reportData = res.data;
+          //console.log('meeting user:  ', res); // เเสดงค่าใน console
+          this.meeting_person = res.data;
+          this.meeting_person_past = res.data_past;
+          this.total_meeting = res.row_meeting;
+          this.total_meeting_pass = res.row_meeting_pass;
+          this.total_meeting_all = res.row_meeting_all;
+          this.total_meeting_assigned = res.row_assigned;
+
         }
       });
   }

@@ -21,11 +21,14 @@ export class HomeComponent {
   agency_list: any;
   fac_name: any;
   citizen_id: any;
-  meeting_list: any;
   user_role: any;
   counts: any = {};
   total_meeting: any;
   total_meeting_pass: any;
+  meeting_person: any;
+  meeting_person_past: any;
+  total_meeting_all: any;
+  total_meeting_assigned: any;
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
@@ -47,7 +50,7 @@ export class HomeComponent {
   getUser(): void {
     const Token: any = localStorage.getItem('Token');
     this.userData = JSON.parse(Token);
-    //console.log('user:, ', this.userData);
+    console.log('user:, ', this.userData);
     this.fac_code = this.userData.faculty_code;
     this.fac_name = this.userData.faculty_name;
     this.user_id = this.userData.user_id;
@@ -95,10 +98,15 @@ export class HomeComponent {
       .subscribe({
         next: (res: any) => {
           //console.log('meeting user:  ', res); // เเสดงค่าใน console
-          this.meeting_list = res.data;
+          this.meeting_person = res.data;
+          this.meeting_person_past = res.data_past;
           this.total_meeting = res.row_meeting;
           this.total_meeting_pass = res.row_meeting_pass;
+          this.total_meeting_all = res.row_meeting_all;
+          this.total_meeting_assigned = res.row_assigned;
+
         }
       });
   }
+
 }

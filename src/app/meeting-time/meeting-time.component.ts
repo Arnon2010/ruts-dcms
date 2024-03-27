@@ -161,6 +161,8 @@ export class MeetingTimeComponent {
   channels:any;
   program_list: any;
   opens: any = {};
+  files_vew: any = [];
+  datafiles: any;
 
 
   constructor(
@@ -268,11 +270,16 @@ export class MeetingTimeComponent {
     window.open(url, '_blank');
     //window.open(sanitizedUrl.toString(), '_blank');
   }
+
+   // data file document
+   onClickOpenFile(item:any) {
+    this.datafiles = item;
+  }
   
   // view file
   async openAnyFile(file_path: any) {
     let path = environment.vieFile + file_path;
-    //console.log(path);
+    console.log(path);
     this.openWindowWithUrl(path);
   }
 
@@ -338,13 +345,12 @@ export class MeetingTimeComponent {
     this.considers.action = "Insert";
 
     const result_check = this.addConsiderCheck(meeting_code, id);
-    console.log('result_check: ', result_check);
+    //console.log('result_check: ', result_check);
     //return false;
-
-    console.log('considers: ', this.considers);
+    //console.log('considers: ', this.considers);
     this.http.post(environment.baseUrl + '/_meeting_consider_add.php', this.considers).subscribe(
       (response: any) => {
-        console.log('response: ', response);
+        //console.log('response: ', response);
         if (response.status == 'Ok') {
           this.fetchConsider(meeting_code);
           this.clearSearch();
@@ -360,6 +366,7 @@ export class MeetingTimeComponent {
 
   }
 
+  
   // Delete consider ลบคณะกรรมการผู้พิจารณา
   removeConsider(item: any, meeting_code: any) {
     let data = {
@@ -477,13 +484,41 @@ export class MeetingTimeComponent {
   }
 
   // upload file book order
+  // onFileChange(event: any) {
+  //   const files: FileList = event.target.files;
+  //   this.selectedFiles = [];
+  //   for (let i = 0; i < files.length; i++) {
+  //     this.selectedFiles.push(files[i]);
+  //   }
+  // }
+
+  // upload file book order
   onFileChange(event: any) {
     const files: FileList = event.target.files;
     this.selectedFiles = [];
     for (let i = 0; i < files.length; i++) {
       this.selectedFiles.push(files[i]);
     }
+    //console.log('Files: ', this.selectedFiles);
+    this.files_vew = [];
+    // Loop through each selected file to create view files
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      const file = this.selectedFiles[i];
+      // Create a view file for each selected file
+      const viewFile = this.sanitizer.bypassSecurityTrustUrl(
+        window.URL.createObjectURL(file)
+      );
 
+      // Push the view file to the array of view files
+      this.files_vew.push(viewFile);
+    }
+    console.log('view file: ', this.files_vew);
+  }
+
+  viewFile(file: any) {
+    this.open_file = this.sanitizer.bypassSecurityTrustUrl(
+      window.URL.createObjectURL(file)
+    );
   }
 
   // Program meeting online
@@ -721,8 +756,49 @@ copyMeeting(meeting_code:any): void {
   resetFormSubmit() {
     this.meetingForm.reset();
     this.meeting.action_submit = 'Insert';
+    this.meeting.doc_files = [];
+    this.selectedFiles = [];
     this.fetchMeeting(this.open_code);
 
+  }
+
+  /** ลบไฟล์ */
+  delFile(item:any, index:any) {
+    let data = {
+      action: 'removeFile',
+      opt: 'meetingDocFile',
+      doc_code: item.meetingdoc_code,
+      doc_path: item.meetingdoc_path,
+    };
+
+    console.log(data);
+    Swal.fire({
+      title: 'ยืนยันการลบข้อมูล',
+      text: 'คุณต้องการที่จะลบข้อมูลนี้หรือไม่?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ใช่, ลบ!',
+      cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.post(environment.baseUrl + '/_remove_file.php', data).subscribe(
+          (res: any) => {
+            if (res.status == 'Ok') {
+                this.meeting.doc_files.splice(index, 1);
+
+            }
+          },
+          (error) => {
+            Swal.fire('ลบข้อมูลไม่สำเร็จ!', '', 'error').then(() => {
+              //this.reloadPage();
+            })
+            console.error(error); // แสดงข้อผิดพลาดที่เกิดขึ้น
+          }
+        );
+      }
+    });
   }
 
   //step 5 confirm

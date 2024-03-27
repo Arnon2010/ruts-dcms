@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Observable } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import {EditorConfig, ST_BUTTONS} from 'ngx-simple-text-editor';
 
 @Component({
   selector: 'app-agenda-topic-admin',
@@ -17,6 +18,11 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./agenda-topic-admin.component.css']
 })
 export class AgendaTopicAdminComponent {
+  content = '';
+  config: EditorConfig = {
+    placeholder: 'Type something...',
+    buttons: ST_BUTTONS,
+  };
   outsiderForm!: FormGroup;
   topicForm!: FormGroup;
   personForm!: FormGroup;
@@ -31,7 +37,7 @@ export class AgendaTopicAdminComponent {
     action_submit: 'Insert',
     agendatopic_offer: '',
     agendatopic_doc: '',
-    agendatopic_origin: ''
+    agendatopic_origin: '',
   };
 
   selectedFiles: File[] = [];
@@ -54,6 +60,12 @@ export class AgendaTopicAdminComponent {
   };
   person_list: any;
 
+  opens: any = {};
+  files_vew: any = [];
+  datafiles: any;
+  open_file: any;
+
+
 
   constructor(
     private http: HttpClient,
@@ -66,7 +78,7 @@ export class AgendaTopicAdminComponent {
 
     this.topicForm = this.fb.group({
       agendatopic_no: ['', Validators.required],
-      agendatopic_name: ['', Validators.required], 
+      agendatopic_name: ['', Validators.required],
       agendatopic_origin: ['', Validators.required],
       agendatopic_offer: ['', Validators.nullValidator],
       agendatopic_doc: ['', Validators.nullValidator],
@@ -89,6 +101,8 @@ export class AgendaTopicAdminComponent {
     this.fetchMeeting(this.meeting_code);
     this.getUser();
     console.log('faculty_code:, ', this.faculty_code);
+
+    this.selectedFiles = []; //กำหนดค่าเริ่มต้นของไฟล์อัปโหลด
   }
 
 
@@ -109,7 +123,7 @@ export class AgendaTopicAdminComponent {
     this.http.post('https://eis.rmutsv.ac.th/api/eis/userpermission.php', data)
       .subscribe({
         next: (res: any) => {
-          console.log('Person ', res); // เเสดงค่าใน console
+          //console.log('Person ', res); // เเสดงค่าใน console
           this.data_person = res;
         }
       });
@@ -260,22 +274,47 @@ export class AgendaTopicAdminComponent {
       });
   }
 
-  // upload file book order
-  onFileChange(event: any) {
-    const files: FileList = event.target.files;
-    this.selectedFiles = [];
-    for (let i = 0; i < files.length; i++) {
-      this.selectedFiles.push(files[i]);
-    }
-
-  }
 
   // Agenda topic.
-  onClickAddTopic(item: any, agendatopic_code:any) {
+  onClickAddTopic(item: any, agendatopic_code: any) {
     console.log('topic: ', item);
     this.topic.topic_code = item.topic_code;
     this.topic.agendatopic_prarent = agendatopic_code; //หัวข้อวาระย่อยของ ?
     this.topic.action_submit = 'Insert';
+  }
+
+  // upload file book order
+  onFileChange(event: any) {
+    const files: FileList = event.target.files;
+
+    for (let i = 0; i < files.length; i++) {
+      this.selectedFiles.push(files[i]);
+    }
+    //console.log('Files: ', this.selectedFiles);
+    this.files_vew = [];
+    // Loop through each selected file to create view files
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      const file = this.selectedFiles[i];
+      // Create a view file for each selected file
+      const viewFile = this.sanitizer.bypassSecurityTrustUrl(
+        window.URL.createObjectURL(file)
+      );
+
+      // Push the view file to the array of view files
+      this.files_vew.push(viewFile);
+    }
+    console.log('view file: ', this.files_vew);
+  }
+
+  viewFile(file: any) {
+    this.open_file = this.sanitizer.bypassSecurityTrustUrl(
+      window.URL.createObjectURL(file)
+    );
+  }
+
+  deleteFile(index: number) {
+    // ลบไฟล์ที่เลือกออกจาก selectedFiles หรือทำการกระทำอื่น ๆ ตามที่คุณต้องการ
+    this.selectedFiles.splice(index, 1);
   }
 
   saveAgendaTopic(item: any) {
@@ -362,6 +401,50 @@ export class AgendaTopicAdminComponent {
     });
   }
 
+  // del file doc
+  delFile(item:any, index:any) {
+    let data = {
+      action: 'removeFile',
+      opt: 'topicDocFile',
+      doc_code: item.topicdoc_code,
+      doc_path: item.topicdoc_path,
+    };
+
+    console.log(data);
+    Swal.fire({
+      title: 'ยืนยันการลบข้อมูล',
+      text: 'คุณต้องการที่จะลบข้อมูลนี้หรือไม่?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ใช่, ลบ!',
+      cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.post(environment.baseUrl + '/_remove_file.php', data).subscribe(
+          (res: any) => {
+            if (res.status == 'Ok') {
+                this.topic.doc_files.splice(index, 1);
+
+            }
+          },
+          (error) => {
+            Swal.fire('ลบข้อมูลไม่สำเร็จ!', '', 'error').then(() => {
+              //this.reloadPage();
+            })
+            console.error(error); // แสดงข้อผิดพลาดที่เกิดขึ้น
+          }
+        );
+      }
+    });
+  }
+
+   // data file document
+   onClickOpenFile(item:any) {
+    this.datafiles = item;
+  }
+
   // edit 
   onClickUpdate(data: any) {
     console.log('topic update:', data);
@@ -387,6 +470,9 @@ export class AgendaTopicAdminComponent {
   defaultForm() {
     this.topicForm.reset();
     this.topic.action_submit = 'Insert';
+    this.topic.doc_files = [];
+    this.selectedFiles = [];
+    this.fetchAgendaTopic(this.meeting.open_code);
   }
 
 }

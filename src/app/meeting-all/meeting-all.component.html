@@ -1,0 +1,42 @@
+<!-- partial -->
+<div class="container-fluid page-body-wrapper">
+  <div class="content-wrapper">
+
+    <div class="row">
+      <div class="col-md-12 stretch-card grid-margin">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">การประชุมทำหมด</p>
+            <ul class="icon-data-list">
+              <li *ngFor="let item of fetchMeetingData">
+                <div class="d-flex align-items-center">
+                  <img src="assets/img/icons8-list-64.png" alt="">
+                  <div class="col-md-12">
+                    <p class="text-info mb-1">{{item.open_title}} ครั้งที่ {{item.meeting_thetime}}</p>
+                    <p class="mb-0">วันที่ {{item.meeting_sdate}}</p>
+                    <small>{{item.meeting_time}} น.</small>
+                  </div>
+
+                  <div class="col-md-3 ml-auto p-2">
+                    <a href="#" [routerLink]="['/']" routerLinkActive="router-link-active" >
+                      <span class="badge badge-primary m-2"><i class="mdi mdi-file-document"></i></span>
+                    </a>
+                    <a href="#" [routerLink]="['/']" routerLinkActive="router-link-active" >
+                      <span class="badge badge-secondary m-2"><i class="mdi mdi-account"></i></span>
+                    </a>
+                    <a href="#" [routerLink]="['/']" routerLinkActive="router-link-active" >
+                      <span class="badge badge-info m-2"><i class="mdi mdi-file-document"></i></span>
+                    </a>
+                    <a href="#" [routerLink]="['/']" routerLinkActive="router-link-active" >
+                      <span class="badge badge-success m-2"><i class="mdi mdi-check-circle"></i></span>
+                    </a>
+                  </div>
+                  
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

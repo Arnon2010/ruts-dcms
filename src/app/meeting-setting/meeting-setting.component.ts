@@ -71,6 +71,7 @@ export class MeetingSettingComponent implements OnInit {
   //Upload
   selectedFiles: File[] = [];
   fileUpload: File[] = [];
+  datafiles: any;
 
   topic_list: any;
   topic_done: any;
@@ -108,6 +109,7 @@ export class MeetingSettingComponent implements OnInit {
   positions: any = {};
   fac_code: any;
   user_id: any;
+  files_vew: any = [];
 
   constructor(
     private http: HttpClient,
@@ -219,6 +221,11 @@ export class MeetingSettingComponent implements OnInit {
     this.openWindowWithUrl(path);
   }
 
+  // data file document
+  onClickOpenFile(item:any) {
+    this.datafiles = item;
+  }
+
   getFac(): void {
     var data = {
       opt: 'viewfac',
@@ -267,12 +274,24 @@ export class MeetingSettingComponent implements OnInit {
       this.selectedFiles.push(files[i]);
     }
     //console.log('Files: ', this.selectedFiles);
+    this.files_vew = [];
+    // Loop through each selected file to create view files
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      const file = this.selectedFiles[i];
+      // Create a view file for each selected file
+      const viewFile = this.sanitizer.bypassSecurityTrustUrl(
+        window.URL.createObjectURL(file)
+      );
+      // Push the view file to the array of view files
+      this.files_vew.push(viewFile);
+    }
+    //console.log('view file: ', this.files_vew);
+  }
 
+  viewFile(file: any) {
     this.open_file = this.sanitizer.bypassSecurityTrustUrl(
-      window.URL.createObjectURL(event.target.files[0])
+      window.URL.createObjectURL(file)
     );
-
-    console.log('file view uploading: ', this.open_file);
   }
 
   // Open meeting save.
@@ -342,7 +361,7 @@ export class MeetingSettingComponent implements OnInit {
     this.http
       .get(environment.baseUrl + '/_meetingopen_data.php?faculty_code=' + this.fac_code) //ติดต่อไปยัง Api getfaculty.php
       .subscribe((res: any) => { // ดึงข้อมูลในฟิลด์ fac_id, fac_name
-        //console.log(res);
+        console.log(res);
         this.meetings = res.data;
         this.filteredItems = res.data;
         this.total_row = res.row;
@@ -812,7 +831,7 @@ export class MeetingSettingComponent implements OnInit {
   addTopic(topic_code: any) {
 
     var data = {
-      "opt":"Insert",
+      "opt": "Insert",
       "open_code": this.meeting.open_code,
       "topic_code": topic_code,
     }
@@ -929,6 +948,45 @@ export class MeetingSettingComponent implements OnInit {
         console.log('Error adduser: ', error);
       }
     );
+  }
+
+  /** ลบไฟล์ */
+  delFile(item:any, index:any) {
+    let data = {
+      action: 'removeFile',
+      opt: 'openDocFile',
+      doc_code: item.opendoc_code,
+      doc_path: item.opendoc_path,
+    };
+
+    console.log(data);
+    Swal.fire({
+      title: 'ยืนยันการลบข้อมูล',
+      text: 'คุณต้องการที่จะลบข้อมูลนี้หรือไม่?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ใช่, ลบ!',
+      cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.post(environment.baseUrl + '/_remove_file.php', data).subscribe(
+          (res: any) => {
+            if (res.status == 'Ok') {
+                this.meeting.doc_files.splice(index, 1);
+
+            }
+          },
+          (error) => {
+            Swal.fire('ลบข้อมูลไม่สำเร็จ!', '', 'error').then(() => {
+              //this.reloadPage();
+            })
+            console.error(error); // แสดงข้อผิดพลาดที่เกิดขึ้น
+          }
+        );
+      }
+    });
   }
 
 }

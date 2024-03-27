@@ -23,26 +23,38 @@
                             <h6 class="font-weight-normal mb-0"><strong>เรื่อง:</strong> {{meeting.open_title}} ครั้งที่
                                 {{meeting.meeting_thetime}}</h6>
                         </div>
-                        <!-- <div class="col-12 col-xl-4">
+                        <div class="col-12 col-xl-4">
                             <div class="justify-content-end d-flex">
                                 <div class="add-items d-flex mb-0 mt-2">
-                                    <input type="text" [(ngModel)]="searchText" (input)="onSearch()"
-                                        class="form-control todo-list-input" placeholder="ค้นหา">
+                                    <button *ngIf="meeting.meeting_rstatus == '1' || meeting.meeting_rstatus == '2' || meeting.meeting_rstatus == '3'" class="btn btn-warning" (click)="confirmOpenMeeting(meeting.meeting_code)">ยืนยันเปิดบันทึกการประชุม</button>
+                                    <span *ngIf="meeting.meeting_rstatus == '4'" class="badge badge-light"><i class="mdi mdi-check"></i>เปิดบันทึกการประชุมแล้ว</span>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" *ngIf="meeting.meeting_rstatus == '4'">
                 <div class="col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
                             <!-- <p class="card-title mb-0">ข้อเสนอวาระการประชุม</p> -->
                             <br />
 
-                            <div class="row">
+                            <!-- <div *ngIf="meeting.meeting_ostatus != 'Y' " class="d-flex justify-content-around mb-4 font-status">
+                                <div>
+                                    <h4>
+                                        <span class="badge badge-primary font-status font-weight-bold" *ngIf="meeting.meeting_rstatus == '0'">ยกเลิก</span>
+                                        <span class="badge badge-primary font-status font-weight-bold" *ngIf="meeting.meeting_rstatus == '1'">รอดำเนินการ</span>
+                                        <span class="badge badge-primary font-status font-weight-bold" *ngIf="meeting.meeting_rstatus == '2'">อยู่ระหว่างเสนอวาระ</span>
+                                        <span class="badge badge-primary font-status font-weight-bold" *ngIf="meeting.meeting_rstatus == '3'">อยู่ระหว่างพิจารณาวาระ</span>
+                                        <span class="badge badge-primary font-status font-weight-bold" *ngIf="meeting.meeting_rstatus == '4'">อยู่ระหว่างบันทึกการประชุม</span>
+                                    </h4>
+                                </div>
+                            </div> -->
+
+                            <div class="row" >
                                 <div class="d-flex topic mb-3 font-weight-bold">
                                     <div class="p-2">วาระที่</div>
                                     <div class="mr-auto p-2">เรื่อง</div>
@@ -92,10 +104,11 @@
 
                                         <!-- บันทึกมติการประชุม -->
                                         <div class="p-2">
+                                            <i class="mdi mdi-information-outline" *ngIf="datasub.agendatopic_rstatus =='S'"></i>
                                             <a href="#" data-toggle="modal" data-target="#meeting-save">
                                                 <span class="badge badge-primary p-2 m-2"
                                                     (click)="onClickTopic(datasub)">
-                                                    <i class="mdi mdi-content-save"></i></span>
+                                                    <i class="mdi mdi-content-save"></i>บันทึกมติประชุม</span>
                                             </a>
                                         </div>
                                     </div>
@@ -120,10 +133,11 @@
 
                                             <!-- บันทึกมติการประชุม -->
                                             <div class="p-2">
+                                                <i class="mdi mdi-information-outline" *ngIf="datasub.agendatopic_rstatus =='S'"></i>
                                                 <a href="#" data-toggle="modal" data-target="#meeting-save">
                                                     <span class="badge badge-primary p-2 m-2"
                                                         (click)="onClickTopic(datasub)">
-                                                        <i class="mdi mdi-content-save"></i></span>
+                                                        <i class="mdi mdi-content-save"></i> บันทึกมติประชุม</span>
                                                 </a>
                                             </div>
                                         </div>
@@ -169,76 +183,6 @@
         }
     </style>
 
-    <!-- บันทึกหัวข้อเสนอวาระการประชุม Add agenda topic -->
-    <!-- <div class="modal fade" id="add-agenda-sub" tabindex="-1" role="dialog" aria-labelledby="addAgendaSubModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog custom-modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addAgendaSubModalLabel">เสนอวาระเพื่อพิจารณา</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="col-md-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">{{open_title}}</h4>
-                            <form class="forms-sample" [formGroup]="topicForm">
-                                <div class="form-group row">
-                                    <label for="outsider_lname" class="col-sm-3 col-form-label">เรื่อง: *
-                                    </label>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="agendatopic_name"
-                                            [(ngModel)]="topic.agendatopic_name" formControlName="agendatopic_name"
-                                            placeholder="เช่น ประธานแจ้งให้ที่ประชุมทราบ">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="outsider_lname" class="col-sm-3 col-form-label">ความเป็นมา: *
-                                    </label>
-                                    <div class="col-sm-8">
-                                        <textarea class="form-control" id="agendatopic_origin" rows="5"
-                                            [(ngModel)]="topic.agendatopic_origin" formControlName="agendatopic_origin"
-                                            placeholder="ที่มาของประเด็นที่นำเสนอ"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="outsider_position" class="col-sm-3 col-form-label">ข้อเสนอเพื่อพิจารณา:
-                                        *
-                                    </label>
-                                    <div class="col-sm-8">
-                                        <textarea class="form-control" id="agendatopic_offer" rows="5"
-                                            [(ngModel)]="topic.agendatopic_offer" formControlName="agendatopic_offer"
-                                            placeholder="ประเด็นที่ต้องการขออนุมัติ หรือ เห็นชอบ"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="outsider_phone"
-                                        class="col-sm-3 col-form-label">เอกสารการประชุมฉบับเต็ม:</label>
-                                    <div class="col-sm-3">
-                                        <input type="file" class="form-control" formControlName="agendatopic_doc"
-                                            (change)="onFileChange($event)" placeholder="">
-                                    </div>
-                                </div>
-                                <div>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                                    <button type="submit" [disabled]="!topicForm.valid" class="btn btn-primary m-2"
-                                        data-dismiss="modal" (click)="saveAgendaTopic(topic)">บันทึก</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
-            </div>
-        </div>
-    </div>
-</div> -->
 
     <div class="modal fade" id="meeting-save" tabindex="-1" role="dialog"
         aria-labelledby="checkConfirmAgendaSubModalLabel" aria-hidden="true">
@@ -256,30 +200,52 @@
                     <div class="col-md-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title"><strong>วาระที่: {{topic.agendatopic_no}}
-                                        {{topic.agendatopic_name}}</strong></h4>
+                                <h4 class="card-title"><strong>วาระที่: {{agenda.agendatopic_no}}
+                                        {{agenda.agendatopic_name}}</strong></h4>
 
-                                <form class="forms-sample" [formGroup]="topicForm">
+                                <form class="forms-sample" [formGroup]="recordForm">
 
-                                    <div class="form-group row">
-                                        <label for="outsider_position" class="col-sm-3 col-form-label">รายละเอียด:
+                                    <div class="form-group">
+                                        <label for="outsider_position" class="col-sm-5 col-form-label">การอภิปรายและข้อเสนอแนะจากที่ประชุม:
                                         </label>
-                                        <div class="col-sm-5">
-                                            <textarea class="form-control" id="agendatopic_note" rows="10"
-                                                [(ngModel)]="topic.agendatopic_note" formControlName="agendatopic_note"
-                                                placeholder=""></textarea>
+                                        <div class="col-sm-10">
+                                            <st-editor 
+                                                [(ngModel)]="agenda.agenda_discussion" 
+                                                formControlName="agenda_discussion" 
+                                                [config]="config"></st-editor>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="outsider_position" class="col-sm-3 col-form-label">มติที่ประชุม:
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <st-editor 
+                                                [(ngModel)]="agenda.agenda_resolution" 
+                                                formControlName="agenda_resolution" 
+                                                [config]="config"></st-editor>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="outsider_position" class="col-sm-3 col-form-label">มติที่ประชุม/มอบหมายงาน:
+                                        </label>
+                                        <div class="col-sm-10">
+                                            <st-editor 
+                                                [(ngModel)]="agenda.agenda_assigned" 
+                                                formControlName="agenda_assigned" 
+                                                [config]="config"></st-editor>
                                         </div>
                                     </div>
 
                                     <div class="row text-center font-weight-bold">
                                         <div class="col d-flex justify-content-center align-items-center">
-                                            <button type="button" (click)="noteAgendaTopic(topic)"
+                                            <button type="button" (click)="recordAgendaTopic(agenda)"
                                                 class="btn btn-primary d-flex align-items-center justify-content-center"
                                                 data-dismiss="modal"><i class="mdi mdi-check-circle"></i>
                                                 บันทึก</button>
 
                                             <button type="button"
-                                                class="btn btn-danger m-2 d-flex align-items-center justify-content-center"
+                                                class="btn btn-outline-secondary m-2 d-flex align-items-center justify-content-center"
                                                 data-dismiss="modal"><i class="mdi mdi-close-box"></i> ยกเลิก</button>
                                         </div>
                                     </div>

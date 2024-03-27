@@ -8,8 +8,8 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a [routerLink]="['/home']"
                             routerLinkActive="router-link-active">Home</a></li>
-                    <li class="breadcrumb-item"><a [routerLink]="['/agenda']"
-                            routerLinkActive="router-link-active">เสนอวาระการประชุม</a></li>
+                    <li class="breadcrumb-item"><a [routerLink]="['/meeting-time',meeting.open_code]"
+                            routerLinkActive="router-link-active">วาระการประชุม</a></li>
                     <li class="breadcrumb-item active">{{meeting.open_title}} คร้ังที่
                         {{meeting.meeting_thetime}}</li>
                 </ol>
@@ -18,9 +18,9 @@
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                         <div class="verticals ten offset-by-one">
-                            <h5>เสนอวาระการประชุม: <strong>{{meeting.open_title}} คร้ังที่
-                                {{meeting.meeting_thetime}}</strong></h5>
-                           
+                            <h5>วาระการประชุม: <strong>{{meeting.open_title}} คร้ังที่
+                                    {{meeting.meeting_thetime}}</strong></h5>
+
                         </div>
                     </div>
 
@@ -53,7 +53,7 @@
                                 <div class="p-2">
                                     <a href="#" data-toggle="modal" data-target="#add-agenda-sub">
                                         <span class="badge badge-warning" (click)="onClickAddTopic(data, '0')"><i
-                                            class="mdi mdi-library-plus"></i></span>
+                                                class="mdi mdi-library-plus"></i></span>
                                     </a>
                                 </div>
                             </div>
@@ -64,26 +64,20 @@
                                     <div class="p-2"><strong>{{item.agendatopic_no}}</strong></div>
                                     <div class="mr-auto p-2"><strong>{{item.agendatopic_name}}</strong></div>
                                     <div class="p-2">
-                                        <a href="#" target="_blank" *ngIf="item.agendatopic_doc != ''"
-                                            (click)="openAnyFile(item.agendatopic_doc)">
+                                        <a [routerLink]="['/agenda-topic-admin',meeting.meeting_code]"
+                                            routerLinkActive="router-link-active" *ngIf="item.doc_files.length > 0"
+                                            data-toggle="modal" data-target="#open-filedocument"
+                                            (click)="onClickOpenFile(item.doc_files)">
                                             <span class="badge badge-primary">
                                                 <i class="mdi mdi-file-check"></i></span>
                                         </a>
-                                        <a *ngIf="item.agendatopic_doc == ''">
-                                            <span class="badge badge-secondary">
-                                                <i class="mdi mdi-file-hidden"></i></span>
-                                        </a>
-                                    </div>
-                                    <!--เพิ่มวาระย่อย-->
-                                    <div class="p-2">
-                                        <a href="#" data-toggle="modal" data-target="#add-agenda-sub"
-                                            *ngIf="item.topic_code != '1' && item.topic_code != '2'">
-                                            <span class="badge badge-warning" (click)="onClickAddTopic(item, item.agendatopic_code)"><i
-                                                    class="mdi mdi-library-plus"></i>
 
-                                            </span>
+                                        <a *ngIf="item.doc_files.length == 0">
+                                            <span class="badge badge-secondary">
+                                                <i class="mdi mdi-file-check"></i></span>
                                         </a>
                                     </div>
+
                                     <!--ผู้ชี้แจงข้อซักถาม-->
                                     <div class="p-2">
                                         <a href="#" data-toggle="modal" data-target="#add-user-meeting"
@@ -108,7 +102,7 @@
                                         </button>
                                     </div>
                                     <!--สถานะ-->
-                                    <div class="p-2">
+                                    <!-- <div class="p-2">
                                         <span class="badge badge-outline-success text-dark font-weight-bold"
                                             *ngIf="item.agendatopic_rstatus == 'Y'">
                                             อนุมัติ
@@ -121,6 +115,16 @@
                                             *ngIf="item.agendatopic_rstatus == '1'">
                                             รอตรวจสอบ
                                         </span>
+                                    </div> -->
+                                    <!--เพิ่มวาระย่อย-->
+                                    <div class="p-2">
+                                        <a href="#" data-toggle="modal" data-target="#add-agenda-sub">
+                                            <span class="badge badge-warning"
+                                                (click)="onClickAddTopic(item, item.agendatopic_code)"><i
+                                                    class="mdi mdi-library-plus"></i> วาระย่อย
+
+                                            </span>
+                                        </a>
                                     </div>
                                 </div>
 
@@ -131,27 +135,22 @@
                                         <div class="mr-auto p-2"><strong>{{item_sub2.agendatopic_name}}</strong></div>
                                         <!-- เอกสาร -->
                                         <div class="p-2">
-                                            <a href="#" target="_blank" *ngIf="item_sub2.agendatopic_doc != ''"
-                                                (click)="openAnyFile(item_sub2.agendatopic_doc)">
+
+                                            <a [routerLink]="['/agenda-topic-admin',meeting.meeting_code]"
+                                                routerLinkActive="router-link-active"
+                                                *ngIf="item_sub2.doc_files.length > 0" data-toggle="modal"
+                                                data-target="#open-filedocument"
+                                                (click)="onClickOpenFile(item_sub2.doc_files)">
                                                 <span class="badge badge-primary">
                                                     <i class="mdi mdi-file-check"></i></span>
                                             </a>
-                                            <a *ngIf="item_sub2.agendatopic_doc == ''">
-                                                <span class="badge badge-secondary">
-                                                    <i class="mdi mdi-file-hidden"></i></span>
-                                            </a>
-                                        </div>
-                                        <!--เพิ่มวาระย่อย-->
-                                        <div class="p-2">
-                                            <a href="#" data-toggle="modal" data-target="#add-agenda-sub"
-                                                *ngIf="item_sub2.topic_code != '1' && item_sub2.topic_code != '2'">
-                                                <span class="badge badge-warning"
-                                                    (click)="onClickAddTopic(item_sub2, item_sub2.agendatopic_code)"><i
-                                                        class="mdi mdi-library-plus"></i>
 
-                                                </span>
+                                            <a *ngIf="item_sub2.doc_files.length == 0">
+                                                <span class="badge badge-secondary">
+                                                    <i class="mdi mdi-file-check"></i></span>
                                             </a>
                                         </div>
+
                                         <!--ผู้ชี้แจงข้อซักถาม-->
                                         <div class="p-2">
                                             <a href="#" data-toggle="modal" data-target="#add-user-meeting"
@@ -176,7 +175,8 @@
                                                 <i class="mdi mdi mdi-delete"></i>
                                             </button>
                                         </div>
-                                        <div class="p-2">
+                                        <!-- สถานะ -->
+                                        <!-- <div class="p-2">
                                             <span class="badge badge-outline-success text-dark font-weight-bold"
                                                 *ngIf="item_sub2.agendatopic_rstatus == 'Y'">
                                                 อนุมัติ
@@ -189,10 +189,99 @@
                                                 *ngIf="item_sub2.agendatopic_rstatus == '1'">
                                                 รอตรวจสอบ
                                             </span>
+                                        </div> -->
+                                        <!--เพิ่มวาระย่อย-->
+                                        <div class="p-2">
+                                            <a href="#" data-toggle="modal" data-target="#add-agenda-sub">
+                                                <span class="badge badge-warning"
+                                                    (click)="onClickAddTopic(item_sub2, item_sub2.agendatopic_code)"><i
+                                                        class="mdi mdi-library-plus"></i> วาระย่อย
+
+                                                </span>
+                                            </a>
                                         </div>
                                     </div>
+
+                                    <!-- วาระย่อย 3 -->
+                                    <div class="row ml-auto" *ngFor="let item of item_sub2.data_sub3">
+                                        <div class="d-flex topic-sub mb-0">
+                                            <div class="p-2"><strong>{{item.agendatopic_no}}</strong></div>
+                                            <div class="mr-auto p-2"><strong>{{item.agendatopic_name}}</strong>
+                                            </div>
+                                            <!-- เอกสาร -->
+                                            <div class="p-2">
+
+                                                <a [routerLink]="['/agenda-topic-admin',meeting.meeting_code]"
+                                                    routerLinkActive="router-link-active"
+                                                    *ngIf="item.doc_files.length > 0" data-toggle="modal"
+                                                    data-target="#open-filedocument"
+                                                    (click)="onClickOpenFile(item.doc_files)">
+                                                    <span class="badge badge-primary">
+                                                        <i class="mdi mdi-file-check"></i></span>
+                                                </a>
+
+                                                <a *ngIf="item_sub2.doc_files.length == 0">
+                                                    <span class="badge badge-secondary">
+                                                        <i class="mdi mdi-file-check"></i></span>
+                                                </a>
+                                            </div>
+
+                                            <!--ผู้ชี้แจงข้อซักถาม-->
+                                            <div class="p-2">
+                                                <a href="#" data-toggle="modal" data-target="#add-user-meeting"
+                                                    (click)="personAdd(item.agendatopic_code, item.topic_no3, item.agendatopic_name)">
+                                                    <span class="badge badge-primary"><i
+                                                            class="mdi mdi-account-multiple-plus"></i>
+                                                        ผู้ชี้แจง <span
+                                                            class="badge badge-light">{{item.num_foreman}}</span>
+                                                    </span>
+                                                </a>
+                                            </div>
+
+                                            <div class="p-2">
+                                                <!--แก้ไข-->
+                                                <button class="btn-action ml-2" data-toggle="modal"
+                                                    data-target="#add-agenda-sub" (click)="onClickUpdate(item)">
+                                                    <i class="mdi mdi-grease-pencil"></i>
+                                                </button>
+                                                <!--ลบ-->
+                                                <button class="btn-action ml-2"
+                                                    (click)="removeAgendaTopic(data.open_code, item.agendatopic_code, item.agendatopic_doc)">
+                                                    <i class="mdi mdi mdi-delete"></i>
+                                                </button>
+                                            </div>
+                                            <!-- สถานะ -->
+                                            <!-- <div class="p-2">
+                                            <span class="badge badge-outline-success text-dark font-weight-bold"
+                                                *ngIf="item_sub2.agendatopic_rstatus == 'Y'">
+                                                อนุมัติ
+                                            </span>
+                                            <span class="badge badge-outline-danger text-dark font-weight-bold"
+                                                *ngIf="item_sub2.agendatopic_rstatus == 'N'">
+                                                ไม่ผ่านอนุมัติ
+                                            </span>
+                                            <span class="badge badge-outline-warning text-dark font-weight-bold"
+                                                *ngIf="item_sub2.agendatopic_rstatus == '1'">
+                                                รอตรวจสอบ
+                                            </span>
+                                        </div> -->
+                                            <!--เพิ่มวาระย่อย-->
+                                            <div class="p-2">
+                                                <a href="#" data-toggle="modal" data-target="#add-agenda-sub">
+                                                    <span class="badge badge-warning"
+                                                        (click)="onClickAddTopic(item, item.agendatopic_code)"><i
+                                                            class="mdi mdi-library-plus"></i> วาระย่อย
+
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <!-- .วาระย่อย 3 -->
                                 </div>
+                                <!-- .วาระย่อย 2 -->
                             </div>
+                            <!-- .วาระย่อย 1 -->
 
 
                         </div>
@@ -224,10 +313,10 @@
     <div class="modal-dialog custom-modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addAgendaSubModalLabel">เพิ่มแก้ไขวาระการประชุม</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="defaultForm()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title" id="addAgendaSubModalLabel">เพิ่มวาระการประชุม</h5>
+
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="defaultForm()"><span
+                        aria-hidden="true">&times;</span> ปิด</button>
             </div>
             <div class="modal-body">
                 <div class="col-md-12 grid-margin stretch-card">
@@ -238,14 +327,15 @@
                             <form class="forms-sample" [formGroup]="topicForm">
 
                                 <div class="form-group row">
-                                        <label for="outsider_fname" class="col-sm-3 col-form-label">วาระที่: *
-                                        </label>
-                                        <div class="col-sm-3">
-                                            <input type="text" class="form-control" id="meeting_thetime"
-                                                [(ngModel)]="topic.agendatopic_no" formControlName="agendatopic_no"
-                                                placeholder="เช่น 1.1, ๑.๑">
-                                        </div>
+                                    <label for="outsider_fname" class="col-sm-3 col-form-label">วาระที่: *
+                                    </label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" id="meeting_thetime"
+                                            [(ngModel)]="topic.agendatopic_no" formControlName="agendatopic_no"
+                                            placeholder="เช่น 1.1, ๑.๑">
                                     </div>
+                                </div>
+
                                 <div class="form-group row">
                                     <label for="outsider_lname" class="col-sm-3 col-form-label">เรื่อง: *
                                     </label>
@@ -255,7 +345,8 @@
                                             placeholder="เช่น ประธานแจ้งให้ที่ประชุมทราบ">
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                
+                                <!-- <div class="form-group row">
                                     <label for="outsider_lname" class="col-sm-3 col-form-label">ความเป็นมา: *
                                     </label>
                                     <div class="col-sm-8">
@@ -263,10 +354,20 @@
                                             [(ngModel)]="topic.agendatopic_origin" formControlName="agendatopic_origin"
                                             placeholder="ที่มาของประเด็นที่นำเสนอ"></textarea>
                                     </div>
+                                </div> -->
+                                
+                                <div class="form-group row">
+                                    <label for="outsider_position" class="col-sm-3 col-form-label">ความเป็นมา: *
+                                    </label>
+                                    <div class="col-sm-8">
+                                        <st-editor 
+                                        [(ngModel)]="topic.agendatopic_origin" 
+                                        formControlName="agendatopic_origin" 
+                                        [config]="config"></st-editor>
+                                    </div>
                                 </div>
                                 <!-- <div class="form-group row">
                                     <label for="outsider_position" class="col-sm-3 col-form-label">ข้อเสนอเพื่อพิจารณา:
-                                        *
                                     </label>
                                     <div class="col-sm-8">
                                         <textarea class="form-control" id="agendatopic_offer" rows="5"
@@ -276,12 +377,82 @@
                                 </div> -->
 
                                 <div class="form-group row">
+                                    <label for="outsider_position" class="col-sm-3 col-form-label">ข้อเสนอเพื่อพิจารณา:
+                                    </label>
+                                    <div class="col-sm-8">
+                                        <st-editor 
+                                        [(ngModel)]="topic.agendatopic_offer" 
+                                        formControlName="agendatopic_offer" 
+                                        [config]="config"></st-editor>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group row">
                                     <label for="outsider_phone"
                                         class="col-sm-3 col-form-label">เอกสารการประชุมฉบับเต็ม:</label>
                                     <div class="col-sm-3">
                                         <input type="file" class="form-control" (change)="onFileChange($event)"
                                             placeholder="" [(ngModel)]="topic.agendatopic_doc" name="agendatopic_doc"
-                                            id="agendatopic_doc" formControlName="agendatopic_doc">
+                                            id="agendatopic_doc" formControlName="agendatopic_doc"
+                                            accept="application/pdf" multiple>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" *ngIf="selectedFiles.length != 0">
+                                    <label for="exampleInputMobile" class="col-sm-3 col-form-label"></label>
+                                    <!-- Add new -->
+                                    <div class="col-sm-8">
+                                        <ul class="list-group">
+                                            <li *ngFor="let file of selectedFiles; let i = index"
+                                                class="list-group-item d-flex justify-content-between align-items-center">
+                                                <div class="col-sm-6 col-md-8 col-lg-8">
+                                                    <span class="badge badge-secondary badge-pill">{{i
+                                                        + 1}}</span> {{file.name}}
+                                                </div>
+                                                <div class="col-sm-6 col-md-4 col-lg-4">
+                                                    <span class="badge badge-info badge-pill m-2">
+                                                        <a href="#" (click)="viewFile(file)" [href]="open_file"
+                                                            target="_blank">
+                                                            <span class="badge badge-info">
+                                                                เอกสาร</span></a>
+                                                    </span>
+                                                    <button (click)="deleteFile(i)"
+                                                        class="btn btn-outline-danger btn-sm">ลบ</button>
+                                                </div>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Update -->
+                                <div class="form-group row">
+                                    <label for="exampleInputMobile" class="col-sm-3 col-form-label"></label>
+                                    <div class="col-sm-8">
+                                        <ul class="list-group">
+                                            <li *ngFor="let file of topic.doc_files; let i = index"
+                                                class="list-group-item d-flex justify-content-between align-items-center">
+                                                <div class="col-sm-6 col-md-8 col-lg-8">
+                                                    <span class="badge badge-secondary badge-pill">
+                                                        {{i + 1}}</span> {{file.topicdoc_name}}
+                                                </div>
+                                                <div class="col-sm-6 col-md-4 col-lg-4">
+                                                    <span class="badge badge-info badge-pill m-2">
+                                                        <a href="#" (click)="openAnyFile(file.topicdoc_path)"
+                                                            [href]="open_file" target="_blank">
+                                                            <span class="badge badge-info">
+                                                                เอกสาร</span></a>
+                                                    </span>
+
+                                                    <button (click)="delFile(file,i)"
+                                                        class="btn btn-outline-danger btn-sm">ลบ</button>
+
+                                                </div>
+
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
 
@@ -296,18 +467,25 @@
                                     </div>
                                      -->
 
-                                <div>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                                    <button type="submit" [disabled]="!topicForm.valid" class="btn btn-primary m-2"
-                                        data-dismiss="modal" (click)="saveAgendaTopic(topic)">บันทึก</button>
+                                <div class="form-group row">
+                                    <label for="outsider_phone" class="col-sm-3 col-form-label"></label>
+                                    <div class="col-sm-8">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">ยกเลิก</button>
+                                        <button type="submit" [disabled]="!topicForm.valid" class="btn btn-primary m-2"
+                                            data-dismiss="modal" (click)="saveAgendaTopic(topic)">บันทึก</button>
+                                    </div>
                                 </div>
+
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="defaultForm()">ปิด</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="defaultForm()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         </div>
     </div>
@@ -346,7 +524,7 @@
 
                                         <div class="form-group row">
                                             <label for="data_person"
-                                                class="col-sm-3 col-form-label">ผู้ชี้แจงข้อสักถาม:</label>
+                                                class="col-sm-3 col-form-label">ผู้ชี้แจงข้อซักถาม:</label>
                                             <div class="col-sm-5">
                                                 <div class="ng-autocomplete">
                                                     <ng-autocomplete [data]="data_person" [searchKeyword]="keyword"
@@ -384,7 +562,7 @@
                                         </div>
 
                                         <div class="row">
-                                            <h2 class="card-title">รายชื่อผู้เข้าร่วมชี้แจงข้อสักถาม
+                                            <h2 class="card-title">รายชื่อผู้เข้าร่วมชี้แจงข้อซักถาม
                                             </h2>
                                             <ul class="list-group">
                                                 <li *ngFor="let item of person_list; let i = index"
@@ -416,6 +594,65 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"
                     (click)="closeModalPerson()">ปิด</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- open-filedocument -->
+<div class="modal fade" id="open-filedocument" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">เอกสารคำสั่งในการประชุม</h5>
+
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span> ปิด</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="col-md-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <div class="row mb-3" *ngFor="let item of datafiles; let i = index">
+                                            <div class="d-flex topic font-weight-bold">
+                                                <div class="p-2">
+                                                    <!-- วาระ -->
+                                                    {{ i + 1 }}
+                                                </div>
+                                                <div class="mr-auto p-2">
+                                                    <!-- เรื่อง -->
+                                                    {{item.topicdoc_name}}
+                                                </div>
+                                                <div class="p-2">
+                                                    <!-- วาระที่เสนอ -->
+                                                    <a href="#" (click)="openAnyFile(item.topicdoc_path)"
+                                                        [href]="open_file" target="_blank">
+                                                        <span class="badge badge-info">
+                                                            เอกสาร</span></a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <!-- <button type="submit" [disabled]="!regisForm.valid" class="btn btn-primary" data-dismiss="modal"
+                (click)="saveUser(user)">ยืนยันเพิ่มผู้ใช้</button> -->
+            </div>
+
         </div>
     </div>
 </div>

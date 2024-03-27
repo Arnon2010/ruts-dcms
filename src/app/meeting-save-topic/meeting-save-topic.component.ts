@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { faUsers, faFilePen, faFilePdf, faCheckToSlot } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../services/api.service';
 import Swal from 'sweetalert2';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import {EditorConfig, ST_BUTTONS} from 'ngx-simple-text-editor';
 
 
 @Component({
@@ -15,11 +15,14 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./meeting-save-topic.component.css']
 })
 export class MeetingSaveTopicComponent {
-  outsiderForm!: FormGroup;
-  topicForm!: FormGroup;
 
+  config: EditorConfig = {
+    placeholder: 'Type something...',
+    buttons: ST_BUTTONS,
+  };
+
+  recordForm!: FormGroup;
   user: any = {};
-
   p: number = 1;
   collection: any = [];
   FAClist: any;
@@ -33,10 +36,6 @@ export class MeetingSaveTopicComponent {
   open_code: any;
   open_title: any;
 
-  //meeting agenda
-  topic: any = {
-    action_submit: 'Insert'
-  };
 
   //confirm
   topic_confirm: any = {};
@@ -51,6 +50,12 @@ export class MeetingSaveTopicComponent {
 
   meeting_endtime:any;
 
+  agenda: any = {
+    agenda_assigned: '',
+    agenda_discussion: '',
+    agenda_resolution: '',
+  };
+
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
@@ -60,9 +65,10 @@ export class MeetingSaveTopicComponent {
     private sanitizer: DomSanitizer,
   ) {
 
-    this.topicForm = this.fb.group({
-      agendatopic_note: ['', Validators.nullValidator],
-      
+    this.recordForm = this.fb.group({
+      agenda_resolution: ['', Validators.nullValidator],
+      agenda_discussion: ['', Validators.nullValidator],
+      agenda_assigned: ['', Validators.nullValidator],
     });
   }
 
@@ -90,7 +96,7 @@ export class MeetingSaveTopicComponent {
     //console.log('save formData', formData);
     this.http.post(environment.baseUrl + '/_view_data.php', data).subscribe(
       (res: any) => {
-        //console.log(res);
+        console.log('meeting data: ',res);
         this.meeting = res.data;
         //console.log(this.meeting);
         this.fetchTopicMeeting(this.meeting.open_code);
@@ -144,21 +150,7 @@ export class MeetingSaveTopicComponent {
     this.openWindowWithUrl(path);
   }
 
-  // Agenda topic.
-
-  onClickTopic(item: any) {
-    this.topic = item;
-    console.log(this.topic);
-  }
-
   confirmCheckAgendaTopic(item: any, confirm_status:any) {
-    
-    // var data = {
-    //   "opt":"confirmAgendaTopic",
-    //   "agendatopic_code": agendatopic_code,
-    //   "confirm_status":confirm_status
-    // }
-
     this.topic_confirm = item;
     this.topic_confirm.confirm_status = confirm_status;
     this.topic_confirm.opt = "confirmAgendaTopic";
@@ -180,6 +172,25 @@ export class MeetingSaveTopicComponent {
         console.log('Error adduser: ', error);
       }
     );
+  }
+
+  confirmOpenMeeting(meeting_code: any) {
+   // console.log('confirm meeting open :', meeting_code);
+    var data = {
+      "opt": "confirmSave",
+      "meeting_code": meeting_code,
+    }
+    console.log('save formData', data);
+    this.http.post(environment.baseUrl + '/_agenda_topic_save_confirm.php', data).subscribe(
+      (res: any) => {
+        console.log(': ', res);
+        this.getMeetingData(meeting_code);
+      },
+      (error) => {
+        console.log('Error adduser: ', error);
+      }
+    );
+
   }
 
   //สร้างไฟล์ระเบียบวาระ pdf
@@ -207,58 +218,7 @@ export class MeetingSaveTopicComponent {
     this.openWindowWithUrl(path);
   }
 
-   // Agenda topic.
-   onClickAddTopic(item: any, agendatopic_code:any) {
-    console.log('topic: ', item);
-    this.topic.topic_code = item.topic_code;
-    this.topic.agendatopic_prarent = agendatopic_code; //หัวข้อวาระย่อยของ ?
-    this.topic.action_submit = 'Insert';
-  }
-
-  saveAgendaTopic(item: any) {
-    this.topic = item;
-
-    console.log('save meeting', this.topic);
-    // Create form data for file upload
-    const formData = new FormData();
-    for (let i = 0; i < this.selectedFiles.length; i++) {
-      formData.append('agendatopic_doc[]', this.selectedFiles[i]);
-    }
-
-    formData.append('user_id', this.user_id);
-    formData.append('meeting_code', this.meeting_code);
-    formData.append('faculty_code', this.fac_code);
-    formData.append('topic_code', this.topic.topic_code);
-    formData.append('agendatopic_prarent', this.topic.agendatopic_prarent);
-    formData.append('agendatopic_no', this.topic.agendatopic_no);
-    formData.append('agendatopic_name', this.topic.agendatopic_name);
-    formData.append('agendatopic_origin', this.topic.agendatopic_origin);
-    formData.append('agendatopic_offer', this.topic.agendatopic_offer);
-    formData.append('agendatopic_code', this.topic.agendatopic_code);
-    formData.append('action_submit', this.topic.action_submit);
-
-    //console.log('save formData', formData);
-    this.http.post(environment.baseUrl + '/_agenda_topic_save.php', formData).subscribe(
-      (response: any) => {
-        console.log('response: ', response);
-        if (response.status == 'Ok') {
-          Swal.fire('บันทึกข้อมูลสำเร็จ', '', 'success').then(() => {
-            //this.fetchTopicMeeting();
-            this.topicForm.reset();
-            this.selectedFiles = [];
-          })
-        }
-      },
-      (error) => {
-        Swal.fire('ไม่สามารถบันทึกข้อมูลได้', '', 'error').then(() => {
-          //this.reloadPage(); //ทำการรีโหลดหน้า Web
-        })
-        console.log('Error adduser: ', error);
-      }
-    );
-  }
-
-  noteAgendaTopic(item:any) {
+  noteAgendaTopic_old(item:any) {
     var data = {
       "action_submit": "Update",
       "agendatopic_code": item.agendatopic_code,
@@ -268,8 +228,69 @@ export class MeetingSaveTopicComponent {
     this.http.post(environment.baseUrl + '/_agenda_topic_note.php', data).subscribe(
       (res: any) => {
         //console.log('topic_note: ', res);
-        this.topicForm.reset();
+        this.recordForm.reset();
         //this.mttopic_list = res.data;
+      },
+      (error) => {
+        console.log('Error adduser: ', error);
+      }
+    );
+  }
+
+  // Agenda topic.
+  onClickTopic(item: any) {
+    this.agenda.agendatopic_code = item.agendatopic_code;
+    this.agenda.agendatopic_name = item.agendatopic_name;
+    this.agenda.agendatopic_no = item.agendatopic_no;
+    
+
+    var data = {
+      "opt": "agendaRecord",
+      "agendatopic_code": item.agendatopic_code,
+    }
+
+    this.http.post(environment.baseUrl + '/_agenda_record_data.php', data).subscribe(
+      (res: any) => {
+        console.log(': ', res);
+        var item = res.data[0];
+
+        if(res.row == '1') {
+          this.agenda.action_submit = 'Update';
+          this.agenda.agenda_resolution = item.agenda_resolution;
+          this.agenda.agenda_discussion = item.agenda_discussion;
+          this.agenda.agenda_assigned = item.agenda_assigned;
+
+        } else {
+          this.agenda.action_submit = 'Insert';
+          this.agenda.agenda_resolution = '';
+          this.agenda.agenda_discussion = '';
+          this.agenda.agenda_assigned = '';
+        }
+        console.log(this.agenda);
+      },
+      (error) => {
+        console.log('Error adduser: ', error);
+      }
+    );
+  }
+
+  // บันทึก record
+  recordAgendaTopic(item:any) {
+    var data = {
+      "opt": "recordTopic",
+      "agendatopic_code": item.agendatopic_code,
+      "agenda_resolution": item.agenda_resolution,
+      "agenda_discussion": item.agenda_discussion,
+      "agenda_assigned": item.agenda_assigned,
+      "action_submit": item.action_submit,
+    }
+    console.log('save formData', data);
+    this.http.post(environment.baseUrl + '/_agenda_record_save.php', data).subscribe(
+      (res: any) => {
+        console.log('topic_note: ', res);
+
+        this.fetchTopicMeeting(this.meeting.open_code);
+        
       },
       (error) => {
         console.log('Error adduser: ', error);

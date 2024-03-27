@@ -49,7 +49,7 @@
                                             <form [formGroup]="firstFormGroup">
                                                 <ng-template matStepLabel>
                                                     <mat-icon class="custom-icon">account_balance</mat-icon>
-                                                    <div style="font-size: 16px">หน่วยงานเข้าร่วมเสนอวาระ</div>
+                                                    <div style="font-size: 14px">หน่วยงานเข้าร่วมเสนอวาระ</div>
                                                 </ng-template>
                                                 <!-- Form Content -->
                                                 <div class="card">
@@ -118,7 +118,7 @@
                                                     <mat-icon style="width: 32px; height: 32px;">person</mat-icon>
                                                     <!-- <mat-icon style="width: 32px; height: 32px;"><span class="badge badge-info">1</span></mat-icon> -->
 
-                                                    <div style="font-size: 16px">คณะกรรมการพิจารณาวาระ</div>
+                                                    <div style="font-size: 14px">คณะกรรมการพิจารณาวาระ</div>
                                                 </ng-template>
                                                 <!-- Form Content -->
                                                 <div class="mt-4">
@@ -238,7 +238,7 @@
                                                     <mat-icon style="width: 32px; height: 32px;">home</mat-icon>
                                                     <!-- <mat-icon style="width: 32px; height: 32px;"><span class="badge badge-info">1</span></mat-icon> -->
 
-                                                    <div style="font-size: 16px">พิจารณาวาระ</div>
+                                                    <div style="font-size: 14px">พิจารณาวาระ</div>
                                                 </ng-template>
                                                 <!-- Form Content -->
                                                 <div class="row">
@@ -427,7 +427,7 @@
 
                                                 <ng-template matStepLabel>
                                                     <mat-icon style="width: 32px; height: 32px;">person</mat-icon>
-                                                    <div style="font-size: 16px">ผู้เข้าร่วมประชุม</div>
+                                                    <div style="font-size: 14px">ผู้เข้าร่วมประชุม</div>
                                                 </ng-template>
                                                 <!-- Form Content -->
                                                 <div class="mt-4">
@@ -587,7 +587,7 @@
                                         <mat-step labelPosition="bottom">
                                             <ng-template matStepLabel>
                                                 <mat-icon style="width: 32px; height: 32px;">done_all</mat-icon>
-                                                <div style="font-size: 12px">บันทึกมติการประชุม</div>
+                                                <div style="font-size: 14px">บันทึกมติการประชุม</div>
                                             </ng-template>
                                             <!-- Content of the last step -->
                                             <!-- Form Content -->
@@ -608,7 +608,8 @@
                                                                         <i class="fa fa-angle-left"></i> กลับ
                                                                     </button>
                                                                     <button class="btn btn-warning" 
-                                                                        [routerLink]="['/meeting-save-topic',meeting_code]" routerLinkActive="router-link-active" >
+                                                                        [routerLink]="['/meeting-save-topic',meeting_code]" 
+                                                                        routerLinkActive="router-link-active" >
                                                                         <span class="font-weight-bold">
                                                                             <i class="mdi mdi-content-save"></i> บันทึกมติการประชุม</span>
                                                                     </button>
