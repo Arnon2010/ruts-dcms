@@ -30,6 +30,9 @@ import { HomeOutsiderComponent } from './home-outsider/home-outsider.component';
 import { MeetingTopicComponent } from './meeting-topic/meeting-topic.component';
 import { AdminComponent } from './admin/admin.component';
 import { MeetingAllComponent } from './meeting-all/meeting-all.component';
+import { ReportDetailComponent } from './report-detail/report-detail.component';
+import { ReportCertifyComponent } from './report-certify/report-certify.component';
+import { ReportCompleteComponent } from './report-complete/report-complete.component';
 
 const routes: Routes = [
  
@@ -59,6 +62,10 @@ const routes: Routes = [
       { path: 'meeting-prepare', component: MeetingPrepareComponent, canActivate: [AuthGuard] }, 
       { path: 'meeting-time-manage/:meeting_code/:open_code', component: MeetingTimeManageComponent, canActivate: [AuthGuard] }, 
       { path: 'report', component: ReportComponent, canActivate: [AuthGuard]}, // route report
+      { path: 'report-detail', component: ReportDetailComponent, canActivate: [AuthGuard]}, // route report detail
+      { path: 'report-certify', component: ReportCertifyComponent, canActivate: [AuthGuard]}, // route report certify
+      { path: 'report-complete', component: ReportCompleteComponent, canActivate: [AuthGuard]}, // route report complete
+
       
       // การเสนอวาระ
       { path: 'agenda-topic-admin/:meeting_code', component: AgendaTopicAdminComponent, canActivate: [AuthGuard] }, 

@@ -81,6 +81,8 @@ import { MeetingPersonComponent } from './meeting-person/meeting-person.componen
 import {NgxSimpleTextEditorModule} from 'ngx-simple-text-editor';
 import { ReportDetailComponent } from './report-detail/report-detail.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ReportCompleteComponent } from './report-complete/report-complete.component';
+import { ReportCertifyComponent } from './report-certify/report-certify.component';
 
 @NgModule({
   declarations: [
@@ -130,7 +132,9 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     MeetingAllComponent,
     AssignedComponent,
     MeetingPersonComponent,
-    ReportDetailComponent
+    ReportDetailComponent,
+    ReportCompleteComponent,
+    ReportCertifyComponent
 
   ],
   imports: [

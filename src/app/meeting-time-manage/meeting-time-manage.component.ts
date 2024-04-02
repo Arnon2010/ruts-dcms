@@ -366,11 +366,10 @@ export class MeetingTimeManageComponent {
       });
   }
 
-
   // บุคคลภายใน
   getPerson(search_query: string): void {
     var data = {
-      "opt": "viewNAME",
+      "opt": "viewNAMEPOSITION",
       "search": search_query
     }
     this.http.post('https://eis.rmutsv.ac.th/api/eis/userpermission.php', data)
@@ -582,10 +581,12 @@ export class MeetingTimeManageComponent {
 
   //ผู้เข้าร่วมประชุม
   // เพิ่มผู้เข้าร่วมประชุม Person
-  addPerson(item: any, id: any, name: string) {
+  addPerson(item: any, id: any, name: string, position:string, faculty:string) {
     this.persons.meeting_code = this.meeting_code;
     this.persons.citizen_id = id;
     this.persons.person_name = name;
+    this.persons.position_work = position;
+    this.persons.faculty_name = faculty;
     this.persons.action = "Insert";
     // const result_check = this.addConsiderCheck(meeting_code, id);
     // console.log('result_check: ', result_check);
@@ -596,7 +597,7 @@ export class MeetingTimeManageComponent {
         console.log('response: ', response);
         if (response.status == 'Ok') {
           this.fetchPerson(this.meeting_code);
-          this.personForm.reset();
+          //this.personForm.reset();
           this.persons.person_type = '1';
         }
       },

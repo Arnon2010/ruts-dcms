@@ -8,11 +8,11 @@ import Swal from 'sweetalert2';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-report',
-  templateUrl: './report.component.html',
-  styleUrls: ['./report.component.css']
+  selector: 'app-report-certify',
+  templateUrl: './report-certify.component.html',
+  styleUrls: ['./report-certify.component.css']
 })
-export class ReportComponent {
+export class ReportCertifyComponent {
   userData: any;
   fac_code: any;
   user_id: any;
@@ -30,8 +30,8 @@ export class ReportComponent {
   report_stime:any;
   report_etime:any;
 
-  //src = 'https://mcps.rmutsv.ac.th/cert/assets/document/2567/165201020015/165201020015-20240207184347.pdf';
-  src = 'https://e-doc.rmutsv.ac.th/document/edoc/D0026/2022/DOC180D1663832881_edoc_2022-09-22-11.pdf';
+  src = 'https://pims.rmutsv.ac.th/api/uploads/pdf/singup-info/info.pdf';
+  //src = 'https://e-doc.rmutsv.ac.th/document/edoc/D0026/2022/DOC180D1663832881_edoc_2022-09-22-11.pdf';
 
   //sanitizedUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://e-doc.rmutsv.ac.th/document/edoc/D0026/2022/DOC180D1663832881_edoc_2022-09-22-11.pdf');
 

@@ -154,11 +154,10 @@ export class MeetingSaveTopicComponent {
     this.topic_confirm = item;
     this.topic_confirm.confirm_status = confirm_status;
     this.topic_confirm.opt = "confirmAgendaTopic";
-
-    console.log('topic_confirm', this.topic_confirm);
+    //console.log('topic_confirm', this.topic_confirm);
     this.http.post(environment.baseUrl + '/_agenda_manage_confirm.php', this.topic_confirm).subscribe(
       (response: any) => {
-        console.log('response: ', response);
+        //console.log('response: ', response);
         if (response.status == 'Ok') {
           Swal.fire('บันทึกข้อมูลสำเร็จ', '', 'success').then(() => {
             //this.fetchTopicMeeting();
@@ -180,10 +179,10 @@ export class MeetingSaveTopicComponent {
       "opt": "confirmSave",
       "meeting_code": meeting_code,
     }
-    console.log('save formData', data);
+    //console.log('save formData', data);
     this.http.post(environment.baseUrl + '/_agenda_topic_save_confirm.php', data).subscribe(
       (res: any) => {
-        console.log(': ', res);
+        //console.log(': ', res);
         this.getMeetingData(meeting_code);
       },
       (error) => {
@@ -202,7 +201,7 @@ export class MeetingSaveTopicComponent {
     //console.log('save formData', formData);
     this.http.post(environment.baseUrl + '/pdf/_create_agenda_topic.php', data).subscribe(
       (res: any) => {
-        console.log('mttopic_list: ', res);
+        //console.log('mttopic_list: ', res);
         this.mttopic_list = res.data;
       },
       (error) => {
@@ -242,16 +241,13 @@ export class MeetingSaveTopicComponent {
     this.agenda.agendatopic_code = item.agendatopic_code;
     this.agenda.agendatopic_name = item.agendatopic_name;
     this.agenda.agendatopic_no = item.agendatopic_no;
-    
-
     var data = {
       "opt": "agendaRecord",
       "agendatopic_code": item.agendatopic_code,
     }
-
     this.http.post(environment.baseUrl + '/_agenda_record_data.php', data).subscribe(
       (res: any) => {
-        console.log(': ', res);
+        //console.log(': ', res);
         var item = res.data[0];
 
         if(res.row == '1') {
@@ -266,7 +262,7 @@ export class MeetingSaveTopicComponent {
           this.agenda.agenda_discussion = '';
           this.agenda.agenda_assigned = '';
         }
-        console.log(this.agenda);
+        //console.log(this.agenda);
       },
       (error) => {
         console.log('Error adduser: ', error);
@@ -284,13 +280,11 @@ export class MeetingSaveTopicComponent {
       "agenda_assigned": item.agenda_assigned,
       "action_submit": item.action_submit,
     }
-    console.log('save formData', data);
+    //console.log('save formData', data);
     this.http.post(environment.baseUrl + '/_agenda_record_save.php', data).subscribe(
       (res: any) => {
-        console.log('topic_note: ', res);
-
+        //console.log('topic_note: ', res);
         this.fetchTopicMeeting(this.meeting.open_code);
-        
       },
       (error) => {
         console.log('Error adduser: ', error);
@@ -304,6 +298,7 @@ export class MeetingSaveTopicComponent {
       "action": "endMeeting",
       "meeting_code": meeting_code,
       "meeting_endtime": this.meeting_endtime,
+      "user_id": this.user_id
     }
     //console.log('save formData', formData);
     this.http.post(environment.baseUrl + '/_meeting_endtime.php', data).subscribe(

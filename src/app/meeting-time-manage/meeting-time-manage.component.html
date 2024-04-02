@@ -528,10 +528,10 @@
                                                                             <label for="exampleInputUsername2"
                                                                                 class="col-sm-3 col-form-label"></label>
 
-                                                                            <div class="col-sm-2">
+                                                                            <div class="col-sm-4">
                                                                                 <button type="button"
                                                                                     [disabled]="!personForm.valid"
-                                                                                    (click)="addPerson(persons, person.id, person.name)"
+                                                                                    (click)="addPerson(persons, person.CITIZEN_ID, person.name, person.POSITION_WORK, person.FACULTY_TNAME)"
                                                                                     class="btn btn-outline-primary">เพิ่มผู้เข้าร่วม</button>
                                                                             </div>
 
@@ -587,7 +587,7 @@
                                         <mat-step labelPosition="bottom">
                                             <ng-template matStepLabel>
                                                 <mat-icon style="width: 32px; height: 32px;">done_all</mat-icon>
-                                                <div style="font-size: 14px">บันทึกมติการประชุม</div>
+                                                <div style="font-size: 14px">สำเร็จ</div>
                                             </ng-template>
                                             <!-- Content of the last step -->
                                             <!-- Form Content -->
@@ -608,10 +608,11 @@
                                                                         <i class="fa fa-angle-left"></i> กลับ
                                                                     </button>
                                                                     <button class="btn btn-warning" 
-                                                                        [routerLink]="['/meeting-save-topic',meeting_code]" 
+                                                                        [routerLink]="['/meeting-time',open_code]" 
                                                                         routerLinkActive="router-link-active" >
                                                                         <span class="font-weight-bold">
-                                                                            <i class="mdi mdi-content-save"></i> บันทึกมติการประชุม</span>
+                                                                            จัดการการประชุม <i
+                                                                            class="fa fa-angle-right"></i></span>
                                                                     </button>
                                                                 </div>
                                                             </div>

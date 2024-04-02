@@ -26,8 +26,12 @@
                         <div class="col-12 col-xl-4">
                             <div class="justify-content-end d-flex">
                                 <div class="add-items d-flex mb-0 mt-2">
-                                    <button *ngIf="meeting.meeting_rstatus == '1' || meeting.meeting_rstatus == '2' || meeting.meeting_rstatus == '3'" class="btn btn-warning" (click)="confirmOpenMeeting(meeting.meeting_code)">ยืนยันเปิดบันทึกการประชุม</button>
-                                    <span *ngIf="meeting.meeting_rstatus == '4'" class="badge badge-light"><i class="mdi mdi-check"></i>เปิดบันทึกการประชุมแล้ว</span>
+                                    <button
+                                        *ngIf="meeting.meeting_rstatus == '1' || meeting.meeting_rstatus == '2' || meeting.meeting_rstatus == '3'"
+                                        class="btn btn-warning"
+                                        (click)="confirmOpenMeeting(meeting.meeting_code)">ยืนยันเปิดบันทึกการประชุม</button>
+                                    <span *ngIf="meeting.meeting_rstatus == '4'" class="badge badge-light"><i
+                                            class="mdi mdi-check"></i>เปิดบันทึกการประชุมแล้ว</span>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +58,7 @@
                                 </div>
                             </div> -->
 
-                            <div class="row" >
+                            <div class="row">
                                 <div class="d-flex topic mb-3 font-weight-bold">
                                     <div class="p-2">วาระที่</div>
                                     <div class="mr-auto p-2">เรื่อง</div>
@@ -104,7 +108,8 @@
 
                                         <!-- บันทึกมติการประชุม -->
                                         <div class="p-2">
-                                            <i class="mdi mdi-information-outline" *ngIf="datasub.agendatopic_rstatus =='S'"></i>
+                                            <i class="mdi mdi-information-outline"
+                                                *ngIf="datasub.agendatopic_rstatus =='S'"></i>
                                             <a href="#" data-toggle="modal" data-target="#meeting-save">
                                                 <span class="badge badge-primary p-2 m-2"
                                                     (click)="onClickTopic(datasub)">
@@ -133,12 +138,45 @@
 
                                             <!-- บันทึกมติการประชุม -->
                                             <div class="p-2">
-                                                <i class="mdi mdi-information-outline" *ngIf="datasub.agendatopic_rstatus =='S'"></i>
+                                                <i class="mdi mdi-information-outline"
+                                                    *ngIf="datasub.agendatopic_rstatus =='S'"></i>
                                                 <a href="#" data-toggle="modal" data-target="#meeting-save">
                                                     <span class="badge badge-primary p-2 m-2"
                                                         (click)="onClickTopic(datasub)">
                                                         <i class="mdi mdi-content-save"></i> บันทึกมติประชุม</span>
                                                 </a>
+                                            </div>
+                                        </div>
+
+                                        <!-- วาระย่อย 3 -->
+                                        <div class="row ml-auto"
+                                            *ngFor="let item of datasub.data_sub3; let i = index">
+                                            <div class="d-flex topic-sub-">
+                                                <!-- วาระ -->
+                                                <div class="p-2">
+                                                    <span *ngIf="item.agendatopic_no != ''">
+                                                        {{datasub.agendatopic_no}}
+                                                    </span>
+                                                    <span *ngIf="item.agendatopic_no == ''">
+                                                        -
+                                                    </span>
+                                                </div>
+
+                                                <!-- เรื่อง -->
+                                                <div class="mr-auto p-2">
+                                                    {{item.agendatopic_name}}
+                                                </div>
+
+                                                <!-- บันทึกมติการประชุม -->
+                                                <div class="p-2">
+                                                    <i class="mdi mdi-information-outline"
+                                                        *ngIf="item.agendatopic_rstatus =='S'"></i>
+                                                    <a href="#" data-toggle="modal" data-target="#meeting-save">
+                                                        <span class="badge badge-primary p-2 m-2"
+                                                            (click)="onClickTopic(item)">
+                                                            <i class="mdi mdi-content-save"></i> บันทึกมติประชุม</span>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -151,20 +189,21 @@
                                 <div class="d-flex topic mb-3 font-weight-bold">
                                     <div class="p-2">เลิกประชุมเวลา</div>
                                     <div class="p-2">
-                                        <input type="time" class="form-control" name="meeting_endtime" [(ngModel)]="meeting_endtime" />
+                                        <input type="time" class="form-control" name="meeting_endtime"
+                                            [(ngModel)]="meeting_endtime" />
                                     </div>
                                     <div class="mr-auto p-2">
                                         <button type="button" (click)="endMeetingTime(meeting_code)"
-                                        class="btn btn-primary d-flex align-items-center justify-content-center">
-                                        บันทึก</button>
+                                            class="btn btn-primary d-flex align-items-center justify-content-center">
+                                            บันทึก</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
 
-                    
+
                 </div>
             </div>
 
@@ -206,34 +245,30 @@
                                 <form class="forms-sample" [formGroup]="recordForm">
 
                                     <div class="form-group">
-                                        <label for="outsider_position" class="col-sm-5 col-form-label">การอภิปรายและข้อเสนอแนะจากที่ประชุม:
+                                        <label for="outsider_position"
+                                            class="col-sm-5 col-form-label">การอภิปรายและข้อเสนอแนะจากที่ประชุม:
                                         </label>
                                         <div class="col-sm-10">
-                                            <st-editor 
-                                                [(ngModel)]="agenda.agenda_discussion" 
-                                                formControlName="agenda_discussion" 
-                                                [config]="config"></st-editor>
+                                            <st-editor [(ngModel)]="agenda.agenda_discussion"
+                                                formControlName="agenda_discussion" [config]="config"></st-editor>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <label for="outsider_position" class="col-sm-3 col-form-label">มติที่ประชุม:
                                         </label>
                                         <div class="col-sm-10">
-                                            <st-editor 
-                                                [(ngModel)]="agenda.agenda_resolution" 
-                                                formControlName="agenda_resolution" 
-                                                [config]="config"></st-editor>
+                                            <st-editor [(ngModel)]="agenda.agenda_resolution"
+                                                formControlName="agenda_resolution" [config]="config"></st-editor>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="outsider_position" class="col-sm-3 col-form-label">มติที่ประชุม/มอบหมายงาน:
+                                        <label for="outsider_position"
+                                            class="col-sm-3 col-form-label">มติที่ประชุม/มอบหมายงาน:
                                         </label>
                                         <div class="col-sm-10">
-                                            <st-editor 
-                                                [(ngModel)]="agenda.agenda_assigned" 
-                                                formControlName="agenda_assigned" 
-                                                [config]="config"></st-editor>
+                                            <st-editor [(ngModel)]="agenda.agenda_assigned"
+                                                formControlName="agenda_assigned" [config]="config"></st-editor>
                                         </div>
                                     </div>
 

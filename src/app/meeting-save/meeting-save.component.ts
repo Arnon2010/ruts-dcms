@@ -73,8 +73,10 @@ export class MeetingSaveComponent {
     this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({
         next: (res: any) => {
-          console.log('meeting list ', res); // เเสดงค่าใน console
+         
           this.meeting_list = res.data;
+
+          console.log('meeting list ', this.meeting_list); // เเสดงค่าใน console
         }
       });
   }
