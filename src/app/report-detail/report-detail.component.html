@@ -111,7 +111,7 @@
                                                 <td class="font-weight-medium">
                                                     <a href="#" data-toggle="modal"
                                                         data-target="#modal-meeting-save-detail"
-                                                        (click)="onClickSaveDetail(item)">
+                                                        (click)="onClickDetailMeeting(item)">
                                                         <span class="badge badge-warning">
                                                             <i class="mdi mdi-content-save"></i>
                                                         </span>
@@ -172,13 +172,13 @@
                                 </div>
                                 <div class="form-group row">
                                     <label for="" class="col-sm-2 col-form-label">อาคาร/ห้อง: </label>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-10">
                                         {{meeting.meeting_location}}
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="" class="col-sm-2 col-form-label">วันที่ เวลา: </label>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-6">
                                         {{meeting.meeting_sdate}} เวลา {{meeting.meeting_time}}
                                     </div>
                                 </div>
@@ -382,35 +382,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger btn-sm d-flex align-items-center justify-content-center"
                         data-dismiss="modal"><i class="mdi mdi-close-box"></i> ปิด</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modal-view-report" tabindex="-1" role="dialog"
-        aria-labelledby="checkConfirmAgendaSubModalLabel" aria-hidden="true">
-        <div class="modal-dialog custom-modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="checkConfirmAgendaSubModalLabel">
-                        รายงานการประชุม
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="col-md-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h2>ng2-pdf-viewer simple usage</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-danger d-flex align-items-center justify-content-center"
-                      data-dismiss="modal"><i class="mdi mdi-close-box"></i> ปิด</button> -->
                 </div>
             </div>
         </div>

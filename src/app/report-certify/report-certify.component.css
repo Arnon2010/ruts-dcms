@@ -1,0 +1,10 @@
+.top-right-message {
+    position: fixed;
+    top: 10px; /* ปรับตำแหน่งตามที่ต้องการ */
+    right: 10px; /* ปรับตำแหน่งตามที่ต้องการ */
+    background-color: #ffffff;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+  }
+  

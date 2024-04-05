@@ -1,9 +1,12 @@
 <!-- partial -->
 <div class="container-fluid page-body-wrapper">
-
+  <!-- ข้อความแสดงการบันทึก -->
+ 
   <div class="content-wrapper">
+    
     <!-- จัดการการประชุม -->
     <div class="row">
+      <!-- <div class="top-right-message">ข้อความของคุณที่นี่</div> -->
       <div class="col-md-12 grid-margin transparent" *ngIf="user_role == 'F'">
         <div class="row">
           <div class="col-lg-3 col-md-6 mb-4 stretch-card transparent">
@@ -92,7 +95,7 @@
                         <th>วันและเวลา</th>
                         <!-- <th class="text-center">รายงานการประชุม</th> -->
                         <th class="text-center">รายงานการประชุม</th>
-                        <th class="text-center">ส่งอีเมล</th>
+                        <th class="text-center">รับรองรายงาน<br/>การประชุม</th>
                         <!-- <th>View PDF</th> -->
                       </tr>
                     </thead>
@@ -129,7 +132,8 @@
                         </td>
 
                         <td class="font-weight-medium text-center">
-                          <a href="#" data-toggle="modal" data-target="#modal-send-mail">
+                          <a href="#" data-toggle="modal" data-target="#modal-send-mail"
+                            (click)="onClickDetailMeeting(item)">
                             <span class="badge badge-info">
                               <i class="mdi mdi-email"></i>
                             </span>
@@ -161,80 +165,155 @@
         </div>
       </div>
     </div> -->
-</div>
-
-<div class="modal fade" id="modal-view-report" tabindex="-1" role="dialog"
-  aria-labelledby="checkConfirmAgendaSubModalLabel" aria-hidden="true">
-  <div class="modal-dialog custom-modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="checkConfirmAgendaSubModalLabel">
-          รายงานการประชุม
-        </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="col-md-12 grid-margin stretch-card">
-          <div class="card">
-            <div class="card-body">
-              <h2>ng2-pdf-viewer simple usage</h2>
-              <!-- <h2>ng2-pdf-viewer simple usage</h2>
-                  <div id="outerContainer">
-                    <div class="pdf-container">
-                      <pdf-viewer [src]="src" [rotation]="0" [original-size]="false" [show-all]="true"
-                        [fit-to-page]="false" [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false"
-                        [render-text]="true" [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false"
-                        style="width: 100%; height: 100vh;"></pdf-viewer>
-                    </div>
-                  </div> -->
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-danger d-flex align-items-center justify-content-center"
-                      data-dismiss="modal"><i class="mdi mdi-close-box"></i> ปิด</button> -->
-      </div>
-    </div>
   </div>
-</div>
 
-<div class="modal fade" id="modal-view-pdf" tabindex="-1" role="dialog"
-  aria-labelledby="checkConfirmAgendaSubModalLabel" aria-hidden="true">
-  <div class="modal-dialog custom-modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="checkConfirmAgendaSubModalLabel">
-          บันทึกมติการประชุม
-        </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="col-md-12 grid-margin stretch-card">
-          <div class="card">
-            <div class="card-body">
-              <h2>ng2-pdf-viewer simple usage</h2>
+  <div class="modal fade" id="modal-send-mail" tabindex="-1" role="dialog"
+    aria-labelledby="checkConfirmAgendaSubModalLabel" aria-hidden="true">
+    <div class="modal-dialog custom-modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="checkConfirmAgendaSubModalLabel">
+            ส่งอีเมล/รับรองรายงานการประชุม
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div class="col-sm-12">
+                  <div class="table-responsive">
+                    <table class="table table-borderless report-table">
+                      <tr>
+                        <th class="text-muted">
+                          ลำดับ
+                        </th>
+                        <th>
+                          รายชื่อผู้เข้าร่วมประชุม
+                        </th>
+                        <th>ตำแหน่งในที่ประชุม</th>
+                        <th>การเข้าประชุม</th>
+                        <th>ทั้งหมด</th>
+                        <th>อีเมล</th>
+                      </tr>
+                      <tr *ngFor="let person of meeting.data_person; let i = index">
+                        <td class="text-center">
+                          {{i+1}}
+                        </td>
+                        <td>{{person.person_name}}</td>
+                        <td>{{person.mtposition_name}}</td>
+                        <td>
+                          <span *ngIf="person.attendances" class="badge badge-info"><i
+                              class="mdi mdi-checkbox-marked-circle-outline"></i></span>
+                          <span *ngIf="!person.attendances" class="badge badge-info"><i
+                              class="mdi mdi-close"></i></span>
+                        </td>
+                        <td class="text-center form-check form-switch">
+                          <input name="Attend" class="form-check-input" type="checkbox" role="switch"
+                            [(ngModel)]="person.attendances" id="attenId{{i}}">
+                        </td>
+                        <td>
+                          <input type="text" class="form-control" name="personMail" [(ngModel)]="person.person_mail" />
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <!-- ระบุวันที่ให้รับรองรายงานประชุม -->
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <p>ผู้ส่งรายงานการประชุม :</p>
+                    </div>
 
-              <div id="outerContainer">
-                <div class="pdf-container">
-                  <pdf-viewer [src]="src" [rotation]="0" [original-size]="false" [show-all]="true" [fit-to-page]="false"
-                    [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false" [render-text]="true"
-                    [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false"
-                    style="width: 100%; height: 100vh;"></pdf-viewer>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label">รับรองรายงานการประชุมภายในวันที่: </label>
+                      <div class="col-sm-4">
+                        <input type="date" name="confirm_date" [(ngModel)]="rconfirm.confirm_date" class="col form-control">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label">link สำหรับใส่ในเนื้อหาอีเมล: </label>
+                      <div class="col-sm-8">
+                        <input type="text" name="confirm_date" [(ngModel)]="rconfirm.confirm_link" class="col form-control">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label">เรื่อง (Subject): </label>
+                      <div class="col-sm-8">
+                        <input type="text" name="confirm_date" [(ngModel)]="rconfirm.confirm_subject" class="col form-control">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label">เนื้อหา: </label>
+                      <div class="col-sm-10">
+                        <textarea class="col form-control" [(ngModel)]="rconfirm.confirm_detail" rows="15"></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <!-- ข้อความที่จะส่งอีเมลไปยังผู้ร่วมประชุม -->
+                  <div class="row">
+                    <div class="col-sm-12">
+
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-danger d-flex align-items-center justify-content-center"
-                      data-dismiss="modal"><i class="mdi mdi-close-box"></i> ปิด</button> -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary d-flex align-items-center justify-content-center"
+            (click)="sendConfirmReport(rconfirm, meeting.meeting_code)"><i class="mdi mdi-content-save"></i>
+            ยืนยันส่งรายงานรับรองการประชุม</button>
+          <button type="button" class="btn btn-danger d-flex align-items-center justify-content-center"
+            data-dismiss="modal"><i class="mdi mdi-close-box"></i> ยกเลิก</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+  <div class="modal fade" id="modal-view-pdf" tabindex="-1" role="dialog"
+    aria-labelledby="checkConfirmAgendaSubModalLabel" aria-hidden="true">
+    <div class="modal-dialog custom-modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="checkConfirmAgendaSubModalLabel">
+            บันทึกมติการประชุม
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h2>ng2-pdf-viewer simple usage</h2>
+
+                <div id="outerContainer">
+                  <div class="pdf-container">
+                    <pdf-viewer [src]="src" [rotation]="0" [original-size]="false" [show-all]="true"
+                      [fit-to-page]="false" [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false"
+                      [render-text]="true" [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false"
+                      style="width: 100%; height: 100vh;"></pdf-viewer>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-danger d-flex align-items-center justify-content-center"
+                      data-dismiss="modal"><i class="mdi mdi-close-box"></i> ปิด</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 

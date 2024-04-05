@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {  FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -27,8 +27,8 @@ export class ReportCertifyComponent {
   total_meeting_pass: any;
   reportData: any;
   meeting: any = {};
-  report_stime:any;
-  report_etime:any;
+  report_stime: any;
+  report_etime: any;
 
   src = 'https://pims.rmutsv.ac.th/api/uploads/pdf/singup-info/info.pdf';
   //src = 'https://e-doc.rmutsv.ac.th/document/edoc/D0026/2022/DOC180D1663832881_edoc_2022-09-22-11.pdf';
@@ -42,7 +42,7 @@ export class ReportCertifyComponent {
     private dataService: ApiService,
     private sanitizer: DomSanitizer,
   ) {
-    
+
   }
 
   ngOnInit(): void {
@@ -95,9 +95,9 @@ export class ReportCertifyComponent {
       });
   }
 
-  onClickSaveDetail(item:any) {
+  onClickDetailMeeting(item: any) {
     this.meeting = item;
-    console.log('meeting: ',item);
+    console.log('meeting: ', item);
   }
 
   public selectAll: boolean = false;
@@ -109,34 +109,43 @@ export class ReportCertifyComponent {
 
   // สร้างตัวแปรเก็บสถานะการเข้าร่วมของแต่ละบุคคล
   public attendances: boolean[] = [];
-  
+
+  rconfirm:any = {};
+
   // ฟังก์ชันสำหรับการบันทึกข้อมูล
-  saveReportDetail(meeting_code:any) {
+  sendConfirmReport(item: any, meeting_code: any) {
+
+    console.log(this.meeting);
     const dataToSave = [];
     for (let i = 0; i < this.meeting.data_person.length; i++) {
-      if (this.attendances[i]) {
+      //if (this.attendances[i]) {
         const person = this.meeting.data_person[i];
-        const attendanceData = {
+        const confirmData = {
           personCode: person.person_code,
           personName: person.person_name,
           position: person.mtposition_name,
-          attendInstead: person.attendInstead,
-          attendNote: person.attendNote
+          person_mail: person.person_mail,
+          attendAnces: person.attendances
         };
-        dataToSave.push(attendanceData);
-      }
+        dataToSave.push(confirmData);
+      //}
     }
-    console.log(dataToSave);
+   
     // ส่งข้อมูลที่ต้องการบันทึกไปยังเซิร์ฟเวอร์ หรือทำอย่างอื่นตามต้องการ
     var data = {
-      "opt": "saveReportDetail",
-      "report_stime": this.report_stime,
-      "report_etime": this.report_etime,
+      "opt": "sendReportConfirm",
       "meeting_code": meeting_code,
+      "confirm_date": item.confirm_date,
+      "confirm_link": item.confirm_link,
+      "confirm_subject": item.confirm_subject,
+      "confirm_detail": item.confirm_detail,
       "report_data": dataToSave,
       "user_id": this.user_id
     }
-    this.http.post(environment.baseUrl + '/_report_detail_save.php', data)
+
+    console.log('', data);
+
+    this.http.post(environment.baseUrl + '/_report_certify_sendconfirm.php', data)
       .subscribe({
         next: (res: any) => {
           console.log('report detail:  ', res); // เเสดงค่าใน console
@@ -146,7 +155,7 @@ export class ReportCertifyComponent {
               //this.fetchTopicMeeting();
             })
           }
-          
+
         }
       });
 
@@ -175,10 +184,24 @@ export class ReportCertifyComponent {
     //window.open(sanitizedUrl.toString(), '_blank');
   }
 
-   // view file
-   async viewReportPdf(meeting_code: any) {
+  // view file
+  async viewReportPdf(meeting_code: any) {
     let path = environment.pdfUrl + '/_report_meeting_certify.php?meeting_code=' + meeting_code;
     //console.log(path);
     this.openWindowWithUrl(path);
   }
+
+  // ในส่วนของคลาส
+  showMessage: boolean = true;
+
+  // ในส่วนของ function ที่เรียกใช้เมื่อต้องการแสดงข้อความ
+  showMessageFunction() {
+    this.showMessage = true;
+  }
+
+  // ในส่วนของ function ที่เรียกใช้เมื่อต้องการซ่อนข้อความ
+  hideMessageFunction() {
+    this.showMessage = false;
+  }
+
 }

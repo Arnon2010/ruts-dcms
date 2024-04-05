@@ -581,12 +581,13 @@ export class MeetingTimeManageComponent {
 
   //ผู้เข้าร่วมประชุม
   // เพิ่มผู้เข้าร่วมประชุม Person
-  addPerson(item: any, id: any, name: string, position:string, faculty:string) {
+  addPerson(item: any, id: any, name: string, position:string, faculty:string, mail:any) {
     this.persons.meeting_code = this.meeting_code;
     this.persons.citizen_id = id;
     this.persons.person_name = name;
     this.persons.position_work = position;
     this.persons.faculty_name = faculty;
+    this.persons.person_mail = mail;
     this.persons.action = "Insert";
     // const result_check = this.addConsiderCheck(meeting_code, id);
     // console.log('result_check: ', result_check);

@@ -84,8 +84,6 @@ export class ReportDetailComponent {
     });
   }
 
-
-
   getUser(): void {
     const Token: any = localStorage.getItem('Token');
     this.userData = JSON.parse(Token);
@@ -130,7 +128,7 @@ export class ReportDetailComponent {
       });
   }
 
-  onClickSaveDetail(item:any) {
+  onClickDetailMeeting(item:any) {
     this.meeting = item;
     this.getPersonObserve(this.meeting.meeting_code);
     console.log('meeting: ',item);
@@ -284,7 +282,7 @@ export class ReportDetailComponent {
       });
   }
 
-  // เพิ่มผู้เข้าร่วมชี้แจง
+  // เพิ่มผู้เข้าร่วมสังเกตการณ์ที่ประชุม
   addPerson(item: any, meeting_code:any) {
     //this.persons.mtposition_code = item.;
     this.personObs.meeting_code = meeting_code;

@@ -1,15 +1,18 @@
-//const url = 'http://localhost:8010/';  //docker
-const url = 'http://localhost/'; //localhost
+//const url = 'http://localhost:8010/';  //docker mac
+const url = 'http://localhost:30424/';  //docker win
+//const url = 'http://localhost/dcms-api'; //localhost
 export const environment = {
     production: false,
-    baseUrl: url + 'dcms-api/api',
-    pdfUrl: url + 'dcms-api/pdf',
-    baseUrlUpload: url + 'dcms-api/documents',
+    baseUrl: url + '/api',
+    pdfUrl: url + '/pdf',
+    baseUrlUpload: url + '/documents',
     //baseUrlUpload: 'assets/documents',
     //vieFile: 'assets/documents',
-    vieFile: url + 'dcms-api/documents',
-    baseUrlReport: url + 'dcms-api/report'
+    vieFile: url + '/documents',
+    baseUrlReport: url + '/report'
   };
+
+  
 
 
 
