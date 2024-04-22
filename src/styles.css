@@ -18,6 +18,11 @@ body {
     backdrop-filter: blur(20px);
 }
 
+.topic-title {
+    font-size: 20px;
+    font-weight:700;
+}
+
 
 .topic {
     padding: 16px;

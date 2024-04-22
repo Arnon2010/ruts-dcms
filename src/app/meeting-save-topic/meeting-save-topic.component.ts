@@ -50,11 +50,7 @@ export class MeetingSaveTopicComponent {
 
   meeting_endtime:any;
 
-  agenda: any = {
-    agenda_assigned: '',
-    agenda_discussion: '',
-    agenda_resolution: '',
-  };
+  agenda: any = {};
 
   constructor(
     private http: HttpClient,
@@ -247,21 +243,25 @@ export class MeetingSaveTopicComponent {
     }
     this.http.post(environment.baseUrl + '/_agenda_record_data.php', data).subscribe(
       (res: any) => {
-        //console.log(': ', res);
+        console.log(': ', res);
         var item = res.data[0];
 
-        if(res.row == '1') {
-          this.agenda.action_submit = 'Update';
-          this.agenda.agenda_resolution = item.agenda_resolution;
-          this.agenda.agenda_discussion = item.agenda_discussion;
-          this.agenda.agenda_assigned = item.agenda_assigned;
+        this.agenda = res.data[0];
 
-        } else {
-          this.agenda.action_submit = 'Insert';
-          this.agenda.agenda_resolution = '';
-          this.agenda.agenda_discussion = '';
-          this.agenda.agenda_assigned = '';
-        }
+        console.log(this.agenda);
+
+        // if(res.row == '1') {
+        //   this.agenda.action_submit = 'Update';
+        //   this.agenda.agenda_resolution = item.agendatopic_resolution;
+        //   this.agenda.agenda_discussion = item.agendatopic_discussion;
+        //   this.agenda.agenda_assigned = item.agendatopic_assigned;
+
+        // } else {
+        //   this.agenda.action_submit = 'Insert';
+        //   this.agenda.agenda_resolution = '';
+        //   this.agenda.agenda_discussion = '';
+        //   this.agenda.agenda_assigned = '';
+        // }
         //console.log(this.agenda);
       },
       (error) => {
@@ -275,16 +275,21 @@ export class MeetingSaveTopicComponent {
     var data = {
       "opt": "recordTopic",
       "agendatopic_code": item.agendatopic_code,
-      "agenda_resolution": item.agenda_resolution,
-      "agenda_discussion": item.agenda_discussion,
-      "agenda_assigned": item.agenda_assigned,
+      "agendatopic_resolution": item.agendatopic_resolution,// มติที่ประชุม
+      "agendatopic_discussion": item.agendatopic_discussion, // การอภิปรายและข้อเสนอแนะจากที่ประชุม
+      "agendatopic_assigned": item.agendatopic_assigned, // มติที่ประชุม/มอบหมายงาน:
       "action_submit": item.action_submit,
     }
     //console.log('save formData', data);
     this.http.post(environment.baseUrl + '/_agenda_record_save.php', data).subscribe(
       (res: any) => {
-        //console.log('topic_note: ', res);
-        this.fetchTopicMeeting(this.meeting.open_code);
+        console.log('topic_note: ', res);
+
+        if (res.status == 'Ok') {
+          Swal.fire('บันทึกข้อมูลสำเร็จ', '', 'success').then(() => {
+            this.fetchTopicMeeting(this.meeting.open_code);
+          })
+        }
       },
       (error) => {
         console.log('Error adduser: ', error);

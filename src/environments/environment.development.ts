@@ -1,5 +1,5 @@
-//const url = 'http://localhost:8010/';  //docker mac
-const url = 'http://localhost:30424/';  //docker win
+const url = 'http://localhost:30424/';  //docker mac
+//const url = 'http://localhost:30424/';  //docker win
 //const url = 'http://localhost/dcms-api'; //localhost
 export const environment = {
     production: false,

@@ -112,6 +112,17 @@
               </ul>
             </li>
 
+            <li *ngIf="user.user_role != 'F' && user.user_role != 'A'">
+              <a href="#" [routerLink]="['/certify']">
+                <i class="mdi mdi-view-agenda"></i>
+                <span class="link_name">รายงานการประชุม</span>
+              </a>
+              <ul class="sub-menu blank">
+                <li><a class="link_name" [routerLink]="['/certify']"
+                    routerLinkActive="router-link-active">รายงานการประชุม</a></li>
+              </ul>
+            </li>
+
             <li *ngIf="user.user_role == 'A'">
               <a href="#" [routerLink]="['/user']">
                 <i class="mdi mdi-account"></i>

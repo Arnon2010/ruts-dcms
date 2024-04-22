@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -79,10 +79,21 @@ import { AssignedComponent } from './assigned/assigned.component';
 import { MeetingPersonComponent } from './meeting-person/meeting-person.component';
 
 import {NgxSimpleTextEditorModule} from 'ngx-simple-text-editor';
-import { ReportDetailComponent } from './report-detail/report-detail.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ReportCompleteComponent } from './report-complete/report-complete.component';
 import { ReportCertifyComponent } from './report-certify/report-certify.component';
+import { PdfTestComponent } from './pdf-test/pdf-test.component';
+import { nl2brPipe } from './nl2br.pipe';
+import { ThaiDatePipe } from './dateth.pipe';
+
+// import { registerLocaleData } from '@angular/common';
+// import localeTh from '@angular/common/locales/th';
+import { CertifyComponent } from './certify/certify.component';
+import { CertifyConfirmComponent } from './certify-confirm/certify-confirm.component';
+import { CertifyDetailComponent } from './certify-detail/certify-detail.component';
+
+// Register the Thai locale data.
+//registerLocaleData(localeTh, 'th');
 
 @NgModule({
   declarations: [
@@ -132,9 +143,14 @@ import { ReportCertifyComponent } from './report-certify/report-certify.componen
     MeetingAllComponent,
     AssignedComponent,
     MeetingPersonComponent,
-    ReportDetailComponent,
     ReportCompleteComponent,
-    ReportCertifyComponent
+    ReportCertifyComponent,
+    PdfTestComponent,
+    nl2brPipe,
+    CertifyComponent,
+    CertifyConfirmComponent,
+    CertifyDetailComponent,
+    ThaiDatePipe
 
   ],
   imports: [
@@ -176,12 +192,17 @@ import { ReportCertifyComponent } from './report-certify/report-certify.componen
     MatIconModule,
     MatSidenavModule,
     NgxSimpleTextEditorModule,
-    PdfViewerModule
+    PdfViewerModule,
   ],
   exports:[CdkStepperModule],
   providers: [
     AuthGuard, 
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
+    { 
+      provide: LocationStrategy,
+      //provide: LOCALE_ID, useValue: 'th',
+      useClass: HashLocationStrategy,
+
+    }
   ],
   bootstrap: [AppComponent]
 })

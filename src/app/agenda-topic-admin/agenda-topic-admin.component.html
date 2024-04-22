@@ -357,7 +357,7 @@
                                 </div> -->
                                 
                                 <div class="form-group row">
-                                    <label for="outsider_position" class="col-sm-3 col-form-label">ความเป็นมา: *
+                                    <label for="outsider_position" class="col-sm-3 col-form-label">รายละเอียด/ความเป็นมา:
                                     </label>
                                     <div class="col-sm-8">
                                         <st-editor 
@@ -377,7 +377,7 @@
                                 </div> -->
 
                                 <div class="form-group row">
-                                    <label for="outsider_position" class="col-sm-3 col-form-label">ข้อเสนอเพื่อพิจารณา:
+                                    <label for="agendatopic_offer" class="col-sm-3 col-form-label">ข้อมูลเพื่อประกอบการพิจารณา:
                                     </label>
                                     <div class="col-sm-8">
                                         <st-editor 
@@ -387,11 +387,20 @@
                                     </div>
                                 </div>
 
-
+                                <!-- <div class="form-group row">
+                                    <label for="agendatopic_issue" class="col-sm-3 col-form-label">ประเด็นที่เสนอ:
+                                    </label>
+                                    <div class="col-sm-8">
+                                        <st-editor 
+                                        [(ngModel)]="topic.agendatopic_issue" 
+                                        formControlName="agendatopic_issue" 
+                                        [config]="config"></st-editor>
+                                    </div>
+                                </div> -->
 
                                 <div class="form-group row">
                                     <label for="outsider_phone"
-                                        class="col-sm-3 col-form-label">เอกสารการประชุมฉบับเต็ม:</label>
+                                        class="col-sm-3 col-form-label">เอกสารแนบวาระ:</label>
                                     <div class="col-sm-3">
                                         <input type="file" class="form-control" (change)="onFileChange($event)"
                                             placeholder="" [(ngModel)]="topic.agendatopic_doc" name="agendatopic_doc"

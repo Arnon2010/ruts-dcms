@@ -1,1 +1,458 @@
-<p>report-complete works!</p>
+<!-- partial -->
+<div class="container-fluid page-body-wrapper">
+  <!-- ข้อความแสดงการบันทึก -->
+
+  <div class="content-wrapper">
+
+    <!-- จัดการการประชุม -->
+    <div class="row">
+      <!-- <div class="top-right-message">ข้อความของคุณที่นี่</div> -->
+      <div class="col-md-12 grid-margin transparent" *ngIf="user_role == 'F'">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 mb-4 stretch-card transparent">
+            <div class="card card-tale">
+              <a class="nav-link" [routerLink]="['/report']">
+                <div class="card-body">
+                  <h6 class="mb-4">รายละเอียดการประชุม</h6>
+                  <p class="fs-30 mb-2" [ngClass]="{
+                            'circle-1': counts.total_conduct >= 1,
+                            'circle-0': counts.total_conduct == 0}">
+                    <span class="badge font-weight-bold circle__content">
+                      {{counts.total_detail}}</span>
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4 stretch-card transparent">
+            <div class="card card-tale">
+              <a class="nav-link" [routerLink]="['/report-certify']">
+                <div class="card-body">
+                  <h6 class="mb-4">รับรองรายงานการประชุม</h6>
+                  <p class="fs-30 mb-2" [ngClass]="{
+                            'circle-1': counts.total_agency >= '1',
+                            'circle-0': counts.total_agency == 0}">
+                    <span class="badge font-weight-bold circle__content">
+                      {{counts.total_certify}}
+                    </span>
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4 stretch-card transparent">
+            <div class="card card-dark-blue">
+              <a class="nav-link" [routerLink]="['/report-complete']">
+                <div class="card-body">
+                  <h6 class="mb-4">รายงานฉบับสมบรูณ์</h6>
+                  <p class="fs-30 mb-2" [ngClass]="{
+                            'circle-1': counts.total_save >= 1,
+                            'circle-0': counts.total_save == 0}">
+                    <span class="badge font-weight-bold circle__content">
+                      {{counts.total_complete}}</span>
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-2">
+            <h6 class="font-weight-bold">อยู่ระหว่างดำเนินการ</h6>
+          </div>
+          <div class="col-12 col-xl-4">
+            <div class="justify-content-end d-flex">
+              <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <i class="mdi mdi-calendar"></i> เลือกแสดงตาม
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
+                  <a class="dropdown-item" href="#">January - March</a>
+                  <a class="dropdown-item" href="#">March - June</a>
+                  <a class="dropdown-item" href="#">June - August</a>
+                  <a class="dropdown-item" href="#">August - November</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card tale-bg">
+              <div class="card-body mt-auto">
+
+
+
+                <div class="table-responsive">
+                  <table class="table table-striped table-borderless">
+                    <thead>
+                      <tr>
+                        <th>ลำดับ</th>
+                        <th>ชื่อการประชุม</th>
+                        <th class="text-center">รายละเอียด<br>รับรองรายงาน</th>
+                        <th class="text-center">แก้ไข<br>การประชุม</th>
+                        <th class="text-center">สร้างรายงาน<br />การประชุมฉบับสมบูรณ์</th>
+                        <th class="text-center">รายงาน<br>การประชุม</th>
+                        <th class="text-center">อัปโหลด<br>รายงาน</th>
+                        <!-- <th>View PDF</th> -->
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of reportData; let i = index;">
+                        <td>{{i+1}}</td>
+                        <td>
+                          <span class="font-weight-bold">
+                            {{item.open_title}} คร้ังที่ {{item.meeting_thetime}}
+                          </span>
+                          <br>
+                          <br>
+                          <span>
+                            {{item.meeting_sdate}} {{item.meeting_time}} น.
+                          </span>
+                          <div class="mt-2">
+                            ณ {{item.meeting_location}}
+                          </div>
+                        </td>
+
+                        <!-- รายละเอียดรับรองรายงาน -->
+                        <td class="font-weight-medium text-center">
+                          <a href="#" data-toggle="modal" data-target="#modal-certify-detail"
+                            (click)="onClickDetailMeeting(item)">
+                            <span class="badge badge-info">
+                              <i class="mdi mdi-file-document"></i>
+                            </span>
+                          </a>
+                        </td>
+                        <!-- แก้ไขการประชุม -->
+                        <td class="font-weight-medium text-center">
+                          <a href="#" data-toggle="modal" data-target="#modal-send-mail"
+                            (click)="onClickDetailMeeting(item)">
+                            <span class="badge badge-warning">
+                              <i class="mdi mdi-pencil"></i>
+                            </span>
+                          </a>
+                        </td>
+                        <!-- สร้างรายงานการประชุมฉบับสมบูรณ์ -->
+                        <td class="font-weight-medium text-center">
+                          <a href="#" data-toggle="modal" data-target="#modal-send-mail"
+                            (click)="onClickDetailMeeting(item)">
+                            <span class="badge badge-secondary">
+                              <i class="mdi mdi-settings"></i>
+                            </span>
+                          </a>
+                        </td>
+
+                        <!-- รายงานการประชุม -->
+                        <td class="font-weight-medium text-center">
+                          <!-- <a href="#" data-toggle="modal" data-target="#modal-send-mail"
+                              (click)="onClickDetailMeeting(item)">
+                              <span class="badge badge-primary">
+                                <i class="mdi mdi-briefcase-upload"></i>
+                              </span>
+                            </a> -->
+                        </td>
+
+                        <!-- อัปโหลดรายงาน -->
+                        <td class="font-weight-medium text-center">
+                          <a href="#" data-toggle="modal" data-target="#modal-send-mail"
+                            (click)="onClickDetailMeeting(item)">
+                            <span class="badge badge-info">
+                              <i class="mdi mdi-briefcase-upload"></i>
+                            </span>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- content-wrapper ends -->
+
+    <!-- <div>
+        <h2>ng2-pdf-viewer simple usage</h2>
+  
+        <div id="outerContainer">
+          <div class="pdf-container">
+            <pdf-viewer [src]="src" [rotation]="0" [original-size]="false" [show-all]="true" [fit-to-page]="false"
+              [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false" [render-text]="true"
+              [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false"
+              style="width: 100%; height: 100vh;"></pdf-viewer>
+          </div>
+        </div>
+      </div> -->
+  </div>
+
+  <div class="modal fade" id="modal-send-mail" tabindex="-1" role="dialog"
+    aria-labelledby="checkConfirmAgendaSubModalLabel" aria-hidden="true">
+    <div class="modal-dialog custom-modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="checkConfirmAgendaSubModalLabel">
+            ส่งอีเมล/รับรองรายงานการประชุม
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div class="col-sm-12" *ngIf="viewSendMailConfirm==false">
+                  <p class="topic-title">คณะกรรมการและสถานะการเข้าร่วมประชุม</p>
+                </div>
+                <div class="col-sm-12">
+                  <div class="table-responsive" *ngIf="viewSendMailConfirm==false">
+                    <table class="table table-borderless report-table">
+                      <tr>
+                        <th class="text-muted">
+                          ลำดับ
+                        </th>
+                        <th>
+                          รายชื่อผู้เข้าร่วมประชุม
+                        </th>
+                        <th>ตำแหน่งในที่ประชุม</th>
+                        <th>การเข้าประชุม</th>
+                        <th>เลือกส่งอีเมล
+                        </th>
+                        <th>อีเมล</th>
+                      </tr>
+                      <tr *ngFor="let person of meeting.data_person; let i = index">
+                        <td class="text-center">
+                          {{i+1}}
+                        </td>
+                        <td>{{person.person_name}}</td>
+                        <td>{{person.mtposition_name}}</td>
+                        <td>
+                          <span *ngIf="person.attendances" class="badge badge-info"><i
+                              class="mdi mdi-checkbox-marked-circle-outline"></i></span>
+                          <span *ngIf="!person.attendances" class="badge badge-info"><i
+                              class="mdi mdi-close"></i></span>
+                        </td>
+                        <td class="text-center form-check form-switch">
+                          <input name="Attend" class="form-check-input" type="checkbox" role="switch"
+                            [(ngModel)]="person.attendances" id="attenId{{i}}">
+                        </td>
+                        <td>
+                          <input type="text" class="form-control" name="personMail" [(ngModel)]="person.person_mail" />
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <!-- ข้อความส่งอีเมล -->
+                  <!-- <p>The current date is: {{ rconfirm.confirm_date | date: 'dd/MM/yyyy' }}</p> -->
+
+                  <div class="row" *ngIf="viewSendMailConfirm==false">
+                    <div class="col-sm-12">
+                      <p class="topic-title">ส่งอีเมลพิจารณารับรองรายงานการประชุม</p>
+                    </div>
+                    <!-- <div class="col-sm-12">
+                        <p class="open_title">ผู้ส่งรายงานการประชุม :</p>
+                      </div> -->
+                    <!-- <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label">link สำหรับใส่ในเนื้อหาอีเมล: </label>
+                        <div class="col-sm-8">
+                          <input type="text" name="confirm_date" [(ngModel)]="rconfirm.confirm_link"
+                            class="col form-control">
+                        </div>
+                      </div> -->
+
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label font-weight-bold">รับรองรายงานการประชุมภายในวันที่:
+                      </label>
+                      <div class="col-sm-4">
+                        <input type="date" name="confirm_date" [(ngModel)]="rconfirm.confirm_date"
+                          class="col form-control">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label font-weight-bold">เรื่อง (Subject): </label>
+                      <div class="col-sm-8">
+                        <input type="text" name="confirm_date" [(ngModel)]="rconfirm.confirm_subject"
+                          class="col form-control">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label font-weight-bold">เนื้อหา: </label>
+                      <div class="col-sm-10">
+                        <textarea class="col form-control" [(ngModel)]="rconfirm.confirm_detail" rows="15">
+
+                          </textarea>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label font-weight-bold">คำลงท้าย: </label>
+                      <div class="col-sm-4">
+                        <textarea class="col form-control" [(ngModel)]="rconfirm.confirm_detail_ending" rows="5">
+                          </textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ตัวอย่างอีเมลและเนื่อนาอีเมลที่จะส่ง -->
+                  <div class="row" *ngIf="viewSendMailConfirm==true">
+                    <div class="col-sm-12">
+                      <p class="topic-title">ข้อความและอีเมลก่อนส่ง</p>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label font-weight-bold">ส่งถึง (to): </label>
+                      <div class="col-sm-10">
+                        <span *ngFor="let item_mail of person_mail_send">
+                          {{item_mail.personMail}};
+                        </span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label font-weight-bold">เรื่อง (Subject): </label>
+                      <div class="col-sm-8">
+                        {{rconfirm.confirm_subject}}
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="" class="col-sm-2 col-form-label font-weight-bold">เนื้อหา: </label>
+                      <div class="col-sm-10">
+                        <span [innerHTML]="rconfirm.confirm_detail | nl2br"></span>
+                        <br>
+                        <!-- <span> ภายในวันที่ {{ rconfirm.confirm_date | date: 'dd/MM/yyyy' }}&nbsp;</span> -->
+                        <span> ภายในวันที่ {{ formattedDateThai(rconfirm.confirm_date)}}&nbsp;</span>
+                        <span>หากพ้นกำหนดวันดังกล่าว ถือว่าท่านเห็นชอบรับรองรายงานการประชุม ฯ ฉบับดังกล่าว</span>
+                        <br>
+                        <br>
+                        <span [innerHTML]="rconfirm.confirm_detail_ending | nl2br"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button *ngIf="!viewSendMailConfirm" type="button"
+            class="btn btn-warning d-flex align-items-center justify-content-center"
+            (click)="viewSendMailConfirm=true; viewSendConfirmReport(rconfirm, meeting.meeting_code)"><i
+              class="mdi mdi-magnify"></i>
+            ตัวอย่างอีเมลที่จะส่ง</button>
+
+          <button *ngIf="!viewSendMailConfirm" type="button"
+            class="btn btn-danger d-flex align-items-center justify-content-center" data-dismiss="modal"><i
+              class="mdi mdi-close-box"></i> ปิด</button>
+
+          <button *ngIf="viewSendMailConfirm" type="button"
+            class="btn btn-secondary d-flex align-items-center justify-content-center"
+            (click)="viewSendMailConfirm=false; viewSendConfirmReport(rconfirm, meeting.meeting_code)"><i
+              class="mdi mdi-keyboard-backspace"></i>
+            กลับ</button>
+
+          <button *ngIf="viewSendMailConfirm" type="button"
+            class="btn btn-primary d-flex align-items-center justify-content-center"
+            (click)="sendConfirmReport(rconfirm, meeting.meeting_code)"><i class="mdi mdi-email"></i>
+            ยืนยันส่งอีเมลและรับรองรายงานผ่านระบบ</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal-certify-detail" tabindex="-1" role="dialog"
+    aria-labelledby="checkConfirmAgendaSubModalLabel" aria-hidden="true">
+    <div class="modal-dialog custom-modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="checkConfirmAgendaSubModalLabel">
+            รายละเอียดการรับรองรายงานการประชุมผ่านระบบ
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <!-- รายชื่อผู้เข้าร่วมประชุม -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <p class="topic-title">คณะกรรมการและสถานะการเข้าร่วมประชุม</p>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="table-responsive">
+                      <table class="table table-borderless report-table">
+                        <tr>
+                          <th class="text-muted">
+                            ลำดับ
+                          </th>
+                          <th>
+                            คณะกรรมการ
+                          </th>
+                          <th>มีแก้ไข</th>
+                          <th>ตอบกลับ
+                          </th>
+                          <th>วันที่ตอบกลับ</th>
+                        </tr>
+                        <tr *ngFor="let person of meeting.data_person; let i = index">
+                          <td class="text-center">
+                            {{i+1}}
+                          </td>
+                          <!-- คณะกรรมการ -->
+                          <td>{{person.person_name}}</td>
+                          <!-- มีแก้ไข -->
+                          <td>
+                            <span *ngIf="person.attendances" class="badge badge-info"><i
+                                class="mdi mdi-check-circle"></i></span>
+                          </td>
+                          <!-- ตอบกลับ -->
+                          <td>
+                            <span *ngIf="person.person_rconfirm == '1'" class="badge badge-info"><i
+                              class="mdi mdi-check-circle"></i></span>
+                          </td>
+                          <!-- วันที่ตอบ -->
+                          <td>
+                            <span>
+                              {{person.person_rconfirm_date | thaiDate}}
+                            </span>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- วาระการประชุม -->
+                <div class="row">
+                  <div class="col-sm-12">
+                    <p class="topic-title">วาระการประชุม</p>
+                  </div>
+                  <div class="col-sm-12">
+
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-danger d-flex align-items-center justify-content-center"
+                        data-dismiss="modal"><i class="mdi mdi-close-box"></i> ปิด</button> -->
+        </div>
+      </div>
+    </div>
+  </div>

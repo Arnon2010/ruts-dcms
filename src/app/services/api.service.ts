@@ -200,5 +200,24 @@ export class ApiService {
     return false;
   }
 
+  fetchReportCount(fac_code: string): Promise<number> {
+    return new Promise((resolve, reject) => {
+      const data = {
+        "opt": "viewReportCount",
+        "fac_code": fac_code
+      };
+
+      this.httpClient.post(environment.baseUrl + '/_view_report.php', data)
+        .subscribe({
+          next: (res: any) => {
+            resolve(res.data);
+          },
+          error: (err) => {
+            reject(err);
+          }
+        });
+    });
+  }
+
 
 }

@@ -8,11 +8,11 @@ import Swal from 'sweetalert2';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-certify',
+  templateUrl: './certify.component.html',
+  styleUrls: ['./certify.component.css']
 })
-export class HomeComponent {
+export class CertifyComponent {
   userData: any;
   fac_code: any;
   user_id: any;
@@ -29,7 +29,11 @@ export class HomeComponent {
   meeting_person_past: any;
   total_meeting_all: any;
   total_meeting_assigned: any;
-  total_certify: any;
+  report_certify: any;
+  num_meeting_certify: any;
+  report_certify_past: any;
+  num_meeting_certify_past: any;
+  total_certify:any;
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
@@ -45,6 +49,8 @@ export class HomeComponent {
     this.getUser();
     this.fetchAgency(this.fac_code);
     this.fetchMeetingUser(this.citizen_id);
+    this.fetchUserCertify(this.citizen_id);
+    this.fetchUserCertifyPastConfirm(this.citizen_id);
     this.fetchMeetingCount(this.fac_code);
   }
 
@@ -71,7 +77,7 @@ export class HomeComponent {
     this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({
         next: (res: any) => {
-          //console.log('meeting count:  ', res.data); // เเสดงค่าใน console
+          console.log('meeting count:  ', res.data); // เเสดงค่าใน console
           this.counts = res.data;
         }
       });
@@ -102,7 +108,7 @@ export class HomeComponent {
           this.meeting_person = res.data;
           this.meeting_person_past = res.data_past;
           this.total_meeting = res.row_meeting;
-          //this.total_meeting_pass = res.row_meeting_pass;
+          this.total_meeting_pass = res.row_meeting_pass;
           this.total_meeting_all = res.row_meeting_all;
           this.total_meeting_assigned = res.row_assigned;
           this.total_certify = res.row_certify;
@@ -111,4 +117,35 @@ export class HomeComponent {
       });
   }
 
+  // รายงานการประชุม
+  fetchUserCertify(person_id: string): void {
+    var data = {
+      "opt": "viewUserCertify",
+      "person_id": person_id
+    }
+    this.http.post(environment.baseUrl + '/_view_report.php', data)
+      .subscribe({
+        next: (res: any) => {
+          console.log('user certify:  ', res); // เเสดงค่าใน console
+          this.report_certify = res.data; // รายงานประชุมที่รอการรับรอง
+          this.num_meeting_certify = res.row;
+        }
+      });
+  }
+
+  // รายงานการประชุม
+  fetchUserCertifyPastConfirm(person_id: string): void {
+    var data = {
+      "opt": "viewUserCertifyPastConfirm",
+      "person_id": person_id
+    }
+    this.http.post(environment.baseUrl + '/_view_report.php', data)
+      .subscribe({
+        next: (res: any) => {
+          console.log('user certify past:  ', res); // เเสดงค่าใน console
+          this.report_certify_past = res.data; // รายงานประชุมที่รับรองแล้ว
+          this.num_meeting_certify_past = res.row;
+        }
+      });
+  }
 }

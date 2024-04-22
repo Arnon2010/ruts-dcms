@@ -39,7 +39,7 @@
                 </div>
             </div>
 
-            <div class="row" *ngIf="meeting.meeting_rstatus == '4'">
+            <div class="row" *ngIf="meeting.meeting_rstatus == '4' || meeting.meeting_rstatus == '5' || meeting.meeting_rstatus == '6'">
                 <div class="col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
@@ -189,8 +189,8 @@
                                 <div class="d-flex topic mb-3 font-weight-bold">
                                     <div class="p-2">เลิกประชุมเวลา</div>
                                     <div class="p-2">
-                                        <input type="time" class="form-control" name="meeting_endtime"
-                                            [(ngModel)]="meeting_endtime" />
+                                        <input type="text" class="form-control" name="meeting_endtime"
+                                            [(ngModel)]="meeting_endtime" placeholder="16:00"/>
                                     </div>
                                     <div class="mr-auto p-2">
                                         <button type="button" (click)="endMeetingTime(meeting_code)"
@@ -249,7 +249,7 @@
                                             class="col-sm-5 col-form-label">การอภิปรายและข้อเสนอแนะจากที่ประชุม:
                                         </label>
                                         <div class="col-sm-10">
-                                            <st-editor [(ngModel)]="agenda.agenda_discussion"
+                                            <st-editor [(ngModel)]="agenda.agendatopic_discussion"
                                                 formControlName="agenda_discussion" [config]="config"></st-editor>
                                         </div>
                                     </div>
@@ -258,7 +258,7 @@
                                         <label for="outsider_position" class="col-sm-3 col-form-label">มติที่ประชุม:
                                         </label>
                                         <div class="col-sm-10">
-                                            <st-editor [(ngModel)]="agenda.agenda_resolution"
+                                            <st-editor [(ngModel)]="agenda.agendatopic_resolution"
                                                 formControlName="agenda_resolution" [config]="config"></st-editor>
                                         </div>
                                     </div>
@@ -267,7 +267,7 @@
                                             class="col-sm-3 col-form-label">มติที่ประชุม/มอบหมายงาน:
                                         </label>
                                         <div class="col-sm-10">
-                                            <st-editor [(ngModel)]="agenda.agenda_assigned"
+                                            <st-editor [(ngModel)]="agenda.agendatopic_assigned"
                                                 formControlName="agenda_assigned" [config]="config"></st-editor>
                                         </div>
                                     </div>

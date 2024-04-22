@@ -38,6 +38,7 @@ export class AgendaTopicAdminComponent {
     agendatopic_offer: '',
     agendatopic_doc: '',
     agendatopic_origin: '',
+    //agendatopic_issue: '',
   };
 
   selectedFiles: File[] = [];
@@ -77,11 +78,12 @@ export class AgendaTopicAdminComponent {
   ) {
 
     this.topicForm = this.fb.group({
-      agendatopic_no: ['', Validators.required],
-      agendatopic_name: ['', Validators.required],
-      agendatopic_origin: ['', Validators.required],
-      agendatopic_offer: ['', Validators.nullValidator],
-      agendatopic_doc: ['', Validators.nullValidator],
+      agendatopic_no: ['', Validators.required], // ลำดับหัวข้อ
+      agendatopic_name: ['', Validators.required], // เรื่อง
+      agendatopic_origin: ['', Validators.nullValidator], // รายละเอียด ความเป็นมา
+      agendatopic_offer: ['', Validators.nullValidator], // ข้อเสนอเพื่อพิจารณา
+      //agendatopic_issue: ['', Validators.nullValidator], // ประเด็นที่เสนอ
+      agendatopic_doc: ['', Validators.nullValidator], // เอกสารประกอบวาระ
       //foreman_code: ['', Validators.required]
     });
 
@@ -161,10 +163,11 @@ export class AgendaTopicAdminComponent {
     //this.persons.mtposition_code = item.;
     this.persons.citizen_id = item.CITIZEN_ID;
     this.persons.position_work = item.POSITION_WORK;
+    this.persons.faculty_code = item.FACULTY_CODE;
     this.persons.foreman_name = item.name;
     this.persons.action = "Insert";
 
-    console.log('Foreman: ', this.persons);
+    //console.log('Foreman: ', this.persons);
     this.http.post(environment.baseUrl + '/_agenda_topic_foreman_add.php', this.persons).subscribe(
       (response: any) => {
         console.log('response: ', response);

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {  FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {  FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../services/api.service';
 import Swal from 'sweetalert2';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-report',
@@ -13,6 +13,9 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./report.component.css']
 })
 export class ReportComponent {
+  personForm!: FormGroup;
+  meetingForm!: FormGroup;
+
   userData: any;
   fac_code: any;
   user_id: any;
@@ -30,10 +33,22 @@ export class ReportComponent {
   report_stime:any;
   report_etime:any;
 
-  //src = 'https://mcps.rmutsv.ac.th/cert/assets/document/2567/165201020015/165201020015-20240207184347.pdf';
   src = 'https://e-doc.rmutsv.ac.th/document/edoc/D0026/2022/DOC180D1663832881_edoc_2022-09-22-11.pdf';
+  //src = 'https://pims.rmutsv.ac.th/api/uploads/pdf/singup-info/info.pdf';
 
-  //sanitizedUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://e-doc.rmutsv.ac.th/document/edoc/D0026/2022/DOC180D1663832881_edoc_2022-09-22-11.pdf');
+    //ผู้เข้าร่วมประชุม
+    keyword = 'name'; //ค้นหาด้วยชื่อ
+    data_person = []; // รายชื่อ
+    person: any = {};
+
+  //ผู้เข้าร่วม/ผู้สังเกตการณ์
+  personObs: any = {
+    person_rstatus: '01'
+  };
+  person_observe: any;
+
+  toggle_add_person:boolean = false;
+
 
   constructor(
     private http: HttpClient,
@@ -42,13 +57,30 @@ export class ReportComponent {
     private dataService: ApiService,
     private sanitizer: DomSanitizer,
   ) {
-    
+     //personForm
+     this.personForm = this.fb.group({
+      person_id: ['', Validators.required]
+    });
   }
 
   ngOnInit(): void {
     this.getUser();
     this.fetchReport(this.fac_code);
-    this.fetchMeetingCount(this.fac_code);
+    this.fetchReportCount(this.fac_code);
+
+    this.meetingForm = this.fb.group({
+      selectAll: [false], // เพิ่มเข้าไป
+      persons: this.fb.array([
+        // this.fb.group({
+        //   attendances: [false],
+        //   person_name: [''],
+        //   mtposition_name: [''],
+        //   attendInstead: [''],
+        //   attendNote: ['']
+        // }),
+        // เพิ่มบุคคลอื่นๆตามต้องการ
+      ])
+    });
   }
 
   getUser(): void {
@@ -65,18 +97,15 @@ export class ReportComponent {
 
   }
 
-  // จำนวนประชุมที่เกี่ยวข้อง
-  fetchMeetingCount(fac_code: string): void {
-    var data = {
-      "opt": "viewMeetingCount",
-      "fac_code": fac_code
-    }
-    this.http.post(environment.baseUrl + '/_view_data.php', data)
-      .subscribe({
-        next: (res: any) => {
-          //console.log('meeting count:  ', res.data); // เเสดงค่าใน console
-          this.counts = res.data;
-        }
+  // จำนวนรายงานการประชุม
+  fetchReportCount(fac_code: string): void {
+    this.dataService.fetchReportCount(fac_code)
+      .then(res => {
+        //console.log('Meeting count:', res);
+        this.counts = res;
+      })
+      .catch(error => {
+        console.error('Error fetching report count:', error);
       });
   }
 
@@ -95,9 +124,39 @@ export class ReportComponent {
       });
   }
 
-  onClickSaveDetail(item:any) {
+  onClickDetailMeeting(item:any) {
     this.meeting = item;
+    this.getPersonObserve(this.meeting.meeting_code);
     console.log('meeting: ',item);
+
+    // const arrayPersons: Array<any> = item.data_person; //เรียน
+
+    // arrayPersons.forEach((element) => {
+    //   this.getPerson(element);
+    // });
+  }
+
+   /** form ctrl receiver (เรียน) */
+   get persons(): FormArray {
+    return this.meetingForm.get("persons") as FormArray
+  }
+
+  // แก้ไขเรียน
+  getPerson(item:any) {
+    //console.log('item persons: ',item);
+      if (item && item.person_name && item.mtposition_name) { // ตรวจสอบข้อมูลก่อนการสร้าง form control
+      const psForm = this.fb.group({
+        attendances: [false],
+        person_name: [item.person_name, Validators.required],
+        mtposition_name: [item.mtposition_name , Validators.required],
+        attendInstead: ['dd', Validators.required],
+        attendNote: ['dd', Validators.required]
+      })
+      this.persons.push(psForm);
+      console.log(this.persons);
+    } else {
+      console.error('Invalid item data:', item); // แสดงข้อความแจ้งเตือนในกรณีที่ข้อมูลไม่ถูกต้อง
+    }
   }
 
   public selectAll: boolean = false;
@@ -114,17 +173,18 @@ export class ReportComponent {
   saveReportDetail(meeting_code:any) {
     const dataToSave = [];
     for (let i = 0; i < this.meeting.data_person.length; i++) {
-      if (this.attendances[i]) {
+      //if (this.attendances[i]) {
         const person = this.meeting.data_person[i];
         const attendanceData = {
+          attendAnces: person.attendances,
           personCode: person.person_code,
           personName: person.person_name,
           position: person.mtposition_name,
-          attendInstead: person.attendInstead,
-          attendNote: person.attendNote
+          attendInstead: person.person_instead,
+          attendNote: person.person_note
         };
         dataToSave.push(attendanceData);
-      }
+      //}
     }
     console.log(dataToSave);
     // ส่งข้อมูลที่ต้องการบันทึกไปยังเซิร์ฟเวอร์ หรือทำอย่างอื่นตามต้องการ
@@ -143,7 +203,7 @@ export class ReportComponent {
 
           if (res.data.status == 'Ok') {
             Swal.fire('บันทึกข้อมูลสำเร็จ', '', 'success').then(() => {
-              //this.fetchTopicMeeting();
+              this.fetchReportCount(this.fac_code);
             })
           }
           
@@ -180,5 +240,103 @@ export class ReportComponent {
     let path = environment.pdfUrl + '/_report_meeting_certify.php?meeting_code=' + meeting_code;
     //console.log(path);
     this.openWindowWithUrl(path);
+  }
+
+  
+  closeModalPerson() {
+    //this.fetchAgendaTopic(this.meeting.open_code);
+  }
+
+  selectEvent(item: any) {
+    console.log('search selectEvent: ', item);
+    this.person = item;
+    // do something with selected item
+  }
+
+  onChangeSearch(val: string) {
+    //console.log('search query: ', val);
+    this.fetchPerson(val);
+
+  }
+
+  onFocused(e: any) {
+    // do something when input is focused
+  }
+
+  // บุคคลภายใน
+  fetchPerson(search_query: string): void {
+    var data = {
+      "opt": "viewNAMEPOSITION"
+      , "search": search_query
+    }
+    this.http.post('https://eis.rmutsv.ac.th/api/eis/userpermission.php', data)
+      .subscribe({
+        next: (res: any) => {
+          //console.log('Person ', res); // เเสดงค่าใน console
+          this.data_person = res;
+        }
+      });
+  }
+
+  // เพิ่มผู้เข้าร่วมสังเกตการณ์ที่ประชุม
+  addPerson(item: any, meeting_code:any) {
+    //this.persons.mtposition_code = item.;
+    this.personObs.meeting_code = meeting_code;
+    this.personObs.citizen_id = item.CITIZEN_ID;
+    this.personObs.position_work = item.POSITION_WORK;
+    this.personObs.faculty_name = item.FACULTY_TNAME;
+    this.personObs.person_name = item.name;
+    this.personObs.action = "Insert";
+
+    console.log('person add: ', this.personObs);
+    this.http.post(environment.baseUrl + '/_report_detail_person_add.php', this.personObs).subscribe(
+      (response: any) => {
+        console.log('response: ', response);
+        if (response.status == 'Ok') {
+          this.getPersonObserve(meeting_code);
+          this.personForm.reset();
+        }
+      },
+      (error) => {
+        Swal.fire('ไม่สามารถบันทึกข้อมูลได้', '', 'error').then(() => {
+          //this.reloadPage(); //ทำการรีโหลดหน้า Web
+        })
+        console.log('Error adduser: ', error);
+      }
+    );
+  }
+
+  // ผู้เข้าร่วมสังเกตการณ์ที่ประชุม
+  getPersonObserve(meeting_code: any): void {
+    var data = {
+      "opt": "viewPersonObserve",
+      "meeting_code": meeting_code
+    }
+    console.log(data);
+    this.http.post(environment.baseUrl + '/_view_report.php', data)
+      .subscribe({
+        next: (res: any) => {
+          console.log('report:  ', res); // เเสดงค่าใน console
+          this.person_observe = res.data;
+          //this.reportData = res.data;
+        }
+      });
+  }
+
+  //delete person
+  delPerson(item:any) {
+    var data = {
+      "action": "delete",
+      "id": item.person_code
+    }
+    //console.log(data);
+    this.http.post(environment.baseUrl + '/_meeting_person_remove.php', data)
+      .subscribe({
+        next: (res: any) => {
+          console.log('del person:  ', res); // เเสดงค่าใน console
+          this.getPersonObserve(item.meeting_code);
+          //this.reportData = res.data;
+        }
+      });
   }
 }
