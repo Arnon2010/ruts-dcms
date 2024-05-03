@@ -96,7 +96,7 @@
                         <th>วันและเวลา</th>
                         <!-- <th class="text-center">รายงานการประชุม</th> -->
                         <th class="text-center">รายงานการประชุม</th>
-                        <th class="text-center">รับรองรายงาน<br />การประชุม</th>
+                        <th class="text-center">ส่งการรับรอง<br>รายงานการประชุม</th>
                         <!-- <th>View PDF</th> -->
                       </tr>
                     </thead>
@@ -105,13 +105,13 @@
                         <td>{{i+1}}</td>
                         <td>
                           <span class="font-weight-bold">
-                            {{item.open_title}} คร้ังที่ {{item.meeting_thetime}}
+                            {{item.open_title}} คร้ังที่ {{item.meeting_thetime}}/{{item.open_year}}
                           </span>
                           <div class="mt-2">
                             {{item.meeting_location}}
                           </div>
                         </td>
-                        <td>{{item.meeting_sdate}}<br> {{item.meeting_time}} น.</td>
+                        <td>{{item.meeting_sdate | thaiDate}}<br> {{item.meeting_time}} น.</td>
 
                         <!-- <td class="font-weight-medium text-center">
                             <a href="#" [routerLink]="['/report']" routerLinkActive="router-link-active"
@@ -203,7 +203,7 @@
                         </th>
                         <th>ตำแหน่งในที่ประชุม</th>
                         <th>การเข้าประชุม</th>
-                        <th>เลือกส่งอีเมล
+                        <th>ส่งอีเมล
                         </th>
                         <th>อีเมล</th>
                       </tr>
@@ -214,9 +214,9 @@
                         <td>{{person.person_name}}</td>
                         <td>{{person.mtposition_name}}</td>
                         <td>
-                          <span *ngIf="person.attendances" class="badge badge-info"><i
-                              class="mdi mdi-checkbox-marked-circle-outline"></i></span>
-                          <span *ngIf="!person.attendances" class="badge badge-info"><i
+                          <span *ngIf="person.person_confirm == 'Y'" class="badge badge-info">
+                            <i class="mdi mdi-check-circle"></i></span>
+                          <span *ngIf="person.person_confirm == 'N'" class="badge badge-info"><i
                               class="mdi mdi-close"></i></span>
                         </td>
                         <td class="text-center form-check form-switch">

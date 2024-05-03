@@ -8,11 +8,11 @@ import Swal from 'sweetalert2';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-certify',
-  templateUrl: './certify.component.html',
-  styleUrls: ['./certify.component.css']
+  selector: 'app-assigns',
+  templateUrl: './assigns.component.html',
+  styleUrls: ['./assigns.component.css']
 })
-export class CertifyComponent {
+export class AssignsComponent {
   userData: any;
   fac_code: any;
   user_id: any;
@@ -34,6 +34,11 @@ export class CertifyComponent {
   report_certify_past: any;
   num_meeting_certify_past: any;
   total_certify:any;
+  num_meeting_assign: any;
+  report_assigns: any;
+  report_assign_past: any;
+  num_meeting_assign_past: any;
+
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
@@ -45,13 +50,12 @@ export class CertifyComponent {
   }
 
   ngOnInit(): void {
-   
     this.getUser();
     this.fetchAgency(this.fac_code);
     this.fetchMeetingUser(this.citizen_id, this.fac_code);
-    this.fetchUserCertify(this.citizen_id);
-    this.fetchUserCertifyPastConfirm(this.citizen_id);
+    this.fetchUserAssign(this.citizen_id, this.fac_code);
     this.fetchMeetingCount(this.fac_code);
+    this.fetchUserAssignPast(this.citizen_id);
   }
 
   getUser(): void {
@@ -65,7 +69,6 @@ export class CertifyComponent {
     this.user_lname = this.userData.lastname;
     this.citizen_id = this.userData.cid;
     this.user_role = this.userData.user_role; //สิทธิ์การใช้งาน
-
   }
 
   // จำนวนประชุมที่เกี่ยวข้อง
@@ -77,7 +80,7 @@ export class CertifyComponent {
     this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({
         next: (res: any) => {
-          console.log('meeting count:  ', res.data); // เเสดงค่าใน console
+          //console.log('meeting count:  ', res.data); // เเสดงค่าใน console
           this.counts = res.data;
         }
       });
@@ -106,7 +109,7 @@ export class CertifyComponent {
     this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({
         next: (res: any) => {
-          console.log('meeting user:  ', res); // เเสดงค่าใน console
+          //console.log('meeting user:  ', res); // เเสดงค่าใน console
           this.meeting_person = res.data;
           this.meeting_person_past = res.data_past;
           this.total_meeting = res.row_meeting;
@@ -120,33 +123,53 @@ export class CertifyComponent {
   }
 
   // รายงานการประชุม
-  fetchUserCertify(person_id: string): void {
+  fetchUserAssign(person_id: string, fac_code:any): void {
     var data = {
-      "opt": "viewUserCertify",
-      "person_id": person_id
+      "opt": "viewUserAssign",
+      "person_id": person_id,
+      "fac_code": fac_code
     }
-    this.http.post(environment.baseUrl + '/_view_report.php', data)
+    this.http.post(environment.baseUrl + '/_view_user.php', data)
       .subscribe({
         next: (res: any) => {
-          console.log('user certify:  ', res); // เเสดงค่าใน console
-          this.report_certify = res.data; // รายงานประชุมที่รอการรับรอง
-          this.num_meeting_certify = res.row;
+          console.log('data:  ', res); // เเสดงค่าใน console
+          this.report_assigns = res.data; // รายงานประชุมที่รอการรับรอง
+          //this.num_meeting_assign = res.row;
         }
       });
   }
 
-  // รายงานการประชุม
-  fetchUserCertifyPastConfirm(person_id: string): void {
+  // ปิดแจ้งเตือน
+  closeNotifi(person_code: string, meeting_code:any): void {
     var data = {
-      "opt": "viewUserCertifyPastConfirm",
-      "person_id": person_id
+      "opt": "closeNotifi",
+      "person_code": person_code,
+      "meeting_code": meeting_code
     }
-    this.http.post(environment.baseUrl + '/_view_report.php', data)
+    //console.log(data);
+    this.http.post(environment.baseUrl + '/_view_user.php', data)
       .subscribe({
         next: (res: any) => {
-          console.log('user certify past:  ', res); // เเสดงค่าใน console
-          this.report_certify_past = res.data; // รายงานประชุมที่รับรองแล้ว
-          this.num_meeting_certify_past = res.row;
+          //console.log('assign: ', res); // เเสดงค่าใน console
+          this.fetchUserAssign(this.citizen_id, this.fac_code);
+          this.fetchMeetingUser(this.citizen_id, this.fac_code);
+          this.fetchUserAssignPast(this.citizen_id);
+        }
+      });
+  }
+
+  // รายงานการประชุมที่ผ่านมา
+  fetchUserAssignPast(person_id: string): void {
+    var data = {
+      "opt": "viewUserAssignPast",
+      "person_id": person_id
+    }
+    this.http.post(environment.baseUrl + '/_view_user.php', data)
+      .subscribe({
+        next: (res: any) => {
+          console.log('user assign past:  ', res); // เเสดงค่าใน console
+          this.report_assign_past = res.data; // รายงานประชุมที่รับรองแล้ว
+          this.num_meeting_assign_past = res.row;
         }
       });
   }

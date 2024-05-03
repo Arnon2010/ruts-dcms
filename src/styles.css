@@ -4,6 +4,8 @@
     font-family: 'Noto Sans Thai', sans-serif;
   } */
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;600&display=swap');
+ 
 body {
     /* background-image: linear-gradient(to right, #2b8196, #a8c0ff); */
     /* background-image: url("assets/images/bg-1.jpg"); */

@@ -61,15 +61,15 @@
                         <!-- <small>{{item.meeting_time}}</small> -->
                       </div>
                       <div class="col-md-3 ml-auto p-2">
-                        <a href="#" [routerLink]="['/']" routerLinkActive="router-link-active">
+                        <a href="#" [routerLink]="['/meeting-topic',item.meeting_code,item.open_code]" routerLinkActive="router-link-active">
                           <span class="badge badge-primary m-2"><i class="mdi mdi-file-document"></i></span>
                         </a>
-                        <a href="#" *ngIf="item.status_assigned == '1'" [routerLink]="['/']" routerLinkActive="router-link-active">
+                        <!-- <a href="#" *ngIf="item.status_assigned == '1'" [routerLink]="['/']" routerLinkActive="router-link-active">
                           <span class="badge badge-secondary m-2"><i class="mdi mdi-account"></i></span>
                         </a>
                         <a href="#" [routerLink]="['/']" routerLinkActive="router-link-active">
                           <span class="badge badge-info m-2"><i class="mdi mdi-book-open-page-variant"></i></span>
-                        </a>
+                        </a> -->
                         <a href="#" [routerLink]="['/certify-confirm',item.meeting_code,item.open_code]"
                           routerLinkActive="router-link-active">
                           <span class="badge badge-warning m-2"><i class="mdi mdi-check-circle"></i></span>
@@ -88,13 +88,19 @@
                 <div class="card card-dark-blue">
                   <a class="nav-link" [routerLink]="['/home']">
                     <div class="card-body">
-                      <h6 class="mb-4">ประชุมที่จะมีขึ้น</h6>
-                      <p class="fs-30 mb-2" [ngClass]="{
-                              'circle-1': total_meeting >= 1,
-                              'circle-0': total_meeting == 0}">
-                        <span class="badge font-weight-bold circle__content">
-                          {{total_meeting}}</span>
-                      </p>
+                      <div class="d-flex flex-column">
+                        <div>
+                          <h6 class="mb-4">ประชุมที่จะมีขึ้น</h6>
+                        </div>
+                        <div class="circle">
+                          <p class="fs-30 mb-2" [ngClass]="{
+                            'circle-2': total_meeting >= 1,
+                            'circle-0': total_meeting == 0}">
+                            <span class="badge font-weight-bold circle__content">
+                              {{total_meeting}}</span>
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </a>
                 </div>
@@ -103,14 +109,19 @@
                 <div class="card card-tale">
                   <a class="nav-link" [routerLink]="['/certify']">
                     <div class="card-body">
-                      <h6 class="mb-4">รับรองรายงานการประชุม</h6>
-                      <p class="fs-30 mb-2" [ngClass]="{
-                              'circle-1': total_certify >= 1,
-                              'circle-0': total_certify == 0}">
-                        <span class="badge font-weight-bold circle__content">
-                          {{total_certify}}
-                        </span>
-                      </p>
+                      <div class="d-flex flex-column">
+                        <div>
+                          <h6 class="mb-4">รับรองรายงานการประชุม</h6>
+                        </div>
+                        <div class="circle">
+                          <p class="fs-30 mb-2" [ngClass]="{
+                            'circle-2': total_certify >= 1,
+                            'circle-0': total_certify == 0}">
+                            <span class="badge font-weight-bold circle__content">
+                              {{total_certify}}</span>
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </a>
                 </div>
@@ -121,13 +132,19 @@
                 <div class="card card-light-blue">
                   <a class="nav-link" [routerLink]="['/meeting-all']">
                     <div class="card-body">
-                      <h6 class="mb-4">การประชุมทั้งหมด</h6>
-                      <p class="fs-30 mb-2" [ngClass]="{
-                              'circle-2': total_meeting_all >= 1,
-                              'circle-0': total_meeting_all == 0}">
-                        <span class="badge font-weight-bold circle__content">
-                          {{total_meeting_all}}</span>
-                      </p>
+                      <div class="d-flex flex-column">
+                        <div>
+                          <h6 class="mb-4">การประชุมทั้งหมด</h6>
+                        </div>
+                        <div class="circle">
+                          <p class="fs-30 mb-2" [ngClass]="{
+                            'circle-2': total_meeting_all >= 1,
+                            'circle-0': total_meeting_all == 0}">
+                            <span class="badge font-weight-bold circle__content">
+                              {{total_meeting_all}}</span>
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </a>
                 </div>
@@ -135,16 +152,21 @@
 
               <div class="col-lg-6 col-md-6 mb-4 stretch-card transparent">
                 <div class="card card-light-danger">
-                  <a class="nav-link" [routerLink]="['/certify']">
+                  <a class="nav-link" [routerLink]="['/assigns']">
                     <div class="card-body">
-                      <h6 class="mb-4">งานที่ได้รับมอบหมาย</h6>
-                      <p class="fs-30 mb-2" [ngClass]="{
-                              'circle-1': total_meeting_assigned >= '1',
-                              'circle-0': total_meeting_assigned == 0}">
-                        <span class="badge font-weight-bold circle__content">
-                          {{total_meeting_assigned}}
-                        </span>
-                      </p>
+                      <div class="d-flex flex-column">
+                        <div class="mb-5">
+                          <h6>งานที่ได้รับมอบหมาย</h6>
+                        </div>
+                        <div class="circle">
+                          <p class="fs-30 mb-2" [ngClass]="{
+                            'circle-2': total_meeting_assigned >= 1,
+                            'circle-0': total_meeting_assigned == 0}">
+                            <span class="badge font-weight-bold circle__content">
+                              {{total_meeting_assigned}}</span>
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </a>
                 </div>
@@ -217,15 +239,15 @@
                         <!-- <small>{{item.meeting_time}}</small> -->
                       </div>
                       <div class="col-md-3 p-2">
-                        <a href="#" [routerLink]="['/']" routerLinkActive="router-link-active">
+                        <a href="#" [routerLink]="['/meeting-topic',item.meeting_code,item.open_code]" routerLinkActive="router-link-active">
                           <span class="badge badge-primary m-2"><i class="mdi mdi-file-document"></i></span>
                         </a>
-                        <a href="#" *ngIf="item.status_assigned == '1'" [routerLink]="['/']" routerLinkActive="router-link-active">
+                        <!-- <a href="#" *ngIf="item.status_assigned == '1'" [routerLink]="['/']" routerLinkActive="router-link-active">
                           <span class="badge badge-secondary m-2"><i class="mdi mdi-account"></i></span>
                         </a>
                         <a href="#" [routerLink]="['/']" routerLinkActive="router-link-active">
                           <span class="badge badge-info m-2"><i class="mdi mdi-book-open-page-variant"></i></span>
-                        </a>
+                        </a> -->
                         
                       </div>
                     </div>

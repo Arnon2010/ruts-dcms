@@ -22,7 +22,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card position-relative">
@@ -44,10 +43,8 @@
                                       </div>
                                     <div class="row">
                                         <div class="col-md-12 col-xl-6 d-flex flex-column justify-content-start">
-                                            
                                             <div class="ml-xl-10 mt-3">
                                                 <!-- <p class="card-title">วาระการประชุม</p> -->
-                                               
                                                 <h4 class="font-weight-500 mb-xl-4 text-primary">{{meeting.open_title}}
                                                     คร้ังที่
                                                     {{meeting.meeting_thetime}}</h4>
@@ -92,16 +89,11 @@
                                                     วันที่: {{meeting.meeting_sdate}} เวลา
                                                     {{meeting.meeting_time}} น.
                                                 </h6> -->
-
-                                                
                                             </div>
                                         </div>
-                                       
                                     </div>
                                 </div>
-
                             </div>
-                   
                         </div>
                     </div>
                 </div>
@@ -113,7 +105,6 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">หัวข้อวาระการประชุม</h4>
-
                         <div *ngIf="meeting.meeting_ostatus != 'Y'" class="d-flex justify-content-around mb-4 font-status">
                             <div>
                                 <h4>
@@ -133,7 +124,6 @@
                                 <div class="p-2"><strong>ระเบียนวาระที่ {{data.No}}</strong></div>
                                 <div class="mr-auto p-2"><strong>{{data.topic_name}}</strong></div>
                                 <div class="p-2"></div>
-
                             </div>
 
                             <!-- วาระย่อย 1 -->
@@ -142,23 +132,20 @@
                                     <div class="p-2"><strong>{{item.topic_no}}</strong></div>
                                     <div class="mr-auto p-2">
                                         <a href="#" target="_blank"
-                                            data-toggle="modal" data-target="#meeting-topic"
+                                            data-toggle="modal" data-target="#correction-topic"
                                             data-whatever="@getbootstrap"
-                                            (click)="onClickModalTopic(item.agendatopic_code)">
+                                            (click)="viewCorrectionPerson(item.agendatopic_code)">
                                             <strong>{{item.agendatopic_name}}</strong>
                                         </a>
-
-                                        
                                     </div>
                                     <div class="p-2">
-
                                     </div>
                                     <!--แก้ไข-->
                                     <div class="p-2">
                                         <a href="#" target="_blank"
-                                            data-toggle="modal" data-target="#meeting-topic"
+                                            data-toggle="modal" data-target="#correction-topic"
                                             data-whatever="@getbootstrap"
-                                            (click)="onClickModalTopic(item.agendatopic_code)">
+                                            (click)="viewCorrectionPerson(item.agendatopic_code)">
                                             <span class="badge badge-warning">
                                                 <i class="mdi mdi-pencil"></i></span>
                                         </a>
@@ -202,18 +189,18 @@
                                         <div class="p-2"><strong>{{item_sub2.topic_no2}}</strong></div>
                                         <div class="mr-auto p-2">
                                             <a href="#" target="_blank"
-                                            data-toggle="modal" data-target="#meeting-topic"
+                                            data-toggle="modal" data-target="#correction-topic"
                                             data-whatever="@getbootstrap"
-                                            (click)="onClickModalTopic(item_sub2.agendatopic_code)">
+                                            (click)="viewCorrectionPerson(item_sub2.agendatopic_code)">
                                             <strong>{{item_sub2.agendatopic_name}}</strong>
                                         </a>
                                         </div>
                                         <!-- แก้ไข -->
                                         <div class="p-2">
                                             <a href="#" target="_blank"
-                                                data-toggle="modal" data-target="#meeting-topic"
+                                                data-toggle="modal" data-target="#correction-topic"
                                                 data-whatever="@getbootstrap"
-                                                (click)="onClickModalTopic(item.agendatopic_code)">
+                                                (click)="viewCorrectionPerson(item.agendatopic_code)">
                                                 <span class="badge badge-warning">
                                                     <i class="mdi mdi-pencil"></i></span>
                                             </a>
@@ -275,7 +262,7 @@
 </style>
 
 <!-- ดูวาระการประชุม -->
-<div class="modal fade" id="meeting-topic" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="correction-topic" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">

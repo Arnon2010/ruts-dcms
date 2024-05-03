@@ -58,7 +58,6 @@
                                     <tr>
                                         <th class="text-center">ลำดับ</th>
                                         <th>การประชุม</th>
-
                                         <th class="text-center">ดำเนินการจัดประชุม</th>
                                         <th class="text-center">เพิ่มวาระ</th>
                                         <th class="text-center">เอกสาร</th>
@@ -67,8 +66,6 @@
                                         <!-- <th class="text-center">เผยแพร่</th>
                                         <th class="text-center">พิมพ์<br>รายชื่อ</th> -->
                                         <th class="text-center">จัดการ</th>
-
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,7 +74,7 @@
                                         <td class="text-center">{{ i + (p - 1) * 10 + 1 }}</td>
                                         <td>
                                             {{opens.open_title}} ({{data.meeting_thetime}})<br>
-                                            <small>{{data.meeting_sdate}} เวลา {{data.meeting_time}} น. ณ
+                                            <small>{{data.meeting_sdate | thaiDate}} เวลา {{data.meeting_time}} น. ณ
                                                 {{data.meeting_location}}</small>
                                         </td>
 
@@ -221,12 +218,12 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="outsider_fname" class="col-sm-3 col-form-label">คร้ังที่ประชุม:
+                                        <label for="outsider_fname" class="col-sm-3 col-form-label">ครั้งที่ประชุม:
                                             *</label>
                                         <div class="col-sm-5">
                                             <input type="text" class="form-control" id="meeting_thetime"
                                                 [(ngModel)]="meeting.meeting_thetime" formControlName="meeting_thetime"
-                                                placeholder="คร้ังที่/ปี พ.ศ.">
+                                                placeholder="เช่นครั้งที่ 1">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -472,7 +469,7 @@
                                                 (click)="resetFormSubmit()">ยกเลิก</button>
                                             <button type="submit" [disabled]="!meetingForm.valid"
                                                 class="btn btn-primary m-2" data-dismiss="modal"
-                                                (click)="saveMeeting(meeting)">ยืนยันเพิ่มการประชุม</button>
+                                                (click)="saveMeeting(meeting)">บันทึกการประชุม</button>
                                         </div>
                                     </div>
 

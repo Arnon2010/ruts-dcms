@@ -22,12 +22,17 @@ th {
     }
 }
 
+.circle {
+    position: absolute; top:-3rem; right:-0.5rem;
+    
+}
+
 .circle-0 {
     display: inline-table;
     vertical-align: middle;
     width: 40px;
     height: 40px;
-    background-color: #c7d2ca;
+    background-color: #bbb;
     border-radius: 50%;
   }
 
@@ -45,7 +50,7 @@ th {
     vertical-align: middle;
     width: 40px;
     height: 40px;
-    background-color: #4e10e0;
+    background-color: #f03f1c;
     border-radius: 50%;
   }
   

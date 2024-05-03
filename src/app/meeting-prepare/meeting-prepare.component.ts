@@ -70,6 +70,7 @@ export class MeetingPrepareComponent {
       });
   }
 
+  
   // Fetch data meeting for faculty 
   fetchMeetingPrepare() {
     var data = {

@@ -44,7 +44,7 @@ export class HomeComponent {
    
     this.getUser();
     this.fetchAgency(this.fac_code);
-    this.fetchMeetingUser(this.citizen_id);
+    this.fetchMeetingUser(this.citizen_id, this.fac_code);
     this.fetchMeetingCount(this.fac_code);
   }
 
@@ -52,14 +52,23 @@ export class HomeComponent {
     const Token: any = localStorage.getItem('Token');
     this.userData = JSON.parse(Token);
     console.log('user:, ', this.userData);
-    this.fac_code = this.userData.faculty_code;
-    this.fac_name = this.userData.faculty_name;
-    this.user_id = this.userData.user_id;
-    this.user_fname = this.userData.user_fname;
-    this.user_lname = this.userData.user_lname;
-    this.citizen_id = this.userData.cid;
     this.user_role = this.userData.user_role; //สิทธิ์การใช้งาน
 
+    if(this.user_role == "F") {
+      this.fac_code = this.userData.faculty_code;
+      this.fac_name = this.userData.faculty_name;
+      this.user_id = this.userData.user_id;
+      this.user_fname = this.userData.user_fname;
+      this.user_lname = this.userData.user_lname;
+      this.citizen_id = this.userData.cid;
+    } else {
+      this.fac_code = this.userData.faccode;
+      this.fac_name = this.userData.facname;
+      this.user_id = this.userData.user_id;
+      this.user_fname = this.userData.firstname;
+      this.user_lname = this.userData.lastname;
+      this.citizen_id = this.userData.cid;
+    }
   }
 
   // จำนวนประชุมที่เกี่ยวข้อง
@@ -90,10 +99,11 @@ export class HomeComponent {
   }
 
   // ประชุมของผู้เข้าร่วม
-  fetchMeetingUser(person_id: string): void {
+  fetchMeetingUser(person_id: string, fac_code: any): void {
     var data = {
       "opt": "viewMeetingUser",
-      "person_id": person_id
+      "person_id": person_id,
+      "fac_code": fac_code
     }
     this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({

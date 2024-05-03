@@ -108,13 +108,15 @@ export class ReportCertifyComponent {
       "opt": "viewReportConfirm",
       "meeting_code": meeting_code
     }
+
     this.http.post(environment.baseUrl + '/_view_report.php', data)
       .subscribe({
         next: (res: any) => {
-          console.log('report confirm:  ', res); // เเสดงค่าใน console
+          //console.log('report confirm:  ', res); // เเสดงค่าใน console
           //this.reportData = res.data;
           if(res.row != 0) {
             this.rconfirm = res.data[0];
+            //console.log(this.rconfirm);
             this.rconfirm.action = 'Update';
           } else {
             this.rconfirm.action = 'Insert';
@@ -135,7 +137,7 @@ export class ReportCertifyComponent {
                 + 'ฝ่ายเลขานุการการประชุม';
             }
           }
-          //console.log(this.rconfirm);
+          
         }
       });
   }

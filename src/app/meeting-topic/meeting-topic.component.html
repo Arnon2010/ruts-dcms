@@ -42,7 +42,7 @@
                                                 </h6>
                                                 <h4 class="font-weight-500 mb-xl-4 text-primary">{{meeting.open_title}}
                                                     คร้ังที่
-                                                    {{meeting.meeting_thetime}}</h4>
+                                                    {{meeting.meeting_thetime}}/{{meeting.open_year}}</h4>
 
                                                 <!-- <div class="mb-2 mb-xl-0 d-flex">
                                                     <div class="p-2 font-weight-bold">
@@ -251,7 +251,7 @@
                                         <a href="#" target="_blank"
                                             data-toggle="modal" data-target="#meeting-topic"
                                             data-whatever="@getbootstrap"
-                                            (click)="onClickModalTopic(item.agendatopic_code)">
+                                            (click)="onClickModalTopic(item.agendatopic_code, item.topic_note)">
                                             <span class="badge badge-primary">
                                                 <i class="mdi mdi-file-check"></i></span>
                                         </a>
@@ -273,7 +273,7 @@
                                             <a href="#" target="_blank"
                                                 data-toggle="modal" data-target="#meeting-topic"
                                                 data-whatever="@getbootstrap"
-                                                (click)="onClickModalTopic(item.agendatopic_code)">
+                                                (click)="onClickModalTopic(item_sub2.agendatopic_code, item_sub2.topic_note)">
                                                 <span class="badge badge-primary">
                                                     <i class="mdi mdi-file-check"></i></span>
                                             </a>
@@ -324,7 +324,7 @@
                 <div class="col-sm-12 col-md-12 col-xl-12">
                     <div class="card card-tale-2">
                         <div class="card-body">
-                            <h4 class="card-title">วาระที่: {{topics.agendatopic_offer}}</h4>
+                            <h4 class="card-title">วาระที่: {{topics.agendatopic_no}}</h4>
                             <form class="forms-sample">
                                 <div class="form-group">
                                     <div class="topic-head">เรือง:</div>
@@ -332,19 +332,29 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="topic-head">ข้อมูลเพื่อประกอบพิจารณา:</div>
-                                    <div class="topic-content">{{topics.agendatopic_offer}}</div>
+                                    <div class="topic-content">
+                                        <span [innerHTML]="topics.agendatopic_offer | nl2br"></span>
+
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="topic-head">ประเด็นที่เสนอ:</div>
-                                    <div class="topic-content">{{topics.agendatopic_origin}}</div>
+                                    <div class="topic-content">
+                                        <span [innerHTML]="topics.agendatopic_origin | nl2br"></span>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="topic-head">มติ:</div>
-                                    <div class="topic-content">-</div>
+                                    <div class="topic-content">
+                                        <span [innerHTML]="topics.agendatopic_resolution | nl2br"></span>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="topic-head">มอบหมาย:</div>
-                                    <div class="topic-content">{{topics.agendatopic_origin}}</div>
+                                    <div class="topic-content">
+                                        <span [innerHTML]="topics.agendatopic_origin | nl2br"></span>
+                                    </div>
+
                                 </div>
                                 <div class="form-group">
                                     <div class="topic-head">เอกสารประกอบ:</div>
@@ -358,16 +368,14 @@
                                             <span class="badge badge-secondary">
                                                 <i class="mdi mdi-file-hidden"></i> ไม่มีเอกสารแนบ</span>
                                         </a>
-
-                                        
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     <label for="exampleInputConfirmPassword1">บันทึกมติการประชุม</label>
-                                    <textarea class="form-control" id="agendatopic_origin" rows="3" [(ngModel)]="topics.agendatopic_note"
+                                    <textarea class="form-control" id="topic_note" rows="3" [(ngModel)]="topics.topic_note" name="topic_note"
                                         placeholder="มติการประชุม"></textarea>
-
-                                    <button type="submit" class="btn btn-warning btn-sm mt-4 mr-2" (click)="savNoteTopic(topics)">บันทึก</button>
+                                    <button type="submit" class="btn btn-warning btn-sm mt-4 mr-2" (click)="savNoteTopic(topics, person.person_code)">บันทึก</button>
 
                                 </div>
                             </form>

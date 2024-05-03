@@ -114,7 +114,7 @@ export class MeetingTopicComponent {
       "cid": this.cid,
     }
 
-    console.log('view agenda topic: ', data);
+    console.log('view agenda topic user: ', data);
     this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({
         next: (res: any) => {
@@ -163,7 +163,7 @@ export class MeetingTopicComponent {
 
   //meeting-topic
 
-  onClickModalTopic(agendatopic_code: any) {
+  onClickModalTopic(agendatopic_code: any, topic_note:string) {
 
     var data = {
       "opt": "viewTopicDetail",
@@ -177,24 +177,24 @@ export class MeetingTopicComponent {
         next: (res: any) => {
           console.log('topic data: ', res);
           this.topics = res.data[0];
+          this.topics.topic_note = topic_note;
         }
       });
   }
 
-  savNoteTopic(item: any) {
+  savNoteTopic(item: any, person_code:any) {
     var data = {
       "opt": "saveNoteTopic",
       "agendatopic_code": item.agendatopic_code,
-      "agendatopic_note": item.agendatopic_note,
+      "topic_note": item.topic_note,
+      "person_code": person_code,
     }
-
     console.log('Topic detail:', data);
-
-    this.http.post(environment.baseUrl + '/_view_data.php', data)
+    this.http.post(environment.baseUrl + '/_meeting_topic_note.php', data)
       .subscribe({
         next: (res: any) => {
-          console.log('topic data: ', res);
-          this.topics = res.data[0];
+          //console.log('topic data: ', res);
+          this.fetchAgendaTopicUser();
         }
       });
   }

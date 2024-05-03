@@ -12,8 +12,8 @@
                 <div class="card-body">
                   <h6 class="mb-4">รายละเอียดการประชุม</h6>
                   <p class="fs-30 mb-2" [ngClass]="{
-                        'circle-1': counts.total_conduct >= 1,
-                        'circle-0': counts.total_conduct == 0}">
+                        'circle-1': counts.total_detail1 >= 1,
+                        'circle-0': counts.total_detail1 == 0}">
                     <span class="badge font-weight-bold circle__content">
                       {{counts.total_detail}}</span>
                   </p>
@@ -27,8 +27,8 @@
                 <div class="card-body">
                   <h6 class="mb-4">รับรองรายงานการประชุม</h6>
                   <p class="fs-30 mb-2" [ngClass]="{
-                        'circle-1': counts.total_agency >= '1',
-                        'circle-0': counts.total_agency == 0}">
+                        'circle-1': counts.total_certify1 >= '1',
+                        'circle-0': counts.total_certify1 == 0}">
                     <span class="badge font-weight-bold circle__content">
                       {{counts.total_certify}}
                     </span>
@@ -44,8 +44,8 @@
                 <div class="card-body">
                   <h6 class="mb-4">รายงานฉบับสมบรูณ์</h6>
                   <p class="fs-30 mb-2" [ngClass]="{
-                        'circle-1': counts.total_save >= 1,
-                        'circle-0': counts.total_save == 0}">
+                        'circle-1': counts.total_complete1 >= 1,
+                        'circle-0': counts.total_complete1 == 0}">
                     <span class="badge font-weight-bold circle__content">
                       {{counts.total_complete}}</span>
                   </p>
@@ -100,14 +100,14 @@
                         <td>{{i+1}}</td>
                         <td>
                           <span class="font-weight-bold">
-                            {{item.open_title}} คร้ังที่ {{item.meeting_thetime}}
+                            {{item.open_title}} คร้ังที่ {{item.meeting_thetime}}/{{item.open_year}}
                           </span>
                           <div class="mt-2">
                             {{item.meeting_location}}
                           </div>
 
                         </td>
-                        <td>{{item.meeting_sdate}}<br> {{item.meeting_time}} น.</td>
+                        <td>{{item.meeting_sdate | thaiDate}}<br> {{item.meeting_time}} น.</td>
                         <td class="font-weight-medium">
                           <a href="#" data-toggle="modal" data-target="#modal-meeting-save-detail"
                             (click)="onClickDetailMeeting(item)">
@@ -165,7 +165,7 @@
                 <div class="form-group row">
                   <label for="" class="col-sm-2 col-form-label">ครั้งที่: </label>
                   <div class="col-sm-4">
-                    {{meeting.meeting_thetime}}
+                    {{meeting.meeting_thetime}} / {{meeting.open_year}}
                   </div>
                 </div>
                 <div class="form-group row">
@@ -177,7 +177,7 @@
                 <div class="form-group row">
                   <label for="" class="col-sm-2 col-form-label">วันที่ เวลา: </label>
                   <div class="col-sm-6">
-                    {{meeting.meeting_sdate}} เวลา {{meeting.meeting_time}}
+                    {{meeting.meeting_sdate | thaiDate}} เวลา {{meeting.meeting_time}}
                   </div>
                 </div>
                 <div class="form-group row">

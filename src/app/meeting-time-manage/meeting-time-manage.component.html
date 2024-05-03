@@ -21,13 +21,17 @@
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                         <div class="verticals ten offset-by-one">
-                            <h5>ดำเนินการจัดการประชุม: <strong>{{open_title}} ครั้งที่ {{meeting.meeting_thetime}}</strong>
+                            <h5>ดำเนินการจัดการประชุม: 
 
                                 <!-- <button type="button" class="btn btn-primary btn-rounded btn-icon" data-toggle="modal"
                                     data-target="#addMeetingForm" data-whatever="@getbootstrap">
                                     <i class="mdi mdi-note-plus"></i>
                                 </button> -->
                             </h5>
+                            <h6>
+                                <strong>เรื่อง </strong>
+                                <span>{{open_title}} ครั้งที่ {{meeting.meeting_thetime}}/{{meeting.open_year}}</span>
+                            </h6>
                             <hr>
                         </div>
                     </div>
@@ -531,7 +535,7 @@
                                                                             <div class="col-sm-4">
                                                                                 <button type="button"
                                                                                     [disabled]="!personForm.valid"
-                                                                                    (click)="addPerson(persons, person.CITIZEN_ID, person.name, person.POSITION_WORK, person.FACULTY_TNAME,person.USERNAME_CISCO)"
+                                                                                    (click)="addPerson(persons, person.CITIZEN_ID, person.name, person.POSITION_WORK, person.FACULTY_CODE, person.FACULTY_TNAME,person.USERNAME_CISCO)"
                                                                                     class="btn btn-outline-primary">เพิ่มผู้เข้าร่วม</button>
                                                                             </div>
 

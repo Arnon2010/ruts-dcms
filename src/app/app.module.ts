@@ -47,8 +47,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import {MatSelectModule} from '@angular/material/select';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete'; // ng-autocomplete
 import { OutsiderComponent } from './outsider/outsider.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
@@ -75,7 +74,6 @@ import { MeetingTopicComponent } from './meeting-topic/meeting-topic.component';
 import { AdminComponent } from './admin/admin.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MeetingAllComponent } from './meeting-all/meeting-all.component';
-import { AssignedComponent } from './assigned/assigned.component';
 import { MeetingPersonComponent } from './meeting-person/meeting-person.component';
 
 import {NgxSimpleTextEditorModule} from 'ngx-simple-text-editor';
@@ -91,6 +89,8 @@ import { ThaiDatePipe } from './dateth.pipe';
 import { CertifyComponent } from './certify/certify.component';
 import { CertifyConfirmComponent } from './certify-confirm/certify-confirm.component';
 import { CertifyDetailComponent } from './certify-detail/certify-detail.component';
+import { AssignsComponent } from './assigns/assigns.component';
+
 
 // Register the Thai locale data.
 //registerLocaleData(localeTh, 'th');
@@ -141,7 +141,6 @@ import { CertifyDetailComponent } from './certify-detail/certify-detail.componen
     MeetingTopicComponent,
     AdminComponent,
     MeetingAllComponent,
-    AssignedComponent,
     MeetingPersonComponent,
     ReportCompleteComponent,
     ReportCertifyComponent,
@@ -150,7 +149,8 @@ import { CertifyDetailComponent } from './certify-detail/certify-detail.componen
     CertifyComponent,
     CertifyConfirmComponent,
     CertifyDetailComponent,
-    ThaiDatePipe
+    ThaiDatePipe,
+    AssignsComponent
 
   ],
   imports: [
@@ -180,7 +180,6 @@ import { CertifyDetailComponent } from './certify-detail/certify-detail.componen
     MatInputModule,
     NgxMatSelectSearchModule,
     MatSelectModule,
-    MatAutocompleteModule,
     AutocompleteLibModule,
     MatDatepickerModule,
     MatNativeDateModule,

@@ -121,29 +121,10 @@ export class ReportCompleteComponent {
   currentDate: Date = new Date();
   viewSendMailConfirm: boolean = false;//ดูตัวอย่างก่อนส่ง mail
 
+  // รายละเอียดรับรองรายงาน
   onClickDetailMeeting(item: any) {
-
     this.meeting = item;
-
-    this.fetchReportConfirm(this.meeting.meeting_code);
-
-    if (this.rconfirm.confirm_code == '') {
-
-      this.rconfirm.confirm_subject = 'พิจารณารับรองรายงานประชุม' + this.meeting.open_title + '  ครั้งที่ ' + this.meeting.meeting_thetime + '/' + this.meeting.open_year;
-      this.rconfirm.confirm_detail = 'เรียน' + this.meeting.open_title + '\n\n'
-        + '  ตามที่ได้มีการประชุม' + this.meeting.open_title + ' ครั้งที่ ' + this.meeting.meeting_thetime + '/' + this.meeting.open_year
-        + ' เมื่อวันที่ ' + this.formattedDateThai(this.meeting.meeting_sdate)
-        + ' ณ ' + this.meeting.meeting_location + ' แล้วนั้น'
-        + 'บัดนี้ฝ่ายเลขานุการการประชุม ได้จัดทำรายงานการประชุม ฯ เสร็จเรียบร้อยแล้ว ท่านสามารถพิจารณารับรองรายงานการประชุม ฯ ดังกล่าว'
-        //+ '\nผ่านระบบ e-Meeting โดยคลิกที่ ผ่านระบบ e-Meeting https://dcms.rmutsv.ac.th ภายในวันที่ '+ this.rconfirm.confirm_date
-        + '\nผ่านระบบ e-Meeting โดยคลิกที่ ผ่านระบบ e-Meeting https://dcms.rmutsv.ac.th'
-      //+ ' หากพ้นกำหนดวันดังกล่าว ถือว่าท่านเห็นชอบรับรองรายงานการประชุม ฯ ฉบับดังกล่าว';
-
-      this.rconfirm.confirm_detail_ending = 'ขอแสดงความนับถือ\n'
-        + 'ฝ่ายเลขานุการการประชุม';
-
-    }
-    console.log('meeting: ', item);
+    console.log('meeting: ', this.meeting);
   }
 
   public selectAll: boolean = false;
@@ -255,7 +236,6 @@ export class ReportCompleteComponent {
     }
   }
 
-
   // รายงาน
   viewReportPdfTest(meeting_code: string): void {
     var data = {
@@ -269,6 +249,18 @@ export class ReportCompleteComponent {
           //this.reportData = res.data;
         }
       });
+  }
+
+  show_correct_id:any = '0';
+
+  showDetailCorrection(item: any) {
+    console.log(item);
+    if(this.show_correct_id === item.person_code) { //close
+      this.show_correct_id = false;
+    } else { //open
+      this.show_correct_id = item.person_code;
+
+    }
   }
 
   detailReportCertify(meeting_code: string) {

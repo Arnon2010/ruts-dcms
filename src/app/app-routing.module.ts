@@ -36,6 +36,7 @@ import { PdfTestComponent } from './pdf-test/pdf-test.component';
 import { CertifyComponent } from './certify/certify.component';
 import { CertifyConfirmComponent } from './certify-confirm/certify-confirm.component';
 import { CertifyDetailComponent } from './certify-detail/certify-detail.component';
+import { AssignsComponent } from './assigns/assigns.component';
 
 const routes: Routes = [
  
@@ -73,6 +74,8 @@ const routes: Routes = [
       { path: 'agenda-topic-admin/:meeting_code', component: AgendaTopicAdminComponent, canActivate: [AuthGuard] }, 
       { path: 'agenda-topic/:meeting_code', component: AgendaTopicComponent, canActivate: [AuthGuard] }, //เสนอวาระตามวาระแต่ละข้อ
       { path: 'agenda', component: AgendaComponent, canActivate: [AuthGuard] },  // การเสนอวาระการประชุม
+
+      { path: 'assigns', component: AssignsComponent, canActivate: [AuthGuard]}, // มอบหมายงาน
 
       // ผู้ใช้งานภายนอก
       { path: 'home-outsider', component: HomeOutsiderComponent, canActivate: [AuthGuard] },  // การเสนอวาระการประชุม

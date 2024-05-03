@@ -123,7 +123,7 @@ export class CertifyConfirmComponent {
       "person_code": person_code,
     }
 
-    console.log('view agenda topic: ', data);
+    //console.log('view agenda topic: ', data);
     this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({
         next: (res: any) => {
@@ -135,26 +135,9 @@ export class CertifyConfirmComponent {
         }
       });
   }
-
-
-  openWindowWithUrl(url: string): void {
-    const sanitizedUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-    //console.log(sanitizedUrl);
-    window.open(url, '_blank');
-    //window.open(sanitizedUrl.toString(), '_blank');
-
-  }
-
-  async openAnyFile(file_path: any) {
-    let path = environment.vieFile + file_path;
-    //console.log(path);
-    this.openWindowWithUrl(path);
-  }
-
+  
   //meeting-topic
-
-  onClickModalTopic(agendatopic_code: any) {
-
+  viewCorrectionPerson(agendatopic_code: any) {
     var data = {
       "opt": "viewCorrectionPerson",
       "agendatopic_code": agendatopic_code,
@@ -173,6 +156,7 @@ export class CertifyConfirmComponent {
   //แก้ไขมติการประชุม
   submitEditTopic(item: any) {
     var data = {
+      "opt":'addCorrection',
       "action_submit": item.action_submit,
       "agendatopic_code": item.agendatopic_code,
       "correction_text": item.correction_text,
@@ -184,7 +168,7 @@ export class CertifyConfirmComponent {
     this.http.post(environment.baseUrl + '/_certify_confirm_edit.php', data)
       .subscribe({
         next: (res: any) => {
-          console.log('certify update: ', res);
+          console.log('certify addCorrection: ', res);
           if (res.status == 'Ok') {
             Swal.fire('บันทึกข้อมูลสำเร็จ', '', 'success').then(() => {
               this.dataMeetingUser(this.meeting_code);
@@ -234,6 +218,21 @@ export class CertifyConfirmComponent {
         }
       });
 
+  }
+  
+
+  openWindowWithUrl(url: string): void {
+    const sanitizedUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    //console.log(sanitizedUrl);
+    window.open(url, '_blank');
+    //window.open(sanitizedUrl.toString(), '_blank');
+
+  }
+
+  async openAnyFile(file_path: any) {
+    let path = environment.vieFile + file_path;
+    //console.log(path);
+    this.openWindowWithUrl(path);
   }
 
   

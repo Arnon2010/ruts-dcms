@@ -106,12 +106,12 @@
                         <td>{{i+1}}</td>
                         <td>
                           <span class="font-weight-bold">
-                            {{item.open_title}} คร้ังที่ {{item.meeting_thetime}}
+                            {{item.open_title}} คร้ังที่ {{item.meeting_thetime}}/{{item.open_year}}
                           </span>
                           <br>
                           <br>
                           <span>
-                            {{item.meeting_sdate}} {{item.meeting_time}} น.
+                            {{item.meeting_sdate | thaiDate}} {{item.meeting_time}} น.
                           </span>
                           <div class="mt-2">
                             ณ {{item.meeting_location}}
@@ -129,7 +129,7 @@
                         </td>
                         <!-- แก้ไขการประชุม -->
                         <td class="font-weight-medium text-center">
-                          <a href="#" data-toggle="modal" data-target="#modal-send-mail"
+                          <a href="#" data-toggle="modal" data-target="#modal-send-mail-test"
                             (click)="onClickDetailMeeting(item)">
                             <span class="badge badge-warning">
                               <i class="mdi mdi-pencil"></i>
@@ -138,7 +138,7 @@
                         </td>
                         <!-- สร้างรายงานการประชุมฉบับสมบูรณ์ -->
                         <td class="font-weight-medium text-center">
-                          <a href="#" data-toggle="modal" data-target="#modal-send-mail"
+                          <a href="#" data-toggle="modal" data-target="#modal-send-mail-test"
                             (click)="onClickDetailMeeting(item)">
                             <span class="badge badge-secondary">
                               <i class="mdi mdi-settings"></i>
@@ -158,7 +158,7 @@
 
                         <!-- อัปโหลดรายงาน -->
                         <td class="font-weight-medium text-center">
-                          <a href="#" data-toggle="modal" data-target="#modal-send-mail"
+                          <a href="#" data-toggle="modal" data-target="#modal-send-mail-test"
                             (click)="onClickDetailMeeting(item)">
                             <span class="badge badge-info">
                               <i class="mdi mdi-briefcase-upload"></i>
@@ -413,13 +413,33 @@
                           <td>{{person.person_name}}</td>
                           <!-- มีแก้ไข -->
                           <td>
-                            <span *ngIf="person.attendances" class="badge badge-info"><i
-                                class="mdi mdi-check-circle"></i></span>
+                            <div *ngIf="person.correction_text">
+                              <button class="btn btn-light btn-sm" (click)="showDetailCorrection(person)"
+                                data-toggle="tooltip" data-html="true" data-placement="top"
+                                title="person.correction_text">
+                                <i class="mdi mdi-check"></i> เพิ่มเติม...
+                              </button>
+                            </div>
+                            <div *ngIf="show_correct_id == person.person_code" class="content-box">
+                              <small><b>ระเบียบวาระที่ {{person.agendatopic_no}}</b> {{person.agendatopic_name}}</small>
+                              <br>
+                              
+                              <small>
+                                 <u><em>มีแก้ไข</em></u>
+                                {{person.correction_text}}
+                              </small>
+                              
+                            </div>
                           </td>
                           <!-- ตอบกลับ -->
                           <td>
-                            <span *ngIf="person.person_rconfirm == '1'" class="badge badge-info"><i
-                              class="mdi mdi-check-circle"></i></span>
+                            <div *ngIf="person.person_rconfirm == '1'">
+                              <span class="badge badge-success"><i class="mdi mdi-check-circle"></i></span>
+                            </div>
+                            <div *ngIf="person.person_rconfirm == '0'">
+                              <span class="badge badge-secondary"><i class="mdi mdi-clock-fast"></i></span>
+                            </div>
+
                           </td>
                           <!-- วันที่ตอบ -->
                           <td>
@@ -427,6 +447,9 @@
                               {{person.person_rconfirm_date | thaiDate}}
                             </span>
                           </td>
+                        </tr>
+                        <tr>
+                          <!-- แสดงข้อมูลเพิ่มเติม click ฟังก์ชันก์ showDetailCorrection() -->
                         </tr>
                       </table>
                     </div>
@@ -437,7 +460,7 @@
                 <!-- วาระการประชุม -->
                 <div class="row">
                   <div class="col-sm-12">
-                    <p class="topic-title">วาระการประชุม</p>
+                    <!-- <p class="topic-title">วาระการประชุม</p> -->
                   </div>
                   <div class="col-sm-12">
 

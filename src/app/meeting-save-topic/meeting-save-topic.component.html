@@ -39,7 +39,8 @@
                 </div>
             </div>
 
-            <div class="row" *ngIf="meeting.meeting_rstatus == '4' || meeting.meeting_rstatus == '5' || meeting.meeting_rstatus == '6'">
+            <div class="row"
+                *ngIf="meeting.meeting_rstatus == '4' || meeting.meeting_rstatus == '5' || meeting.meeting_rstatus == '6'">
                 <div class="col-sm-12 col-md-12 col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
@@ -149,8 +150,7 @@
                                         </div>
 
                                         <!-- วาระย่อย 3 -->
-                                        <div class="row ml-auto"
-                                            *ngFor="let item of datasub.data_sub3; let i = index">
+                                        <div class="row ml-auto" *ngFor="let item of datasub.data_sub3; let i = index">
                                             <div class="d-flex topic-sub-">
                                                 <!-- วาระ -->
                                                 <div class="p-2">
@@ -190,7 +190,7 @@
                                     <div class="p-2">เลิกประชุมเวลา</div>
                                     <div class="p-2">
                                         <input type="text" class="form-control" name="meeting_endtime"
-                                            [(ngModel)]="meeting_endtime" placeholder="16:00"/>
+                                            [(ngModel)]="meeting_endtime" placeholder="16:00" />
                                     </div>
                                     <div class="mr-auto p-2">
                                         <button type="button" (click)="endMeetingTime(meeting_code)"
@@ -241,16 +241,14 @@
                             <div class="card-body">
                                 <h4 class="card-title"><strong>วาระที่: {{agenda.agendatopic_no}}
                                         {{agenda.agendatopic_name}}</strong></h4>
-
-                                <form class="forms-sample" [formGroup]="recordForm">
-
+                                <form class="forms-sample">
                                     <div class="form-group">
                                         <label for="outsider_position"
                                             class="col-sm-5 col-form-label">การอภิปรายและข้อเสนอแนะจากที่ประชุม:
                                         </label>
                                         <div class="col-sm-10">
                                             <st-editor [(ngModel)]="agenda.agendatopic_discussion"
-                                                formControlName="agenda_discussion" [config]="config"></st-editor>
+                                                name="agenda_discussion" [config]="config"></st-editor>
                                         </div>
                                     </div>
 
@@ -259,33 +257,119 @@
                                         </label>
                                         <div class="col-sm-10">
                                             <st-editor [(ngModel)]="agenda.agendatopic_resolution"
-                                                formControlName="agenda_resolution" [config]="config"></st-editor>
+                                                name="agenda_resolution" [config]="config"></st-editor>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="outsider_position"
-                                            class="col-sm-3 col-form-label">มติที่ประชุม/มอบหมายงาน:
+                                        <label for="outsider_position" class="col-sm-3 col-form-label">การมอบหมายงาน:
                                         </label>
                                         <div class="col-sm-10">
-                                            <st-editor [(ngModel)]="agenda.agendatopic_assigned"
-                                                formControlName="agenda_assigned" [config]="config"></st-editor>
+                                            <st-editor [(ngModel)]="agenda.agendatopic_assigned" name="agenda_assigned"
+                                                [config]="config"></st-editor>
+                                        </div>
+                                        <label for="outsider_position"
+                                            class="col-sm-3 col-form-label">ระบุหน่วยงาน/บุคคล:
+                                        </label>
+                                        <!-- <div class="col-sm-4">
+                                            <select class="form-control" [(ngModel)]="person_assignd_type"
+                                                name="person_assignd_type">
+                                                <option value="1">บุคคล</option>
+                                                <option value="2">หน่วยงาน</option>
+                                            </select>
+                                        </div> -->
+                                        <label for="outsider_position" class="col-sm-3 col-form-label">&nbsp;
+                                        </label>
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <div class="col-md-4">
+                                                    <div class="form-check1 ml-3">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input"
+                                                                [(ngModel)]="persons.person_type" name="person_type"
+                                                                value="1" checked>
+                                                            คณะกรรมการ
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-check1 ml-2">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input"
+                                                                [(ngModel)]="persons.person_type" name="person_type"
+                                                                value="2">
+                                                            หน่วยงาน
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group row">
+                                                <div class="col-md-5">
+                                                    <div class="ng-autocomplete">
+                                                        <ng-autocomplete [data]="data_person" [searchKeyword]="keyword"
+                                                            placeholder="ค้นหา"
+                                                            (selected)='selectEvent($event)'
+                                                            (inputChanged)='onChangeSearch($event)'
+                                                            (inputFocused)='onFocused($event)'
+                                                            [itemTemplate]="itemTemplate"
+                                                            [notFoundTemplate]="notFoundTemplate" 
+                                                            style="width: 300px;"
+                                                            >
+                                                        </ng-autocomplete>
+
+                                                        <ng-template #itemTemplate let-item>
+                                                            <a [innerHTML]="item.name"></a>
+                                                        </ng-template>
+
+                                                        <ng-template #notFoundTemplate let-notFound>
+                                                            <div [innerHTML]="notFound">
+                                                            </div>
+                                                        </ng-template>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-sm-6" *ngIf="person_assignd_type=='2'">
+                                            test 2
+                                        </div> -->
+                                        <div class="col-sm-12 mt-2">
+                                            <button class="btn btn-warning btn-sm" 
+                                            (click)="addAssign(agenda, person, persons.person_type)">
+                                            <i class="mdi mdi-account-multiple-plus"></i>
+                                                เพิ่มการมอบหมายงาน</button>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <h2 class="card-title">ผู้ได้รับการมอบหมายงาน
+                                        </h2>
+                                        <ul class="list-group">
+                                            <li *ngFor="let item of assigns_list; let i = index"
+                                                class="list-group-item d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <span
+                                                        class="badge badge-secondary badge-pill">{{i
+                                                        + 1}} </span>
+                                                    <span *ngIf="item.assign_rstatus == '1'">
+                                                        {{item.person_name}}
+                                                    </span>
+                                                    <span *ngIf="item.assign_rstatus == '2'">
+                                                        {{item.dept_name}}
+                                                    </span>
+                                                    
+                                                </div>
+                                                <div>
+                                                    <!-- <span
+                                                        class="badge badge-primary badge-pill">{{item.mtposition_name}}</span> -->
+                                                    <button type="button"
+                                                        (click)="delAssign(item)"
+                                                        class="btn btn-outline-danger btn-sm m-2">ลบ</button>
+                                                </div>
 
-                                    <div class="row text-center font-weight-bold">
-                                        <div class="col d-flex justify-content-center align-items-center">
-                                            <button type="button" (click)="recordAgendaTopic(agenda)"
-                                                class="btn btn-primary d-flex align-items-center justify-content-center"
-                                                data-dismiss="modal"><i class="mdi mdi-check-circle"></i>
-                                                บันทึก</button>
-
-                                            <button type="button"
-                                                class="btn btn-outline-secondary m-2 d-flex align-items-center justify-content-center"
-                                                data-dismiss="modal"><i class="mdi mdi-close-box"></i> ยกเลิก</button>
-                                        </div>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <!-- </div> -->
-                                    <!-- </div> -->
+                                    
+                                   
 
                                 </form>
                             </div>
@@ -293,8 +377,18 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-danger d-flex align-items-center justify-content-center"
-                    data-dismiss="modal"><i class="mdi mdi-close-box"></i> ปิด</button> -->
+                    <div class="row text-center font-weight-bold">
+                        <div class="col d-flex justify-content-center align-items-center">
+                            <button type="button" (click)="recordAgendaTopic(agenda)"
+                                class="btn btn-primary d-flex align-items-center justify-content-center"
+                                data-dismiss="modal"><i class="mdi mdi-check-circle"></i>
+                                บันทึก</button>
+
+                            <button type="button"
+                                class="btn btn-outline-secondary m-2 d-flex align-items-center justify-content-center"
+                                data-dismiss="modal"><i class="mdi mdi-close-box"></i> ยกเลิก</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

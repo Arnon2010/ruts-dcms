@@ -89,7 +89,7 @@
               </ul>
             </li> -->
 
-            <li *ngIf="user.user_role != 'F' && user.user_role != 'A'">
+            <!-- <li *ngIf="user.user_role != 'F' && user.user_role != 'A'">
               <a href="#" [routerLink]="['/meeting-all']" >
                 <i class="mdi mdi-view-agenda"></i>
                 <span class="link_name">การประชุมทั้งหมด</span>
@@ -99,15 +99,15 @@
                     routerLinkActive="router-link-active">การประชุมทั้งหมด</a>
                 </li>
               </ul>
-            </li>
+            </li> -->
 
             <li *ngIf="user.user_role != 'F' && user.user_role != 'A'">
-              <a href="#" [routerLink]="['/']">
+              <a href="#" [routerLink]="['/assigns']">
                 <i class="mdi mdi-view-agenda"></i>
                 <span class="link_name">งานที่ได้รับมอบหมาย</span>
               </a>
               <ul class="sub-menu blank">
-                <li><a class="link_name" [routerLink]="['/']"
+                <li><a class="link_name" [routerLink]="['/assigns']"
                     routerLinkActive="router-link-active">งานที่ได้รับมอบหมาย</a></li>
               </ul>
             </li>

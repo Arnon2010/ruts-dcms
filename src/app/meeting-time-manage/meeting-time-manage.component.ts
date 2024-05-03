@@ -14,8 +14,6 @@ import {
   NgbDateStruct,
 } from '@ng-bootstrap/ng-bootstrap';
 
-
-
 @Component({
   selector: 'app-meeting-time-manage',
   templateUrl: './meeting-time-manage.component.html',
@@ -96,7 +94,6 @@ export class MeetingTimeManageComponent {
   collection: any = [];
   FAClist: any;
   users: any[] = [];
-  meetings: any[] = [];
   filteredItems: any[] = [];
   userData: any;
   searchText: any;
@@ -581,11 +578,12 @@ export class MeetingTimeManageComponent {
 
   //ผู้เข้าร่วมประชุม
   // เพิ่มผู้เข้าร่วมประชุม Person
-  addPerson(item: any, id: any, name: string, position:string, faculty:string, mail:any) {
+  addPerson(item: any, id: any, name: string, position:string, faculty_code:any, faculty:string, mail:any) {
     this.persons.meeting_code = this.meeting_code;
     this.persons.citizen_id = id;
     this.persons.person_name = name;
     this.persons.position_work = position;
+    this.persons.faculty_code = faculty_code;
     this.persons.faculty_name = faculty;
     this.persons.person_mail = mail;
     this.persons.action = "Insert";
