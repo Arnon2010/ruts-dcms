@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
@@ -15,13 +15,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'; 
+
 
 @Component({
   selector: 'app-meeting-setting',
   templateUrl: './meeting-setting.component.html',
   styleUrls: ['./meeting-setting.component.css']
 })
-export class MeetingSettingComponent implements OnInit {
+export class MeetingSettingComponent implements OnInit  {
 
   firstFormGroup = this.fb.group({
     firstCtrl: ['', Validators.required],
@@ -111,13 +113,16 @@ export class MeetingSettingComponent implements OnInit {
   user_id: any;
   files_vew: any = [];
 
+  myModal:any;
+
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
     private dataService: ApiService,
     private sanitizer: DomSanitizer,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private modalService: NgbModal
   ) {
     this.isLogin = this.dataService.isLoggedIn();
     this.meetingForm = this.fb.group({
@@ -127,6 +132,8 @@ export class MeetingSettingComponent implements OnInit {
       open_path: ['', Validators.nullValidator],
       open_year: ['', Validators.required],
     });
+
+    
 
     //position Form
     this.mtpositionForm = this.fb.group({
@@ -146,6 +153,7 @@ export class MeetingSettingComponent implements OnInit {
       person_rstatus: ['', Validators.required]
     });
   }
+
 
   ngOnInit(): void {
     this.getFac();

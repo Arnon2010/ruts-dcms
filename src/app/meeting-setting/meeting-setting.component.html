@@ -346,7 +346,7 @@
                                                                 class="col-sm-4 col-form-label">ชื่อเรื่องการประชุม:
                                                                 *</label>
                                                             <div class="col-md-6">
-                                                                <input type="text" class="form-control"
+                                                                <input #myInput type="text" class="form-control"
                                                                     [(ngModel)]="meeting.open_title" name="open_title"
                                                                     formControlName="open_title"
                                                                     placeholder="ชื่อเรื่อง หรือหัวข้อการประชุม">
@@ -898,3 +898,18 @@
             </div>
         </div>
     </div>
+
+    <!-- <ng-template #myModal let-modal>
+        <div class="modal-body">
+          <input #myInput type="text">
+        </div>
+      </ng-template>
+
+    <ng-template>
+        <input #myInput type="text">
+    </ng-template>
+
+    <div class="row">
+        <input #myInputTest type="text">
+    </div> -->
+      

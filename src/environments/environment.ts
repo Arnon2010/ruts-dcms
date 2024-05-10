@@ -5,6 +5,5 @@ export const environment = {
     pdfUrl: url + 'assets/pdf',
     baseUrlUpload: url + 'assets/documents',  
     vieFile: 'assets/documents',
-    //baseUrlUpload: 'assets/documents',
     baseUrlReport: url + 'assets/report'
   };

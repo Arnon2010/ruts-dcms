@@ -120,7 +120,7 @@
                           </a>
 
                         </p>
-                        <p class="mb-0">วันที่ {{item.meeting_sdate}} เวลา {{item.meeting_time}} น.
+                        <p class="mb-0">วันที่ {{item.meeting_sdate | thaiDate}} เวลา {{item.meeting_time}} น.
                           <br>
                           <span *ngIf="item.channel_code == '1'">
                             {{item.meeting_location}}
@@ -302,7 +302,7 @@
                         <!-- <p class="text-info mb-1">
                           คร้ังที่{{item.meeting_thetime}}
                         </p> -->
-                        <p class="mb-0">วันที่ {{item.meeting_sdate}} เวลา {{item.meeting_time}} น.
+                        <p class="mb-0">วันที่ {{item.meeting_sdate | thaiDate}} เวลา {{item.meeting_time}} น.
                           <br>
                           <span *ngIf="item.channel_code == '1'">
                             {{item.meeting_location}}

@@ -545,7 +545,6 @@ export class MeetingTimeComponent {
     console.log('save meeting', this.meeting);
 
     //const date_sdate = toModel(this.meeting.meeting_sdate);
-
     //let meeting_sdate = this.meeting.meeting_sdate.year + '-' + this.meeting.meeting_sdate.month + '-' + this.meeting.meeting_sdate.day;
     //let meeting_edate = this.meeting.meeting_edate.year + '-' + this.meeting.meeting_edate.month + '-' + this.meeting.meeting_edate.day;
     //let meeting_fdate = this.meeting.meeting_fdate.year + '-' + this.meeting.meeting_fdate.month + '-' + this.meeting.meeting_fdate.day;
@@ -589,6 +588,7 @@ export class MeetingTimeComponent {
         }
       },
       (error) => {
+        
         Swal.fire('ไม่สามารถบันทึกข้อมูลได้', '', 'error').then(() => {
           //this.reloadPage(); //ทำการรีโหลดหน้า Web
         })

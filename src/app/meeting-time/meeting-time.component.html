@@ -62,7 +62,7 @@
                                         <th class="text-center">เพิ่มวาระ</th>
                                         <th class="text-center">เอกสาร</th>
                                         <th class="text-center">สถานะ</th>
-                                        <th class="text-center">คัดลอก</th>
+                                        <!-- <th class="text-center">คัดลอก</th> -->
                                         <!-- <th class="text-center">เผยแพร่</th>
                                         <th class="text-center">พิมพ์<br>รายชื่อ</th> -->
                                         <th class="text-center">จัดการ</th>
@@ -138,17 +138,24 @@
                                         </td> -->
 
                                         <!--คัดลอก-->
-                                        <td class="text-center">
+                                        <!-- <td class="text-center">
                                             <button class="btn-action" data-toggle="modal"
                                                 (click)="copyMeeting(data.meeting_code)">
                                                 <span class="badge badge-primary m-2"><i
                                                         class="mdi mdi-content-copy"></i>
                                                 </span>
                                             </button>
-                                        </td>
+                                        </td> -->
 
                                         <!--จัดการข้อมูล-->
                                         <td class="text-center">
+                                            <!--คัดลอก-->
+                                            <button class="btn-action" data-toggle="modal"
+                                                (click)="copyMeeting(data.meeting_code)">
+                                                <span class="badge badge-primary m-2"><i
+                                                        class="mdi mdi-content-copy"></i>
+                                                </span>
+                                            </button>
                                             <!--แก้ไข-->
                                             <button class="btn-action" data-toggle="modal" data-target="#addMeetingForm"
                                                 (click)="onClickEditMeeting(data)">

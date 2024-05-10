@@ -294,6 +294,8 @@ export class ReportCertifyComponent {
   // view file
   async viewReportPdf(meeting_code: any) {
     let path = environment.pdfUrl + '/_report_meeting_certify.php?meeting_code=' + meeting_code;
+    //let path = environment.pdfUrl + '/thai_pdf_test.php';
+
     //console.log(path);
     this.openWindowWithUrl(path);
   }
