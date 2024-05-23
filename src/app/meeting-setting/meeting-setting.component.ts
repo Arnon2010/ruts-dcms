@@ -16,8 +16,6 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap'; 
-
-
 @Component({
   selector: 'app-meeting-setting',
   templateUrl: './meeting-setting.component.html',
