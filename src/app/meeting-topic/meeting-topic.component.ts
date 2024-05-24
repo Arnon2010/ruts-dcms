@@ -58,7 +58,7 @@ export class MeetingTopicComponent {
     this.meeting_code = this.route.snapshot.paramMap.get('meeting_code');
     this.open_code = this.route.snapshot.paramMap.get('open_code');
     this.getUser();
-    this.dataMeetingUser(this.meeting_code);
+    this.dataMeetingUser(this.meeting_code); 
     this.fetchAgendaTopicUser();
   }
 

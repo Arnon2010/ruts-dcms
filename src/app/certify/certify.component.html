@@ -45,7 +45,7 @@
                             <i class="mdi mdi-window-restore"></i>
                           </a>
                         </p>
-                        <p class="mb-0">วันที่ {{item.meeting_sdate}} เวลา {{item.meeting_time}} น.
+                        <p class="mb-0">วันที่ {{item.meeting_sdate | thaiDate}} เวลา {{item.meeting_time}} น.
                           <br>
                           <span *ngIf="item.channel_code == '1'">
                             {{item.meeting_location}}
@@ -70,7 +70,7 @@
                         <a href="#" [routerLink]="['/']" routerLinkActive="router-link-active">
                           <span class="badge badge-info m-2"><i class="mdi mdi-book-open-page-variant"></i></span>
                         </a> -->
-                        <a href="#" [routerLink]="['/certify-confirm',item.meeting_code,item.open_code]"
+                        <a href="#" *ngIf="item.person_rconfirm=='0'" [routerLink]="['/certify-confirm',item.meeting_code,item.open_code]"
                           routerLinkActive="router-link-active">
                           <span class="badge badge-warning m-2"><i class="mdi mdi-check-circle"></i></span>
                         </a>
@@ -223,7 +223,7 @@
                         <!-- <p class="text-info mb-1">
                             คร้ังที่{{item.meeting_thetime}}
                           </p> -->
-                        <p class="mb-0">วันที่ {{item.meeting_sdate}} เวลา {{item.meeting_time}} น.
+                        <p class="mb-0">วันที่ {{item.meeting_sdate | thaiDate}} เวลา {{item.meeting_time}} น.
                           <br>
                           <span *ngIf="item.channel_code == '1'">
                             {{item.meeting_location}}
@@ -248,6 +248,11 @@
                         <a href="#" [routerLink]="['/']" routerLinkActive="router-link-active">
                           <span class="badge badge-info m-2"><i class="mdi mdi-book-open-page-variant"></i></span>
                         </a> -->
+
+                        <a href="#" *ngIf="item.person_rconfirm=='0'" [routerLink]="['/certify-confirm',item.meeting_code,item.open_code]"
+                          routerLinkActive="router-link-active">
+                          <span class="badge badge-warning m-2"><i class="mdi mdi-check-circle"></i></span>
+                        </a>
                         
                       </div>
                     </div>

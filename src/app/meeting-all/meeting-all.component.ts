@@ -55,7 +55,7 @@ export class MeetingAllComponent {
     this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({
         next: (res: any) => {
-          console.log('meeting user:  ', res); // เเสดงค่าใน console
+          console.log('meeting all:  ', res); // เเสดงค่าใน console
           this.fetchMeetingData = res.data;
         }
       });

@@ -60,7 +60,7 @@ export class OutsiderComponent {
   getUser(): void {
     const Token: any = localStorage.getItem('Token');
     this.userData = JSON.parse(Token);
-    console.log('user:, ', this.userData);
+    //console.log('user:, ', this.userData);
     this.fac_code = this.userData.faculty_code;
     this.user_id = this.userData.user_id;
   }
@@ -94,7 +94,7 @@ export class OutsiderComponent {
     this.http.post('https://eis.rmutsv.ac.th/api/eis/userpermission.php', data)
       .subscribe({
         next: (res: any) => {
-          console.log('REF_PREFIX ', res); // เเสดงค่าใน console
+          //console.log('REF_PREFIX ', res); // เเสดงค่าใน console
           this.prefix_list = res;
         }
       });
@@ -108,7 +108,7 @@ export class OutsiderComponent {
         this.users = res.data;
         this.filteredItems = res.data;
         this.total_row = res.row;
-        console.log('Users: ', this.users)
+        //console.log('Users: ', this.users)
       });
   }
 
@@ -183,12 +183,12 @@ export class OutsiderComponent {
     this.user = data;
     this.user.outsider_code = data.outsider_code; // id user
     this.user.action_submit = 'Update'; // Update ข้อมูล
-
-    console.log('outsiderForm: ',this.outsiderForm);
+    //console.log('outsiderForm: ',this.outsiderForm);
   }
 
   onClickClearForm() {
     this.outsiderForm.reset();
+    this.user.action_submit = 'Insert';
     this.fetchOutsider();
   }
 }
