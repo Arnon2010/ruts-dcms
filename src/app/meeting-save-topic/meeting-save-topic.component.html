@@ -342,6 +342,7 @@
                                     <div class="row">
                                         <h2 class="card-title">ผู้ได้รับการมอบหมายงาน
                                         </h2>
+                                        <span class="text-muted" *ngIf="assigns_list.length === 0">- ไม่พบข้อมูล</span>
                                         <ul class="list-group">
                                             <li *ngFor="let item of assigns_list; let i = index"
                                                 class="list-group-item d-flex justify-content-between align-items-center">
@@ -379,14 +380,15 @@
                 <div class="modal-footer">
                     <div class="row text-center font-weight-bold">
                         <div class="col d-flex justify-content-center align-items-center">
+                            <button type="button"
+                                class="btn btn-outline-secondary m-2 d-flex align-items-center justify-content-center"
+                                data-dismiss="modal"><i class="mdi mdi-close-box"></i> ยกเลิก</button>
                             <button type="button" (click)="recordAgendaTopic(agenda)"
                                 class="btn btn-primary d-flex align-items-center justify-content-center"
                                 data-dismiss="modal"><i class="mdi mdi-check-circle"></i>
                                 บันทึก</button>
 
-                            <button type="button"
-                                class="btn btn-outline-secondary m-2 d-flex align-items-center justify-content-center"
-                                data-dismiss="modal"><i class="mdi mdi-close-box"></i> ยกเลิก</button>
+                            
                         </div>
                     </div>
                 </div>

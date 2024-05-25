@@ -38,7 +38,7 @@ export class AgendaTopicAdminComponent {
     agendatopic_offer: '',
     agendatopic_doc: '',
     agendatopic_origin: '',
-    //agendatopic_issue: '',
+    agendatopic_issue: '',
   };
 
   selectedFiles: File[] = [];
@@ -82,7 +82,7 @@ export class AgendaTopicAdminComponent {
       agendatopic_name: ['', Validators.required], // เรื่อง
       agendatopic_origin: ['', Validators.nullValidator], // รายละเอียด ความเป็นมา
       agendatopic_offer: ['', Validators.nullValidator], // ข้อเสนอเพื่อพิจารณา
-      //agendatopic_issue: ['', Validators.nullValidator], // ประเด็นที่เสนอ
+      agendatopic_issue: ['', Validators.nullValidator], // ประเด็นที่เสนอ
       agendatopic_doc: ['', Validators.nullValidator], // เอกสารประกอบวาระ
       //foreman_code: ['', Validators.required]
     });
@@ -322,8 +322,7 @@ export class AgendaTopicAdminComponent {
 
   saveAgendaTopic(item: any) {
     this.topic = item;
-
-    console.log('save meeting', this.topic);
+    //console.log('save meeting', this.topic);
     // Create form data for file upload
     const formData = new FormData();
     for (let i = 0; i < this.selectedFiles.length; i++) {
@@ -339,11 +338,13 @@ export class AgendaTopicAdminComponent {
     formData.append('agendatopic_name', this.topic.agendatopic_name);
     formData.append('agendatopic_origin', this.topic.agendatopic_origin);
     formData.append('agendatopic_offer', this.topic.agendatopic_offer);
+    formData.append('agendatopic_issue', this.topic.agendatopic_issue);
     formData.append('agendatopic_code', this.topic.agendatopic_code);
     formData.append('agendatopic_doc', this.topic.agendatopic_doc);
     formData.append('action_submit', this.topic.action_submit);
 
     //console.log('save formData', formData);
+
     this.http.post(environment.baseUrl + '/_agenda_topic_save_admin.php', formData).subscribe(
       (response: any) => {
         console.log('response: ', response);

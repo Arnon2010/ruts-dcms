@@ -56,7 +56,7 @@ export class MeetingSaveTopicComponent {
   keyword = 'name'; //ค้นหาด้วยชื่อ
   person_assignd_type: any = '1';
   assigns: any;
-  assigns_list: any;
+  assigns_list: any[] = [];
 
   constructor(
     private http: HttpClient,
@@ -310,42 +310,29 @@ export class MeetingSaveTopicComponent {
     );
   }
 
-  // Agenda topic.
+  // Agenda topic. แสดงรายละเอียดของวาระประชุมแต่ละข้อ
   onClickTopic(item: any) {
     console.log(': ', item);
+    this.fetchAssign(item.agendatopic_code); //ผู้รับมอบหมาย
 
-    this.fetchAssign(item.agendatopic_code);
+    this.agenda = item;
 
-    this.agenda.agendatopic_code = item.agendatopic_code;
-    this.agenda.agendatopic_name = item.agendatopic_name;
-    this.agenda.agendatopic_no = item.agendatopic_no;
-    var data = {
-      "opt": "agendaRecord",
-      "agendatopic_code": item.agendatopic_code,
-    }
-    this.http.post(environment.baseUrl + '/_agenda_record_data.php', data).subscribe(
-      (res: any) => {
-        
-        var item = res.data[0];
-        this.agenda = res.data[0];
-        //console.log(this.agenda);
-        // if(res.row == '1') {
-        //   this.agenda.action_submit = 'Update';
-        //   this.agenda.agenda_resolution = item.agendatopic_resolution;
-        //   this.agenda.agenda_discussion = item.agendatopic_discussion;
-        //   this.agenda.agenda_assigned = item.agendatopic_assigned;
-        // } else {
-        //   this.agenda.action_submit = 'Insert';
-        //   this.agenda.agenda_resolution = '';
-        //   this.agenda.agenda_discussion = '';
-        //   this.agenda.agenda_assigned = '';
-        // }
-        //console.log(this.agenda);
-      },
-      (error) => {
-        console.log('Error adduser: ', error);
-      }
-    );
+    // this.agenda.agendatopic_code = item.agendatopic_code;
+    // this.agenda.agendatopic_name = item.agendatopic_name;
+    // this.agenda.agendatopic_no = item.agendatopic_no;
+    // var data = {
+    //   "opt": "agendaRecord",
+    //   "agendatopic_code": item.agendatopic_code,
+    // }
+    // this.http.post(environment.baseUrl + '/_agenda_record_data.php', data).subscribe(
+    //   (res: any) => {
+    //     //console.log(res);
+    //     //this.agenda = res.data[0];
+    //   },
+    //   (error) => {
+    //     console.log('Error adduser: ', error);
+    //   }
+    // );
   }
 
   // บันทึก record
@@ -361,7 +348,7 @@ export class MeetingSaveTopicComponent {
     //console.log('save formData', data);
     this.http.post(environment.baseUrl + '/_agenda_record_save.php', data).subscribe(
       (res: any) => {
-        console.log('topic_note: ', res);
+        //console.log('topic_note: ', res);
 
         if (res.status == 'Ok') {
           Swal.fire('บันทึกข้อมูลสำเร็จ', '', 'success').then(() => {
@@ -427,7 +414,7 @@ export class MeetingSaveTopicComponent {
     //console.log('persons: ', this.persons);
     this.http.post(environment.baseUrl + '/_meeting_assign_add.php', this.persons).subscribe(
       (response: any) => {
-        console.log('response: ', response);
+        //console.log('response: ', response);
         if (response.status == 'Ok') {
           this.fetchAssign(this.persons.agendatopic_code);
           //this.personForm.reset();
