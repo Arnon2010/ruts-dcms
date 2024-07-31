@@ -7,7 +7,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a [routerLink]="['/home']" routerLinkActive="router-link-active">Home</a>
                 </li>
-                <li class="breadcrumb-item active">เตรียมการประชุม</li>
+                <li class="breadcrumb-item active">ดำเนินการจัดการประชุม</li>
             </ol>
         </nav>
         <div class="row">
@@ -18,7 +18,7 @@
             <div class="col-md-12 grid-margin">
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                        <h6 class="font-weight-bold">เตรียมการประชุม</h6>
+                        <h6 class="font-weight-bold">ดำเนินการจัดการประชุม</h6>
                     </div>
                     <div class="col-12 col-xl-4">
 
@@ -71,9 +71,10 @@
                                         data-mdb-ripple-init>
                                         <span class="badge badge-primary font-weight-bold"><i class="mdi mdi-wrench"></i> จัดการการประชุม</span></a>
                                     <a class="btn btn-link m-0 text-reset" href="#" role="button"
-                                        data-ripple-color="primary" data-mdb-ripple-init><small><strong>
-                                            </strong>{{item.meeting_sdate}} เวลา {{item.meeting_time}} น.</small><i
-                                            class="fas fa-phone ms-2"></i></a>
+                                        data-ripple-color="primary" data-mdb-ripple-init><strong> 
+                                            {{item.meeting_sdate | thaiDate}} เวลา {{item.meeting_time}} น.
+                                            <i class="mdi mdi-calendar-check"></i></strong>
+                                        </a>
                                 </div>
                             </div>
                         </div>

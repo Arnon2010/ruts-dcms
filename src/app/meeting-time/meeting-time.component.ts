@@ -163,6 +163,7 @@ export class MeetingTimeComponent {
   opens: any = {};
   files_vew: any = [];
   datafiles: any;
+  countMeetingList: any;
 
 
   constructor(
@@ -230,7 +231,7 @@ export class MeetingTimeComponent {
     //console.log('open meeting data: ', data);
     this.http.post(environment.baseUrl + '/_view_data.php', data).subscribe(
       (res: any) => {
-        console.log(res);
+        //console.log(res);
         this.opens = res.data[0];
 
       },
@@ -258,8 +259,7 @@ export class MeetingTimeComponent {
     this.userData = JSON.parse(Token) //ให้ตัวเเปล studentData เท่ากับ ค่าจาก local storage ใน Key Token ที่อยู่ใน รูปเเบบ Json
     this.user_id = this.userData.user_id;
     this.faculty_code = this.userData.faculty_code;
-
-    console.log(this.faculty_code);
+    //console.log(this.faculty_code);
     //console.log('userdata:, ', this.userData); //เเสดงค่า studentData ใน console
   }
 
@@ -279,12 +279,12 @@ export class MeetingTimeComponent {
   // view file
   async openAnyFile(file_path: any) {
     let path = environment.vieFile + file_path;
-    console.log(path);
+    //console.log(path);
     this.openWindowWithUrl(path);
   }
 
   selectEvent(item: any) {
-    console.log('search selectEvent: ', item);
+    //console.log('search selectEvent: ', item);
     this.person = item;
     // do something with selected item
   }
@@ -324,13 +324,13 @@ export class MeetingTimeComponent {
 
   addConsiderCheck(meeting_code: any, id: string): string {
     const checkPerson = this.consider_list.find((item: { citicen_id: string; }) => item.citicen_id === id);
-    console.log('check person: ', this.consider_list);
+    //console.log('check person: ', this.consider_list);
     return checkPerson ? checkPerson.person_name : checkPerson;
   }
 
   // show modal agency
   onClickConsider(item: any) {
-    console.log('meeting_code: ', item);
+    //console.log('meeting_code: ', item);
     this.considers.meeting_code = item;
 
     this.fetchConsider(item);
@@ -425,11 +425,11 @@ export class MeetingTimeComponent {
       "opt": "viewNAME",
       "search": search_query
     }
-    this.http.post('https://eis.rmutsv.ac.th/api/eis/userpermission.php', data)
+    this.http.post(environment.baseUrl + '/_curl_acc3d_person.php', data)
       .subscribe({
         next: (res: any) => {
-          //console.log('Person ', res); // เเสดงค่าใน console
-          this.data_person = res;
+          //console.log('viewTable ', res.data); // เเสดงค่าใน console
+          this.data_person = res.data;
         }
       });
   }
@@ -474,10 +474,11 @@ export class MeetingTimeComponent {
       opt: 'viewfac',
       "Table": "FACULTY"
     }
-    this.http.post('https://eis.rmutsv.ac.th/api/eis/userpermission.php', data)
+
+    this.http.post(environment.baseUrl + '/_curl_acc3d_person.php', data)
       .subscribe({
         next: (res: any) => {
-          //console.log('Faculty ', res); // เเสดงค่าใน console
+          //console.log('viewTable ', res.data); // เเสดงค่าใน console
           this.FAClist = res;
         }
       });
@@ -512,7 +513,7 @@ export class MeetingTimeComponent {
       // Push the view file to the array of view files
       this.files_vew.push(viewFile);
     }
-    console.log('view file: ', this.files_vew);
+    //console.log('view file: ', this.files_vew);
   }
 
   viewFile(file: any) {
@@ -526,7 +527,7 @@ export class MeetingTimeComponent {
     this.http
       .get(environment.baseUrl + '/_program_data.php') //ติดต่อไปยัง Api getfaculty.php
       .subscribe((res: any) => { // ดึงข้อมูลในฟิลด์ fac_id, fac_name
-        console.log('program data: ', res);
+        //console.log('program data: ', res);
         this.program_list = res.data;
       });
   }
@@ -534,7 +535,7 @@ export class MeetingTimeComponent {
   // 
   onClickManageMeeting(item:any) {
     this.meeting_manage = item;
-    console.log('meeting_manage',this.meeting_manage);
+    //console.log('meeting_manage',this.meeting_manage);
     this.fetchAgency(item.meeting_code);
   }
 
@@ -542,7 +543,7 @@ export class MeetingTimeComponent {
 
   saveMeeting(item: any) {
     this.meeting = item;
-    console.log('save meeting', this.meeting);
+    //console.log('save meeting', this.meeting);
 
     //const date_sdate = toModel(this.meeting.meeting_sdate);
     //let meeting_sdate = this.meeting.meeting_sdate.year + '-' + this.meeting.meeting_sdate.month + '-' + this.meeting.meeting_sdate.day;
@@ -579,7 +580,7 @@ export class MeetingTimeComponent {
     //console.log('save formData', formData);
     this.http.post(environment.baseUrl + '/_meeting_save.php', formData).subscribe(
       (response: any) => {
-        console.log('response: ', response);
+        //console.log('response: ', response);
         if (response.status == 'Ok') {
           Swal.fire('บันทึกข้อมูลสำเร็จ', '', 'success').then(() => {
             this.resetFormSubmit();
@@ -602,8 +603,9 @@ export class MeetingTimeComponent {
     this.http
       .get(environment.baseUrl + '/_meeting_data.php?open_code=' + open_code) //ติดต่อไปยัง Api getfaculty.php
       .subscribe((res: any) => { // ดึงข้อมูลในฟิลด์ fac_id, fac_name
-        console.log('meeting data: ', res);
+        //console.log('meeting data: ', res);
         this.meeting_list = res.data;
+        this.countMeetingList = this.meeting_list.length;
         this.filteredItems = res.data;
         this.total_row = res.row;
       });
@@ -658,7 +660,7 @@ copyMeeting(meeting_code:any): void {
   }
   this.http.post(environment.baseUrl + '/_meeting_copy.php', data).subscribe(
     (response: any) => {
-      console.log('response: ', response);
+      //console.log('response: ', response);
       if (response.status == 'Ok') {
         Swal.fire('ทำสำเนาสำเร็จ!', '', 'success').then(() => {
           this.fetchMeeting(this.open_code);
@@ -700,13 +702,12 @@ copyMeeting(meeting_code:any): void {
     this.agencys.meeting_code = this.meeting_manage.meeting_code;
     this.agencys.agency_name = agency.name;
     this.agencys.faculty_code = agency.code;
-
     this.agencys.action = "Insert";
 
-    console.log('agencys: ', this.agencys);
+    //console.log('agencys: ', this.agencys);
     this.http.post(environment.baseUrl + '/_meeting_agency_add.php', this.agencys).subscribe(
       (response: any) => {
-        console.log('response: ', response);
+        //console.log('response: ', response);
         if (response.status == 'Ok') {
           this.fetchAgency(this.agencys.meeting_code);
         }

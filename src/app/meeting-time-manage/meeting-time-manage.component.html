@@ -48,6 +48,7 @@
                             <div class="card">
                                 <div class="card-body">
 
+                                    <!-- หน่วยงานเข้าร่วมเสนอระเบียบวาระ -->
                                     <mat-stepper headerPosition="top" #stepper>
                                         <mat-step [stepControl]="firstFormGroup" *ngIf="meeting.propose_code == '01'" labelPosition="bottom">
                                             <form [formGroup]="firstFormGroup">
@@ -103,9 +104,10 @@
                                                             </ul>
                                                         </div>
                                                         <div class="d-flex justify-content-between flex-row mb-5 mt-4">
-                                                            <button class="btn btn-outline-primary" matStepperPrevious>
+                                                            <a [routerLink]="['/meeting-time', open_code]"
+                                                            routerLinkActive="router-link-active" class="btn btn-outline-primary" matStepperPrevious>
                                                                 <i class="fa fa-angle-left"></i> กลับ
-                                                            </button>
+                                                            </a>
                                                             <button class="btn btn-warning" matStepperNext>
                                                                 ขั้นตอนถัดไป <i class="fa fa-angle-right"></i>
                                                             </button>
@@ -572,10 +574,15 @@
 
                                                                     <div
                                                                         class="d-flex justify-content-between flex-row mb-5 mt-4">
-                                                                        <button class="btn btn-outline-primary"
+                                                                        <!-- <button class="btn btn-outline-primary" *ngIf="meeting.propose_code == '01'"
                                                                             matStepperPrevious>
                                                                             <i class="fa fa-angle-left"></i> กลับ
                                                                         </button>
+                                                                        <a [routerLink]="['/meeting-time', open_code]" *ngIf="meeting.propose_code == '02'"
+                                                                        routerLinkActive="router-link-active" class="btn btn-outline-primary" matStepperPrevious>
+                                                                            <i class="fa fa-angle-left"></i> กลับ
+                                                                        </a> -->
+
                                                                         <button class="btn btn-warning" matStepperNext>
                                                                             ขั้นตอนถัดไป <i
                                                                                 class="fa fa-angle-right"></i>
@@ -615,8 +622,14 @@
                                                                         [routerLink]="['/meeting-time',open_code]" 
                                                                         routerLinkActive="router-link-active" >
                                                                         <span class="font-weight-bold">
-                                                                            จัดการการประชุม <i
-                                                                            class="fa fa-angle-right"></i></span>
+                                                                            จัดการการประชุม</span>
+                                                                    </button>
+                                                                    <button class="btn btn-warning" 
+                                                                        [routerLink]="['/agenda-topic-admin',meeting_code]" 
+                                                                        routerLinkActive="router-link-active" >
+                                                                        <span class="font-weight-bold">
+                                                                            <i
+                                                                            class="mdi mdi-library-plus"></i> เพิ่มวาระ</span>
                                                                     </button>
                                                                 </div>
                                                             </div>

@@ -91,10 +91,11 @@ export class OutsiderComponent {
       opt: 'viewTable',
       "Table": "REF_PREFIX"
     }
-    this.http.post('https://eis.rmutsv.ac.th/api/eis/userpermission.php', data)
+
+    this.http.post(environment.baseUrl + '/_curl_acc3d_person.php', data)
       .subscribe({
         next: (res: any) => {
-          //console.log('REF_PREFIX ', res); // เเสดงค่าใน console
+          //console.log('viewTable ', res.data); // เเสดงค่าใน console
           this.prefix_list = res;
         }
       });

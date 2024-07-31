@@ -9,7 +9,7 @@
                         <a [routerLink]="['/meeting-manage']">เตรียมการประชุม </a>
                     </li>
                     <li class="breadcrumb-item active">
-                        {{opens.open_title}}
+                        {{opens.open_title}} ประจำปี {{opens.open_year}}
                     </li>
                 </ol>
             </nav>
@@ -50,7 +50,7 @@
                         <p>&nbsp;</p> -->
                         <h4 class="card-title">การประชุมแต่ละครั้ง</h4>
                         <p class="card-description">
-                            รายการประชุมทั้งหมด <code>1</code>
+                            รายการประชุมทั้งหมด <code>{{countMeetingList}}</code>
                         </p>
                         <div class="table-responsive">
                             <table class="table table-striped table-borderless">
@@ -73,7 +73,7 @@
                                         *ngFor="let data of filteredItems | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
                                         <td class="text-center">{{ i + (p - 1) * 10 + 1 }}</td>
                                         <td>
-                                            {{opens.open_title}} ({{data.meeting_thetime}})<br>
+                                            {{opens.open_title}} ({{data.meeting_thetime}}/{{opens.open_year}})<br>
                                             <small>{{data.meeting_sdate | thaiDate}} เวลา {{data.meeting_time}} น. ณ
                                                 {{data.meeting_location}}</small>
                                         </td>
@@ -230,7 +230,7 @@
                                         <div class="col-sm-5">
                                             <input type="text" class="form-control" id="meeting_thetime"
                                                 [(ngModel)]="meeting.meeting_thetime" formControlName="meeting_thetime"
-                                                placeholder="เช่นครั้งที่ 1">
+                                                placeholder="ไม่ต้องระบุปี">
                                         </div>
                                     </div>
                                     <div class="form-group row">

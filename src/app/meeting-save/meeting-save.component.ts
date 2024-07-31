@@ -34,17 +34,15 @@ export class MeetingSaveComponent {
   }
 
   ngOnInit(): void {
-
     this.getUser();
     this.fetchAgency(this.fac_code);
     this.fetchMeeting();
-
   }
 
   getUser(): void {
     const Token: any = localStorage.getItem('Token');
     this.userData = JSON.parse(Token);
-    console.log('user:, ', this.userData);
+    //console.log('user:, ', this.userData);
     this.fac_code = this.userData.faculty_code;
     this.fac_name = this.userData.faculty_name;
     this.user_id = this.userData.user_id;
@@ -58,7 +56,7 @@ export class MeetingSaveComponent {
     this.http
       .get(environment.baseUrl + '/_agency_data.php?faculty_code=' + fac_code) //ติดต่อไปยัง Api getfaculty.php
       .subscribe((res: any) => { // ดึงข้อมูลในฟิลด์ fac_id, fac_name
-        console.log('agency_list: ', res);
+        //console.log('agency_list: ', res);
         this.agency_list = res.data;
       });
   }
@@ -69,14 +67,11 @@ export class MeetingSaveComponent {
       "opt": "viewMeetingSave",
       "faculty_code": this.fac_code
     }
-
     this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({
         next: (res: any) => {
-         
           this.meeting_list = res.data;
-
-          console.log('meeting list ', this.meeting_list); // เเสดงค่าใน console
+          //console.log('meeting list ', this.meeting_list); // เเสดงค่าใน console
         }
       });
   }

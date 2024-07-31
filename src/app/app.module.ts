@@ -91,7 +91,6 @@ import { CertifyConfirmComponent } from './certify-confirm/certify-confirm.compo
 import { CertifyDetailComponent } from './certify-detail/certify-detail.component';
 import { AssignsComponent } from './assigns/assigns.component';
 
-
 // Register the Thai locale data.
 //registerLocaleData(localeTh, 'th');
 

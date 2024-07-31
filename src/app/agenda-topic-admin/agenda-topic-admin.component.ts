@@ -458,7 +458,7 @@ export class AgendaTopicAdminComponent {
   }
 
   openWindowWithUrl(url: string): void {
-    const sanitizedUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    //const sanitizedUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
     //console.log(sanitizedUrl);
     window.open(url, '_blank');
     //window.open(sanitizedUrl.toString(), '_blank');
@@ -467,8 +467,8 @@ export class AgendaTopicAdminComponent {
 
   async openAnyFile(file_path: any) {
     let path = environment.vieFile + file_path;
-    //console.log(path);
-    this.openWindowWithUrl(path);
+    console.log(path);
+    this.openWindowWithUrl(path); 
   }
 
   defaultForm() {

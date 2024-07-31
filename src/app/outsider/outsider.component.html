@@ -5,9 +5,20 @@
         <div class="row">
             <div class="col-md-12 grid-margin">
                 <div class="row">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a [routerLink]="['/home']"
+                                    routerLinkActive="router-link-active">Home</a></li>
+                            <li class="breadcrumb-item active">ผู้ใช้งานภายนอก</li>
+                        </ol>
+                    </nav>
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                        <h4 class="font-weight-bold">ผู้ใช้งานภายนอก (Outsider users)</h4>
-                        <h6 class="font-weight-normal mb-0">All users <span class="text-primary">
+                        <h5 class="font-weight-bold">ผู้ใช้งานภายนอก <a href="#" data-toggle="modal"
+                            data-target="#addUserForm" data-whatever="@getbootstrap">
+                            <span class="badge badge-primary"><i class="mdi mdi-shape-square-plus"></i></span>
+
+                        </a></h5>
+                        <h6 class="font-weight-normal mb-0">จำนวนผู้ใช้งาน <span class="text-primary">
                                 <strong>{{total_row}}</strong></span>
                         </h6>
                     </div>
@@ -16,10 +27,10 @@
                             <div class="add-items d-flex mb-0 mt-2">
                                 <input type="text" [(ngModel)]="searchText" (input)="onSearch()"
                                     class="form-control todo-list-input" placeholder="ค้นหา">
-                                <input type="text" class="form-control todo-list-input" placeholder="เพิ่มบุคคลภายนอก">
+                                <!-- <input type="text" class="form-control todo-list-input" placeholder="เพิ่มบุคคลภายนอก">
                                 <button class="add btn btn-icon text-primary todo-list-add-btn bg-transparent"
                                     data-toggle="modal" data-target="#addUserForm" data-whatever="@getbootstrap"><i
-                                        class="icon-circle-plus"></i></button>
+                                        class="icon-circle-plus"></i></button> -->
                             </div>
                         </div>
                     </div>

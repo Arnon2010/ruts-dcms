@@ -224,19 +224,20 @@
                                 <h4>
                                     <span class="badge badge-primary font-status font-weight-bold"
                                         *ngIf="meeting.meeting_rstatus == '0'">ยกเลิก</span>
-                                    <span class="badge badge-primary font-status font-weight-bold"
-                                        *ngIf="meeting.meeting_rstatus == '1'">รอดำเนินการ</span>
-                                    <span class="badge badge-primary font-status font-weight-bold"
+                                    <span class="badge badge-warning font-status font-weight-bold"
+                                        *ngIf="meeting.meeting_rstatus == '1'">อยู่ระหว่างรอการประชุม</span>
+                                    <span class="badge badge-warning font-status font-weight-bold"
                                         *ngIf="meeting.meeting_rstatus == '2'">อยู่ระหว่างเสนอวาระ</span>
-                                    <span class="badge badge-primary font-status font-weight-bold"
+                                    <span class="badge badge-warning font-status font-weight-bold"
                                         *ngIf="meeting.meeting_rstatus == '3'">อยู่ระหว่างพิจารณาวาระ</span>
-                                    <span class="badge badge-primary font-status font-weight-bold"
+                                    <span class="badge badge-warning font-status font-weight-bold"
                                         *ngIf="meeting.meeting_rstatus == '4'">อยู่ระหว่างบันทึกการประชุม</span>
                                 </h4>
                             </div>
                         </div>
 
-                        <div *ngIf="meeting.meeting_ostatus == 'Y'">
+                        <!-- <div *ngIf="meeting.meeting_ostatus == 'Y'"></div> -->
+                        <div>
                             <!-- วาระหลัก -->
                             <div class="row" *ngFor="let data of agendatopic_list; let i = index">
                                 <div class="d-flex topic-title mb-1">
@@ -249,7 +250,7 @@
                                 <!-- วาระย่อย 1 -->
                                 <div class="row ml-auto" *ngFor="let item of data.sub_data; let s = index;">
                                     <div class="d-flex topic-sub mb-0">
-                                        <div class="p-2"><strong>{{item.topic_no}}</strong></div>
+                                        <div class="p-2"><strong>{{item.agendatopic_no}}</strong></div>
                                         <div class="mr-auto p-2"><strong>{{item.agendatopic_name}}</strong></div>
                                         <div class="p-2">
 
@@ -273,7 +274,7 @@
                                     <!-- วาระย่อย 2 -->
                                     <div class="row ml-auto" *ngFor="let item_sub2 of item.data_sub2">
                                         <div class="d-flex topic-sub mb-0">
-                                            <div class="p-2"><strong>{{item_sub2.topic_no2}}</strong></div>
+                                            <div class="p-2"><strong>{{item_sub2.agendatopic_no}}</strong></div>
                                             <div class="mr-auto p-2"><strong>{{item_sub2.agendatopic_name}}</strong>
                                             </div>
                                             <!-- เอกสาร -->
@@ -322,7 +323,11 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
                     หัวข้อวาระการประชุม
+                    <br>
+                    <hr>
+                    วาระที่: {{topics.agendatopic_no}} {{topics.agendatopic_name}}
                 </h5>
+                <!-- <h4 class="card-title">วาระที่: {{topics.agendatopic_no}} {{topics.agendatopic_name}}</h4> -->
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -331,71 +336,114 @@
                 <div class="col-sm-12 col-md-12 col-xl-12">
                     <div class="card card-tale-2">
                         <div class="card-body">
-                            <h4 class="card-title">วาระที่: {{topics.agendatopic_no}}</h4>
+
                             <form class="forms-sample">
                                 <div class="form-group">
                                     <div class="topic-head">เรือง:</div>
-                                    <div class="topic-content">{{topics.agendatopic_name}}</div>
+                                    <div class="topic-content" class="alert alert-light text-dark" role="alert">
+                                        {{topics.agendatopic_name}}</div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="topic-head">ข้อมูลเพื่อประกอบพิจารณา:</div>
-                                    <div class="topic-content">
+                                    <div class="topic-head">รายละเอียด/ความเป็นมา: </div>
+                                    <div class="topic-content" class="alert alert-light text-dark" role="alert">
+                                        <span [innerHTML]="topics.agendatopic_origin | nl2br"></span>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="topic-head">ข้อมูลเพื่อประกอบพิจารณา: </div>
+                                    <div class="topic-content" class="alert alert-light text-dark" role="alert">
                                         <span [innerHTML]="topics.agendatopic_offer | nl2br"></span>
 
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="topic-head">ประเด็นที่เสนอ:</div>
-                                    <div class="topic-content">
+                                    <div class="topic-head">ประเด็นที่เสนอ: </div>
+                                    <div class="topic-content" class="alert alert-light text-dark" role="alert">
                                         <span [innerHTML]="topics.agendatopic_issue | nl2br"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="topic-head">มติ:</div>
-                                    <div class="topic-content">
+                                    <div class="topic-head">มติ: </div>
+                                    <div class="topic-content" class="alert alert-light text-dark" role="alert">
                                         <span [innerHTML]="topics.agendatopic_resolution | nl2br"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="topic-head">มอบหมาย:</div>
-                                    <div class="topic-content">
+                                    <div class="topic-head">มอบหมาย: </div>
+                                    <div class="topic-content" class="alert alert-light text-dark" role="alert">
                                         <span [innerHTML]="topics.agendatopic_assigned | nl2br"></span>
                                     </div>
                                     <div class="topic-content" *ngIf="topics.agendatopic_assigned !== ''">
                                         <span class="font-weight-500">ผู้ได้รับการมอบหมาย: </span>
-                                        <div class="d-flex justify-content-start" *ngFor="let item of topics.data_asign">
-                                            <li>{{item.person_name}} <span class="text-muted">{{item.dept_name}}</span></li>
+                                        <div class="d-flex justify-content-start"
+                                            *ngFor="let item of topics.data_asign">
+                                            <li>{{item.person_name}} <span class="text-muted">{{item.dept_name}}</span>
+                                            </li>
                                         </div>
-                                        
-                                    </div> 
-                                    
-
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="topic-head">เอกสารประกอบ:</div>
-                                    <div class="display-4">
-                                        <button *ngIf="topics.agendatopic_doc != ''" class="btn-action"
-                                            (click)="openAnyFile(topics.agendatopic_doc)">
-                                            <span class="badge badge-info">
-                                                <i class="mdi mdi-file-document-box"></i></span>
-                                        </button>
+                                    <div class="topic-head">เอกสารประกอบ: </div>
 
-                                        <a *ngIf="topics.agendatopic_doc == ''">
+                                    <ul class="list-group" *ngFor="let file of topics.doc_files">
+                                        <li
+                                            class="list-group-item d-flex justify-content-between align-items-center alert-secondary">
+                                            <div>
+                                                <button class="btn-action" (click)="openAnyFile(file.topicdoc_path)">
+                                                    <span class="badge badge-info">
+                                                        <i class="mdi mdi-file-document-box"></i></span>
+                                                </button> {{file.topicdoc_name}}
+                                            </div>
+
+                                            <!-- <span class="badge badge-primary badge-pill">
+                                            </span> -->
+
+                                        </li>
+                                    </ul>
+                                    <!-- {{topics.doc_files}} -->
+                                    <div class="display-4" *ngIf="fileCountTopic == 0">
+                                        <a class="alert alert-light text-dark" role="alert">
                                             <span class="badge badge-secondary">
-                                                <i class="mdi mdi-file-hidden"></i> ไม่มีเอกสารแนบ</span>
+                                                ไม่พบเอกสารแนบ</span>
                                         </a>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputConfirmPassword1">Note</label>
-                                    <textarea class="form-control" id="topic_note" rows="3"
-                                        [(ngModel)]="topics.topic_note" name="topic_note"
-                                        placeholder="พิมพ์ข้อความจดบันทึก"></textarea>
-                                    <button type="submit" class="btn btn-warning btn-sm mt-4 mr-2"
-                                        (click)="savNoteTopic(topics, person.person_code)">บันทึก Note</button>
-
+                                    <div class="col-8 col-lg-8 col-md-12">
+                                        <label for="exampleInputConfirmPassword1">Note: </label>
+                                        <textarea class="form-control" id="topic_note" rows="3" [(ngModel)]="topics.topic_note"
+                                            name="topic_note" placeholder="พิมพ์ข้อความจดบันทึก"></textarea>
+                                        <button type="submit" class="btn btn-warning btn-sm mt-4 mr-2"
+                                            (click)="saveNoteTopic(topics, person.person_code)">บันทึก Note</button>
+                                    </div>
                                 </div>
+                                <!-- <div class="form-group">
+                                    <div class="col-8 col-lg-8 col-md-12">
+                                        <ul class="list-group" *ngFor="let note of topic_notes">
+                                            <li
+                                                class="list-group-item d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <i class="mdi mdi-message"></i> {{note.topicnote_note}}
+                                                </div>
+                                                <div>
+                                                    <a [routerLink]="['/meeting-topic',meeting.meeting_code, meeting.open_code]" 
+                                                        routerLinkActive="router-link-active"   (click)="editTopic(note)" class="p-2">
+                                                        <span class="badge badge-primary badge-pill">แก้ไข
+                                                        </span>
+                                                    </a>
+                                                    <a [routerLink]="['/meeting-topic',meeting.meeting_code, meeting.open_code]" 
+                                                        routerLinkActive="router-link-active"   (click)="delTopic(note)">
+                                                        <span class="badge badge-danger badge-pill">ลบ
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div> -->
                             </form>
                         </div>
                     </div>

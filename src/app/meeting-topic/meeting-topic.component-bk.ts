@@ -43,10 +43,12 @@ export class MeetingTopicComponent {
   topics: any = {};
   topic_doc_file: any;
   fileCountTopic: any;
-  topic_notes: any = {};
+  topic_notes: any;
 
-  topic_note: string = '';
 
+  note: any = {
+    action_submit: 'Insert',
+  };
 
   constructor(
     private http: HttpClient,
@@ -70,7 +72,7 @@ export class MeetingTopicComponent {
   getUser(): void {
     const Token: any = localStorage.getItem('Token');
     this.userData = JSON.parse(Token) //ให้ตัวเเปล studentData เท่ากับ ค่าจาก local storage ใน Key Token ที่อยู่ใน รูปเเบบ Json
-    //console.log('user data token: ', this.userData);
+    console.log('user data token: ', this.userData);
     this.user_id = this.userData.user_id;
     this.faculty_code = this.userData.faculty_code;
     this.cid = this.userData.cid;
@@ -84,7 +86,7 @@ export class MeetingTopicComponent {
     this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({
         next: (res: any) => {
-          //console.log('meeting data--->: ', res); // เเสดงค่าใน console
+          console.log('meeting data--->: ', res); // เเสดงค่าใน console
           this.meeting = res.data;
           this.open_title = this.meeting.open_title;
           this.open_code = this.meeting.open_code;
@@ -117,11 +119,12 @@ export class MeetingTopicComponent {
       "meeting_code": this.meeting_code,
       "cid": this.cid,
     }
-    //console.log('view agenda topic: ', data);
+
+    console.log('view agenda topic user: ', data);
     this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({
         next: (res: any) => {
-          //console.log('agendatopic_list: ', res);
+          console.log('agendatopic_list: ', res);
           this.agendatopic_list = res.data;
           this.person = res.data_person[0];
           this.person_position = res.data_person;
@@ -142,18 +145,20 @@ export class MeetingTopicComponent {
     this.http.post(environment.baseUrl + '/_person_meeting_confirm.php', data)
       .subscribe({
         next: (res: any) => {
-          //console.log('confirm: ', res);
+          console.log('confirm: ', res);
           this.person.person_rstatus = confirm_status;
           //this.agendatopic_list = res.data;
         }
       });
   }
 
+
   openWindowWithUrl(url: string): void {
     const sanitizedUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
     //console.log(sanitizedUrl);
     window.open(url, '_blank');
     //window.open(sanitizedUrl.toString(), '_blank');
+
   }
 
   async openAnyFile(file_path: any) {
@@ -165,38 +170,49 @@ export class MeetingTopicComponent {
   //meeting-topic
 
   onClickModalTopic(agendatopic_code: any, topic_note:string) {
+
+    this.note.agendatopic_code = agendatopic_code;
+
     var data = {
       "opt": "viewTopicDetail",
       "agendatopic_code": agendatopic_code,
     }
-    //console.log('Topic detail:', topic_note);
+
+    console.log('viewTopicDetail:', data);
+
     //this.fetchTopicNote(agendatopic_code, this.person.person_code);
+
     this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({
-        next: (res: any) => {  
-          //console.log('respone: ', res);
-          this.topics = res.data[0];
+        next: (res: any) => {
+          
+          this.topics = res;
+          console.log('topics: ', this.topics);
           //this.topics.topic_note = topic_note;
           this.fileCountTopic = res.data[0].doc_files.length;
-          //console.log('topics: ', this.topics);
         }
       });
   }
 
-  saveNoteTopic(item: any, person_code:any) {
+  saveNoteTopic(person_code:any) {
+    console.log(this.note);
     var data = {
-      "opt": "saveNoteTopic",
-      "agendatopic_code": item.agendatopic_code,
-      "topic_note": item.topic_note,
+      "opt": this.note.action_submit,
+      "agendatopic_code": this.note.agendatopic_code,
+      "topic_note": this.note.topic_note,
+      "topicnote_code": this.note.topicnote_code,
       "person_code": person_code,
     }
-    //console.log('Topic save note:', data);
+    console.log('Topic save note:', data);
     this.http.post(environment.baseUrl + '/_meeting_topic_note.php', data)
       .subscribe({
         next: (res: any) => {
           //console.log('topic data: ', res);
           this.fetchAgendaTopicUser();
-          //this.fetchTopicNote(item.agendatopic_code, person_code);
+          this.fetchTopicNote(this.note.agendatopic_code, person_code);
+          this.note.topic_note = '';
+          this.note.action_submit = 'Insert';
+
         }
       });
   }
@@ -210,13 +226,36 @@ export class MeetingTopicComponent {
       "person_code": person_code
     }
 
-    //console.log(data);
-
+    console.log('fetchTopicNote ',data);
     this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({
         next: (res: any) => {
-          //console.log('note person: ', res);
+          console.log('note person: ', res);
           this.topic_notes = res;
+        }
+      });
+  }
+
+  editTopic(item:any) {
+    this.note.action_submit = 'Update';
+    this.note.topic_note = item.topicnote_note;
+    this.note.topicnote_code = item.topicnote_code;
+
+    console.log(this.note);
+  }
+
+  delTopic(item:any) {
+    var data = {
+      "action": "delete",
+      "id": item.topicnote_code,
+    }
+    this.http.post(environment.baseUrl + '/_meeting_topic_note_remove.php', data)
+      .subscribe({
+        next: (res: any) => {
+          console.log(res);
+          if(res.status == 'Ok') {
+            this.fetchTopicNote(item.agendatopic_code, item.person_code);
+          }
         }
       });
   }

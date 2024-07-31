@@ -24,8 +24,6 @@ export class MeetingTimeManageComponent {
 
   startDate: NgbDateStruct | undefined;
   endDate: NgbDateStruct | undefined;
-
-
   model: NgbDateStruct | undefined;
   date: { year: number; month: number; } | undefined;
 
@@ -116,7 +114,6 @@ export class MeetingTimeManageComponent {
   meeting_code: any;
   topic_confirm: any = {};
 
-
   constructor(
     private http: HttpClient,
     private fb: FormBuilder,
@@ -175,7 +172,7 @@ export class MeetingTimeManageComponent {
     this.fetchPerson(this.meeting_code);
     this.fetchMtPosition(this.open_code);
 
-    console.log('meeting: ', this.meeting);
+    //console.log('meeting: ', this.meeting);
   }
 
 
@@ -369,13 +366,24 @@ export class MeetingTimeManageComponent {
       "opt": "viewNAMEPOSITION",
       "search": search_query
     }
-    this.http.post('https://eis.rmutsv.ac.th/api/eis/userpermission.php', data)
-      .subscribe({
-        next: (res: any) => {
-          //console.log('Person ', res); // เเสดงค่าใน console
-          this.data_person = res;
-        }
-      });
+    // this.http.post('https://eis.rmutsv.ac.th/api/eis/userpermission.php', data)
+    //   .subscribe({
+    //     next: (res: any) => {
+    //       //console.log('Person ', res); // เเสดงค่าใน console
+    //       this.data_person = res;
+    //     }
+    //   });
+
+      this.http.post(environment.baseUrl + '/_curl_acc3d_person.php', data)
+        .subscribe({
+          next: (res: any) => {
+            //console.log('Person ', res); // เเสดงค่าใน console
+            this.data_person = res;
+          }
+        });
+  
+
+
   }
 
   // บุคคลภายนอก
@@ -418,13 +426,13 @@ export class MeetingTimeManageComponent {
       opt: 'viewfac',
       "Table": "FACULTY"
     }
-    this.http.post('https://eis.rmutsv.ac.th/api/eis/userpermission.php', data)
-      .subscribe({
-        next: (res: any) => {
-          //console.log('Faculty ', res); // เเสดงค่าใน console
-          this.FAClist = res;
-        }
-      });
+    this.http.post(environment.baseUrl + '/_curl_acc3d_person.php', data)
+        .subscribe({
+          next: (res: any) => {
+            //console.log('Person ', res); // เเสดงค่าใน console
+            this.FAClist = res;
+          }
+        });
   }
 
   // upload file book order
@@ -442,7 +450,7 @@ export class MeetingTimeManageComponent {
     this.http
       .get(environment.baseUrl + '/_program_data.php') //ติดต่อไปยัง Api getfaculty.php
       .subscribe((res: any) => { // ดึงข้อมูลในฟิลด์ fac_id, fac_name
-        console.log('program data: ', res);
+        //console.log('program data: ', res);
         this.program_list = res.data;
       });
   }
@@ -452,7 +460,7 @@ export class MeetingTimeManageComponent {
     this.http
       .get(environment.baseUrl + '/_meeting_data.php?open_code=' + open_code) //ติดต่อไปยัง Api getfaculty.php
       .subscribe((res: any) => { // ดึงข้อมูลในฟิลด์ fac_id, fac_name
-        console.log('meeting data: ', res);
+        //console.log('meeting data: ', res);
         this.meeting_list = res.data;
         this.filteredItems = res.data;
         this.total_row = res.row;
@@ -477,7 +485,7 @@ export class MeetingTimeManageComponent {
     this.http
       .get(environment.baseUrl + '/_meeting_agency_data.php?meeting_code=' + meeting_code) //ติดต่อไปยัง Api getfaculty.php
       .subscribe((res: any) => { // ดึงข้อมูลในฟิลด์ fac_id, fac_name
-        console.log(res);
+        //console.log(res);
         this.agency_list = res.data;
       });
   }
@@ -488,10 +496,10 @@ export class MeetingTimeManageComponent {
     this.agencys.agency_name = agency.name;
     this.agencys.action = "Insert";
 
-    console.log('agencys: ', this.agencys);
+    //console.log('agencys: ', this.agencys);
     this.http.post(environment.baseUrl + '/_meeting_agency_add.php', this.agencys).subscribe(
       (response: any) => {
-        console.log('response: ', response);
+        //console.log('response: ', response);
         if (response.status == 'Ok') {
           this.fetchAgency(this.meeting_code);
         }
@@ -557,10 +565,10 @@ export class MeetingTimeManageComponent {
       "open_code": this.open_code,
       "meeting_code": this.meeting_code,
     }
-    console.log('meeting topic', data);
+    //console.log('meeting topic', data);
     this.http.post(environment.baseUrl + '/_view_data.php', data).subscribe(
       (res: any) => {
-        console.log('mttopic_list: ', res);
+        //console.log('mttopic_list: ', res);
         this.mttopic_list = res.data;
       },
       (error) => {
@@ -573,7 +581,7 @@ export class MeetingTimeManageComponent {
 
   onClickCheckTopic(item: any) {
     this.topic = item;
-    console.log('topic detail: ', this.topic);
+    //console.log('topic detail: ', this.topic);
   }
 
   //ผู้เข้าร่วมประชุม
@@ -590,10 +598,10 @@ export class MeetingTimeManageComponent {
     // const result_check = this.addConsiderCheck(meeting_code, id);
     // console.log('result_check: ', result_check);
     //return false;
-    console.log('persons: ', this.persons);
+    //console.log('persons: ', this.persons);
     this.http.post(environment.baseUrl + '/_meeting_person_add.php', this.persons).subscribe(
       (response: any) => {
-        console.log('response: ', response);
+        //console.log('response: ', response);
         if (response.status == 'Ok') {
           this.fetchPerson(this.meeting_code);
           //this.personForm.reset();
@@ -611,7 +619,7 @@ export class MeetingTimeManageComponent {
 
    // delete ผู้เข้าร่วมประชุม
    delPerson(item: any) {
-    console.log(item);
+    //console.log(item);
     let data = {
       "id": item.person_code,
       "action": "delete"
@@ -651,14 +659,14 @@ export class MeetingTimeManageComponent {
     this.http
       .get(environment.baseUrl + '/_meeting_person_data.php?meeting_code=' + meeting_code)
       .subscribe((res: any) => {
-        console.log('person: ', res);
+        //console.log('person: ', res);
         this.person_list = res.data;
       });
   }
 
   // Meeting position
   fetchMtPosition(open_code: any) {
-    console.log('open_code: ', open_code);
+    //console.log('open_code: ', open_code);
     this.http
       .get(environment.baseUrl + '/_meeting_position_data.php?open_code=' + open_code) //ติดต่อไปยัง Api getfaculty.php
       .subscribe((res: any) => { // ดึงข้อมูลในฟิลด์ fac_id, fac_name

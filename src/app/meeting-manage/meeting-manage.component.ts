@@ -80,7 +80,7 @@ export class MeetingManageComponent {
   getUser(): void {
     const Token: any = localStorage.getItem('Token');
     this.userData = JSON.parse(Token);
-    console.log('user:, ', this.userData);
+    //console.log('user:, ', this.userData);
     this.fac_code = this.userData.faculty_code;
     this.user_id = this.userData.user_id;
     this.user_fname = this.userData.user_fname;
@@ -89,13 +89,19 @@ export class MeetingManageComponent {
 
   getPrefix(): void {
     var data = {
-      opt: 'viewTable',
+      "opt": 'viewTable',
       "Table": "REF_PREFIX"
     }
-    this.http.post('https://eis.rmutsv.ac.th/api/eis/userpermission.php', data)
+    // this.http.post('https://eis.rmutsv.ac.th/api/eis/userpermission.php', data)
+    //   .subscribe({
+    //     next: (res: any) => {
+    //       //console.log('REF_PREFIX ', res); // เเสดงค่าใน console
+    //       this.prefix_list = res;
+    //     }
+    //   });
+    this.http.post(environment.baseUrl + '/_curl_acc3d_person.php', data)
       .subscribe({
         next: (res: any) => {
-          //console.log('REF_PREFIX ', res); // เเสดงค่าใน console
           this.prefix_list = res;
         }
       });

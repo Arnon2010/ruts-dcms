@@ -171,14 +171,14 @@ export class MeetingSettingComponent implements OnInit  {
     const dialogRef = this.dialog.open(DialogFormOpenDialog);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      //console.log(`Dialog result: ${result}`);
     });
   }
 
   getUser(): void {
     const Token: any = localStorage.getItem('Token');
     this.userData = JSON.parse(Token);
-    console.log('user:, ', this.userData);
+    //console.log('user:, ', this.userData);
     this.fac_code = this.userData.faculty_code;
     this.user_id = this.userData.user_id;
   }
@@ -237,10 +237,11 @@ export class MeetingSettingComponent implements OnInit  {
       opt: 'viewfac',
       "Table": "FACULTY"
     }
-    this.http.post('https://eis.rmutsv.ac.th/api/eis/userpermission.php', data)
+
+    this.http.post(environment.baseUrl + '/_curl_acc3d_person.php', data)
       .subscribe({
         next: (res: any) => {
-          //console.log('Faculty ', res); // เเสดงค่าใน console
+          //console.log('viewTable ', res.data); // เเสดงค่าใน console
           this.FAClist = res;
         }
       });
@@ -255,10 +256,10 @@ export class MeetingSettingComponent implements OnInit  {
       "open_code": open_code,
       "path": path
     };
-    console.log('del: ', data);
+    //console.log('del: ', data);
     this.http.post(environment.baseUrl + '/_meetingopen_file_remove.php', data).subscribe(
       (response: any) => {
-        console.log('response: ', response);
+        //console.log('response: ', response);
         if (response.status == 'Ok') {
           this.meeting.open_path = '';
         }
@@ -304,7 +305,7 @@ export class MeetingSettingComponent implements OnInit  {
 
   saveOpenMeeting(item: any) {
     this.meeting = item;
-    console.log('save meeting', this.meeting);
+    //console.log('save meeting', this.meeting);
     // Create form data for file upload
     const formData = new FormData();
     for (let i = 0; i < this.selectedFiles.length; i++) {
@@ -324,7 +325,7 @@ export class MeetingSettingComponent implements OnInit  {
     //console.log('save formData', formData);
     this.http.post(environment.baseUrl + '/_meetingopen_save.php', formData).subscribe(
       (response: any) => {
-        console.log('response: ', response);
+        //console.log('response: ', response);
         if (response.status == 'Ok') {
           //Swal.fire('บันทึกข้อมูลสำเร็จ', '', 'success').then(() => {
           // get users
@@ -367,7 +368,7 @@ export class MeetingSettingComponent implements OnInit  {
     this.http
       .get(environment.baseUrl + '/_meetingopen_data.php?faculty_code=' + this.fac_code) //ติดต่อไปยัง Api getfaculty.php
       .subscribe((res: any) => { // ดึงข้อมูลในฟิลด์ fac_id, fac_name
-        console.log(res);
+        //console.log(res);
         this.meetings = res.data;
         this.filteredItems = res.data;
         this.total_row = res.row;
@@ -502,10 +503,11 @@ export class MeetingSettingComponent implements OnInit  {
       "opt": "viewNAME",
       "search": search_query
     }
-    this.http.post('https://eis.rmutsv.ac.th/api/eis/userpermission.php', data)
+ 
+    this.http.post(environment.baseUrl + '/_curl_acc3d_person.php', data)
       .subscribe({
         next: (res: any) => {
-          console.log('Person ', res); // เเสดงค่าใน console
+          //console.log('viewTable ', res.data); // เเสดงค่าใน console
           this.data_person = res;
         }
       });

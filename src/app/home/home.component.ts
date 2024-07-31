@@ -41,7 +41,6 @@ export class HomeComponent {
   }
 
   ngOnInit(): void {
-   
     this.getUser();
     this.fetchAgency(this.fac_code);
     this.fetchMeetingUser(this.citizen_id, this.fac_code);
@@ -51,7 +50,7 @@ export class HomeComponent {
   getUser(): void {
     const Token: any = localStorage.getItem('Token');
     this.userData = JSON.parse(Token);
-    console.log('user:, ', this.userData);
+    //console.log('user:, ', this.userData);
     this.user_role = this.userData.user_role; //สิทธิ์การใช้งาน
 
     if(this.user_role == "F") {
