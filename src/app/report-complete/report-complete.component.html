@@ -13,12 +13,13 @@
             <div class="card card-tale">
               <a class="nav-link" [routerLink]="['/report']">
                 <div class="card-body">
-                  <h6 class="mb-4">รายละเอียดการประชุม</h6>
+                  <h6 class="mb-4">บันทึกรายงานการประชุม</h6>
                   <p class="fs-30 mb-2" [ngClass]="{
                             'circle-1': counts.total_conduct >= 1,
                             'circle-0': counts.total_conduct == 0}">
-                    <span class="badge font-weight-bold circle__content">
-                      {{counts.total_detail}}</span>
+                    <!-- <span class="badge font-weight-bold circle__content">
+                      {{counts.total_detail}}</span> -->
+                    <span class="badge badge-warning font-weight-bold">{{counts.total_detail}}</span>
                   </p>
                 </div>
               </a>
@@ -32,9 +33,10 @@
                   <p class="fs-30 mb-2" [ngClass]="{
                             'circle-1': counts.total_agency >= '1',
                             'circle-0': counts.total_agency == 0}">
-                    <span class="badge font-weight-bold circle__content">
+                    <!-- <span class="badge font-weight-bold circle__content">
                       {{counts.total_certify}}
-                    </span>
+                    </span> -->
+                    <span class="badge badge-warning font-weight-bold">{{counts.total_certify}}</span>
                   </p>
                 </div>
               </a>
@@ -48,8 +50,9 @@
                   <p class="fs-30 mb-2" [ngClass]="{
                             'circle-1': counts.total_save >= 1,
                             'circle-0': counts.total_save == 0}">
-                    <span class="badge font-weight-bold circle__content">
-                      {{counts.total_complete}}</span>
+                    <!-- <span class="badge font-weight-bold circle__content">
+                      {{counts.total_complete}}</span> -->
+                    <span class="badge badge-warning font-weight-bold">{{counts.total_complete}}</span>
                   </p>
                 </div>
               </a>

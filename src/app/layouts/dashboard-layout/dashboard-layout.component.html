@@ -77,29 +77,17 @@
               </ul>
             </li>
 
-            <!-- <li *ngIf="user.user_role == 'F' && user.user_role == 'A'">
-              <a href="#" [routerLink]="['/meeting-all']" >
+            <li *ngIf="user.user_role != 'F' && user.user_role != 'A'">
+              <a href="#" [routerLink]="['/home']" >
                 <i class="mdi mdi-view-agenda"></i>
-                <span class="link_name">การประชุมทั้งหมด</span>
+                <span class="link_name">การประชุมที่จะมีขึ้น</span>
               </a>
               <ul class="sub-menu blank">
-                <li><a class="link_name" [routerLink]="['/meeting-all']"
-                    routerLinkActive="router-link-active">การประชุมทั้งหมด</a>
+                <li><a class="link_name" [routerLink]="['/home']"
+                    routerLinkActive="router-link-active">การประชุมที่จะมีขึ้น</a>
                 </li>
               </ul>
-            </li> -->
-
-            <!-- <li *ngIf="user.user_role != 'F' && user.user_role != 'A'">
-              <a href="#" [routerLink]="['/meeting-all']" >
-                <i class="mdi mdi-view-agenda"></i>
-                <span class="link_name">การประชุมทั้งหมด</span>
-              </a>
-              <ul class="sub-menu blank">
-                <li><a class="link_name" [routerLink]="['/meeting-all']"
-                    routerLinkActive="router-link-active">การประชุมทั้งหมด</a>
-                </li>
-              </ul>
-            </li> -->
+            </li>
 
             <li *ngIf="user.user_role != 'F' && user.user_role != 'A'">
               <a href="#" [routerLink]="['/assigns']">
@@ -109,6 +97,18 @@
               <ul class="sub-menu blank">
                 <li><a class="link_name" [routerLink]="['/assigns']"
                     routerLinkActive="router-link-active">งานที่ได้รับมอบหมาย</a></li>
+              </ul>
+            </li>
+
+            <li *ngIf="user.user_role != 'F' && user.user_role != 'A'">
+              <a href="#" [routerLink]="['/meeting-all']" >
+                <i class="mdi mdi-view-agenda"></i>
+                <span class="link_name">การประชุมทั้งหมด</span>
+              </a>
+              <ul class="sub-menu blank">
+                <li><a class="link_name" [routerLink]="['/meeting-all']"
+                    routerLinkActive="router-link-active">การประชุมทั้งหมด</a>
+                </li>
               </ul>
             </li>
 

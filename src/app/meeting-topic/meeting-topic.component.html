@@ -82,13 +82,13 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="d-flex mb-3 mb-md-0 mt-3">
+                                                <div class="d-flex mb-3 mb-md-0 mt-3" *ngIf="meeting.meeting_rstatus == '1' || meeting.meeting_rstatus == '2' || meeting.meeting_rstatus == '3'">
                                                     <div class="p-2">
                                                         <span class="font-weight-bold">
-                                                            ยืนยันเข้าร่วม:
+                                                            ยืนยันเข้าร่วม: 
                                                         </span>
                                                     </div>
-                                                    <div class="p-2" *ngIf="person.person_rstatus == '0'">
+                                                    <div class="p-2" *ngIf="person.person_rstatus == '0' && meeting.meeting_ostatus != 'Y'">
                                                         <button class="btn-action"
                                                             (click)="confirmMeeting('1',person.person_type)">
                                                             <span
@@ -101,12 +101,17 @@
                                                         </button>
                                                     </div>
 
+                                                    <div class="p-2" *ngIf="meeting.meeting_ostatus == 'Y'">
+                                                        <span class="badge badge-outline-secondary font-weight-bold font-action">เลยกำหนดเวลาเข้าร่วม</span>
+                                                    </div>
+
                                                     <div class="p-2"
                                                         *ngIf="person.person_rstatus == '1' || person.person_rstatus == '2'">
-                                                        <button class="btn-action"
+                                                        <button class="btn-action" 
                                                             (click)="confirmMeeting('0',person.person_type)">
                                                             <span
-                                                                class="badge badge-warning font-weight-bold font-status">ยกเลิกการเข้าร่วม</span>
+                                                                class="badge badge-warning font-weight-bold font-status">ยกเลิกการเข้าร่วม {{meeting.meeting_rstatus}}
+                                                            </span>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -121,7 +126,7 @@
                                                         <span *ngIf="person.person_rstatus == '0'"
                                                             class="font-status">รอการยืนยัน</span>
                                                         <span *ngIf="person.person_rstatus == '1'"
-                                                            class="font-status">เข้าร่วมแล้ว</span>
+                                                            class="font-status">เข้าร่วม</span>
                                                         <span *ngIf="person.person_rstatus == '2'"
                                                             class="font-status">ผู้อื่นเข้าร่วมประชุมแทน</span>
                                                     </div>

@@ -84,7 +84,7 @@ export class MeetingTopicComponent {
     this.http.post(environment.baseUrl + '/_view_data.php', data)
       .subscribe({
         next: (res: any) => {
-          //console.log('meeting data--->: ', res); // เเสดงค่าใน console
+          console.log('meeting data--->: ', res); // เเสดงค่าใน console
           this.meeting = res.data;
           this.open_title = this.meeting.open_title;
           this.open_code = this.meeting.open_code;

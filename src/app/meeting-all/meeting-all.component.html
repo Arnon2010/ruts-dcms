@@ -21,22 +21,17 @@
                     <a href="#" [routerLink]="['/meeting-topic',item.meeting_code,item.open_code]" routerLinkActive="router-link-active">
                       <span class="badge badge-primary m-2"><i class="mdi mdi-file-document"></i></span>
                     </a>
-                    <a href="#" *ngIf="item.person_rconfirm=='0'" [routerLink]="['/certify-confirm',item.meeting_code,item.open_code]"
+                    <a href="#" [routerLink]="['/']" routerLinkActive="router-link-active" >
+                      <span class="badge badge-info m-2"><i class="mdi mdi-account"></i></span>
+                    </a>
+                    <a href="#" [routerLink]="['/certify-confirm',item.meeting_code,item.open_code]"
                           routerLinkActive="router-link-active">
-                          <span class="badge badge-warning m-2"><i class="mdi mdi-check-circle"></i></span>
+                          <span class="badge {{item.person_rconfirm == '0' ? 'badge-warning': 'badge-success'}} m-2"><i class="mdi mdi-check-circle"></i></span>
                         </a>
                     <!-- <a href="#" [routerLink]="['/']" routerLinkActive="router-link-active" >
-                      <span class="badge badge-primary m-2"><i class="mdi mdi-file-document"></i></span>
-                    </a>
-                    <a href="#" [routerLink]="['/']" routerLinkActive="router-link-active" >
-                      <span class="badge badge-secondary m-2"><i class="mdi mdi-account"></i></span>
-                    </a>
-                    <a href="#" [routerLink]="['/']" routerLinkActive="router-link-active" >
                       <span class="badge badge-info m-2"><i class="mdi mdi-file-document"></i></span>
-                    </a>
-                    <a href="#" [routerLink]="['/']" routerLinkActive="router-link-active" >
-                      <span class="badge badge-success m-2"><i class="mdi mdi-check-circle"></i></span>
                     </a> -->
+                    
                   </div>
                   
                 </div>

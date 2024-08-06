@@ -1,17 +1,17 @@
 <!-- partial -->
 <div class="container-fluid page-body-wrapper">
-    <div class="content-wrapper">
-      <!-- จัดการการประชุม -->
-      <div class="row">
-  
-        <div class="col-md-12 grid-margin">
-          <div class="row">
-            <div class="col-12 col-xl-8 mb-4 mb-xl-2">
-              <h6 class="font-weight-bold">มี {{total_meeting_assigned}} การประชุม งานที่ได้รับมอบหมาย </h6>
-            </div>
-            <div class="col-12 col-xl-4">
-              <div class="justify-content-end d-flex">
-                <!-- <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+  <div class="content-wrapper">
+    <!-- จัดการการประชุม -->
+    <div class="row">
+
+      <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-12 col-xl-8 mb-4 mb-xl-2">
+            <h6 class="font-weight-bold">มี {{total_meeting_assigned}} การประชุม งานที่ได้รับมอบหมาย </h6>
+          </div>
+          <div class="col-12 col-xl-4">
+            <div class="justify-content-end d-flex">
+              <!-- <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
                     <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2"
                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                       <i class="mdi mdi-calendar"></i> Today (07 Feb 2024)
@@ -23,162 +23,149 @@
                       <a class="dropdown-item" href="#">August - November</a>
                     </div>
                   </div> -->
-              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-7 grid-margin stretch-card">
-              <div class="card tale-bg">
-                <div class="card-body mt-auto">
-                  <ul class="icon-data-list">
-                    <li *ngFor="let item of report_assigns">
-                      <div class="d-flex flex-column">
-                        <!-- <div class="p-2">
-                          <img src="assets/img/icons8-meeting-64.png" alt="user">
-                        </div> -->
-  
-                        <div class="mr-auto p-2">
-                          <p class="text-info mb-1">
-                            <img src="assets/img/icons8-meeting-64.png" alt="user"> 
-                            <a href="#" [routerLink]="['/certify-confirm',item.meeting_code,item.open_code]"
-                              routerLinkActive="router-link-active">
-                              {{item.open_title}} คร้ังที่ {{item.meeting_thetime}} / {{item.open_year}}
-                              <i class="mdi mdi-window-restore"></i>
-                            </a>
-                          </p>
-                          <p class="mb-0">
-                            ระเบียนวาระที่ {{item.agendatopic_no}} {{item.agendatopic_name}}
-                            <br>
-                            <span><b>มติที่ประชุม:</b></span>
-                            <br>
-                            <span class="p-2"><u>{{item.agendatopic_resolution}}</u></span>
-                            
-                            
-                            <br>
-                            <span><b>มอบหมายงาน:</b></span>
-                            <br>
-                            <span class="p-2"><u>{{item.agendatopic_assigned}}</u></span>
-
-                          </p>
-                          <p class="text-muted">
-                            <span>ประชุมเมื่อวันที่ {{item.meeting_sdate | thaiDate}}</span>
-                          </p>
-                          <!-- <small>{{item.meeting_time}}</small> -->
-                        </div>
-                        <div class="p-2 btn-noti">
-                          <a href="#" [routerLink]="['/assigns']" routerLinkActive="router-link-active" 
-                            (click)="closeNotifi(item.person_code, item.meeting_code)">
-                            <span class="badge badge-primary m-2">
-                                <i class="mdi mdi-close-circle"></i> ปิดแจ้งเตือน</span>
-                          </a>
-
-               
-
-                        </div>
-                      </div>
-                      <hr>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-5 grid-margin transparent">
-              <div class="row">
-                <div class="col-lg-6 col-md-6 mb-4 stretch-card transparent">
-                  <div class="card card-dark-blue">
-                    <a class="nav-link" [routerLink]="['/home']">
-                      <div class="card-body">
-                        <div class="d-flex flex-column">
-                          <div>
-                            <h6 class="mb-4">ประชุมที่จะมีขึ้น</h6>
-                          </div>
-                          <div class="circle">
-                            <p class="fs-30 mb-2" [ngClass]="{
-                              'circle-2': total_meeting >= 1,
-                              'circle-0': total_meeting == 0}">
-                              <span class="badge font-weight-bold circle__content">
-                                {{total_meeting}}</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-                <div class="col-lg-6 col-md-6 mb-4 stretch-card transparent">
-                  <div class="card card-tale">
-                    <a class="nav-link" [routerLink]="['/certify']">
-                      <div class="card-body">
-                        <div class="d-flex flex-column">
-                          <div>
-                            <h6 class="mb-4">รับรองรายงานการประชุม</h6>
-                          </div>
-                          <div class="circle">
-                            <p class="fs-30 mb-2" [ngClass]="{
-                              'circle-2': total_certify >= 1,
-                              'circle-0': total_certify == 0}">
-                              <span class="badge font-weight-bold circle__content">
-                                {{total_certify}}</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-6 col-md-6 mb-4 stretch-card transparent">
-                  <div class="card card-light-blue">
-                    <a class="nav-link" [routerLink]="['/meeting-all']">
-                      <div class="card-body">
-                        <div class="d-flex flex-column">
-                          <div>
-                            <h6 class="mb-4">การประชุมทั้งหมด</h6>
-                          </div>
-                          <div class="circle">
-                            <p class="fs-30 mb-2" [ngClass]="{
-                              'circle-2': total_meeting_all >= 1,
-                              'circle-0': total_meeting_all == 0}">
-                              <span class="badge font-weight-bold circle__content">
-                                {{total_meeting_all}}</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-  
-                <div class="col-lg-6 col-md-6 mb-4 stretch-card transparent">
-                  <div class="card card-light-danger">
-                    <a class="nav-link" [routerLink]="['/assigns']">
-                      <div class="card-body">
-                        <div class="d-flex flex-column">
-                          <div class="mb-5">
-                            <h6>งานที่ได้รับมอบหมาย</h6>
-                          </div>
-                          <div class="circle">
-                            <p class="fs-30 mb-2" [ngClass]="{
-                              'circle-2': total_meeting_assigned >= 1,
-                              'circle-0': total_meeting_assigned == 0}">
-                              <span class="badge font-weight-bold circle__content">
-                                {{total_meeting_assigned}}</span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-  
           </div>
         </div>
-  
-        <!-- การประชุมที่ผ่านมา -->
-        <!-- <div class="col-md-12 grid-margin">
+        <div class="row">
+          <div class="col-md-7 grid-margin stretch-card">
+            <div class="card tale-bg">
+              <div class="card-body mt-auto" *ngFor="let item of report_assigns">
+                <div class="d-flex justify-content-start">
+                  <div class="mr-auto p-2">
+                    <p class="text-info mb-1">
+                      <img src="assets/img/icons8-meeting-64.png" alt="user">
+                      <a href="#" [routerLink]="['/certify-confirm',item.meeting_code,item.open_code]"
+                        routerLinkActive="router-link-active">
+                        {{item.open_title}} คร้ังที่ {{item.meeting_thetime}} / {{item.open_year}}
+                        <i class="mdi mdi-window-restore"></i>
+                      </a>
+                    </p>
+                    <p class="mb-0">
+                      ระเบียนวาระที่ {{item.agendatopic_no}} {{item.agendatopic_name}}
+                      <br>
+                      <span><b>มติที่ประชุม:</b></span>
+                      <br>
+                      <span class="p-2"><u>{{item.agendatopic_resolution}}</u></span>
+                      <br>
+                      <span><b>มอบหมายงาน:</b></span>
+                      <br>
+                      <span class="p-2"><u>{{item.agendatopic_assigned}}</u></span>
+                    </p>
+                    <p class="text-muted">
+                      <span>ประชุมเมื่อวันที่ {{item.meeting_sdate | thaiDate}}</span>
+                    </p>
+                    <!-- <small>{{item.meeting_time}}</small> -->
+                  </div>
+                  <div>
+                    <a href="#" [routerLink]="['/assigns']" routerLinkActive="router-link-active"
+                          (click)="closeNotifi(item.person_code, item.meeting_code)">
+                          <span class="badge badge-primary m-2">
+                            <i class="mdi mdi-close-circle"></i> ปิดแจ้งเตือน</span>
+                        </a>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+         
+          <div class="col-md-5 grid-margin transparent">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 mb-4 stretch-card transparent">
+                <div class="card card-dark-blue">
+                  <a class="nav-link" [routerLink]="['/home']">
+                    <div class="card-body">
+                      <div class="d-flex flex-column">
+                        <div>
+                          <h6 class="mb-4">การประชุมที่จะมีขึ้น</h6>
+                        </div>
+                        <div class="circle">
+                          <p class="fs-30 mb-2" [ngClass]="{
+                              'circle-2': total_meeting >= 1,
+                              'circle-0': total_meeting == 0}">
+                            <span class="badge font-weight-bold circle__content">
+                              {{total_meeting}}</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 mb-4 stretch-card transparent">
+                <div class="card card-tale">
+                  <a class="nav-link" [routerLink]="['/certify']">
+                    <div class="card-body">
+                      <div class="d-flex flex-column">
+                        <div>
+                          <h6 class="mb-4">รับรองรายงานการประชุม</h6>
+                        </div>
+                        <div class="circle">
+                          <p class="fs-30 mb-2" [ngClass]="{
+                              'circle-2': total_certify >= 1,
+                              'circle-0': total_certify == 0}">
+                            <span class="badge font-weight-bold circle__content">
+                              {{total_certify}}</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 mb-4 stretch-card transparent">
+                <div class="card card-light-blue">
+                  <a class="nav-link" [routerLink]="['/meeting-all']">
+                    <div class="card-body">
+                      <div class="d-flex flex-column">
+                        <div>
+                          <h6 class="mb-4">การประชุมทั้งหมด</h6>
+                        </div>
+                        <div class="circle">
+                          <p class="fs-30 mb-2" [ngClass]="{
+                              'circle-2': total_meeting_all >= 1,
+                              'circle-0': total_meeting_all == 0}">
+                            <span class="badge font-weight-bold circle__content">
+                              {{total_meeting_all}}</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 mb-4 stretch-card transparent">
+                <div class="card card-light-danger">
+                  <a class="nav-link" [routerLink]="['/assigns']">
+                    <div class="card-body">
+                      <div class="d-flex flex-column">
+                        <div class="mb-5">
+                          <h6>งานที่ได้รับมอบหมาย</h6>
+                        </div>
+                        <div class="circle">
+                          <p class="fs-30 mb-2" [ngClass]="{
+                              'circle-2': total_meeting_assigned >= 1,
+                              'circle-0': total_meeting_assigned == 0}">
+                            <span class="badge font-weight-bold circle__content">
+                              {{total_meeting_assigned}}</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- การประชุมที่ผ่านมา -->
+      <!-- <div class="col-md-12 grid-margin">
           <div class="row">
             <div class="col-12 col-xl-8 mb-4 mb-xl-2">
               <h6 class="font-weight-bold">
@@ -256,9 +243,9 @@
           </div>
   
         </div> -->
-  
-      </div>
-      
-  
-  
+
     </div>
+
+
+
+  </div>

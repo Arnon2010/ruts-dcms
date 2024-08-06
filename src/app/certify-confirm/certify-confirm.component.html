@@ -34,7 +34,7 @@
                                         <div class="col-12 col-xl-8 mb-4 mb-xl-2">
                                           <h6 class="font-weight-bold">วาระการประชุม</h6>
                                         </div>
-                                        <div class="col-12 col-xl-4">
+                                        <div class="col-12 col-xl-4" *ngIf="person.person_rconfirm == '0'">
                                           <div class="justify-content-end d-flex">
                                            <button class="btn btn-primary" (click)="onClickCertify(meeting.meeting_code)">
                                             <i class="mdi mdi-pencil"></i> รับรองรายงานการประชุม</button>
@@ -141,7 +141,7 @@
                                     <div class="p-2">
                                     </div>
                                     <!--แก้ไข-->
-                                    <div class="p-2">
+                                    <div class="p-2" *ngIf="person.person_rconfirm == '0'">
                                         <a href="#" target="_blank"
                                             data-toggle="modal" data-target="#correction-topic"
                                             data-whatever="@getbootstrap"
@@ -196,7 +196,7 @@
                                         </a>
                                         </div>
                                         <!-- แก้ไข -->
-                                        <div class="p-2">
+                                        <div class="p-2" *ngIf="person.person_rconfirm == '0'">
                                             <a href="#" target="_blank"
                                                 data-toggle="modal" data-target="#correction-topic"
                                                 data-whatever="@getbootstrap"
@@ -204,10 +204,7 @@
                                                 <span class="badge badge-warning">
                                                     <i class="mdi mdi-pencil"></i></span>
                                             </a>
-                                            
                                         </div>
-                                       
-
                                     </div>
                                     <div class="topic-sub mb-0">
                                         <div class="p-2"><strong>ความเป็นมา:</strong></div>
